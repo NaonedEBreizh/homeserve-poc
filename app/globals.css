@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
+/* Tokens HomeServe — noms identiques à ceux observés sur homeserve.fr
+   (voir docs/architecture.md §2) : un composant du POC se colle dans leur
+   monorepo sans renommage. Ne pas en inventer d'autres. */
 @theme {
-  --color-brand-50: oklch(0.97 0.02 250);
-  --color-brand-500: oklch(0.55 0.18 250);
-  --color-brand-600: oklch(0.48 0.18 250);
+  --color-corail-600: #e22c22;
+  --color-canard-500: #258386;
+  --color-vert-600: #255a2e;
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui;
+  --radius-card: 1rem;
 }
 
 :root {
-  color-scheme: light dark;
+  /* Pas de palette sombre définie côté marque : on s'en tient au clair. */
+  color-scheme: light;
 }

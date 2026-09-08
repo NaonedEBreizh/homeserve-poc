@@ -4,22 +4,32 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 /**
- * A per-request CSP nonce can only be stamped onto Next.js' inline bootstrap
- * scripts while a route is rendered dynamically — static prerendering happens
- * at build time, when no nonce exists yet. Opting the whole tree into dynamic
- * rendering is what keeps `script-src` free of `'unsafe-inline'`.
+ * Le nonce CSP ne peut être apposé sur les scripts de bootstrap Next.js que
+ * pendant un rendu dynamique : le pré-rendu statique a lieu au build, avant
+ * que le nonce n'existe. C'est ce qui permet à `script-src` de rester sans
+ * 'unsafe-inline' (voir README).
  */
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "HomeServe POC",
-  description: "Proof of concept HomeServe — Next.js App Router",
+  title: "Mon projet énergie — prototype HomeServe",
+  description:
+    "Prototype non officiel : estimation d'économies solaire et pompe à chaleur, sans transmission de données.",
+  // Prototype de candidature : il n'a rien à faire dans un index de moteur.
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr">
-      <body className="min-h-dvh bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+      <body className="min-h-dvh bg-white font-sans text-slate-900 antialiased">
+        {/* Bandeau exigé sur toutes les pages (CLAUDE.md). */}
+        <p
+          role="note"
+          className="bg-canard-500 px-4 py-2 text-center text-sm font-medium text-white"
+        >
+          Prototype non officiel — aucune donnée transmise
+        </p>
         {children}
       </body>
     </html>
