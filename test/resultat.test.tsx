@@ -1,7 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Resultat } from "@/components/Resultat";
+import { evenements, viderBus } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
 import {
   __reinitialiserPourTests,
@@ -100,10 +101,58 @@ describe("variante par défaut", () => {
   });
 
   it("nomme le pack sans jamais dire « votre installation »", () => {
-    const { container } = render(<Resultat />);
+    render(<Resultat />);
 
-    expect(screen.getByText(contenu.resultat.recommandation.intro)).toBeDefined();
-    expect(container.textContent).not.toContain("votre installation");
+    const intro = screen.getByText(contenu.resultat.recommandation.intro);
+    const carte = intro.closest("section");
+
+    expect(carte).not.toBeNull();
+    // La règle porte sur la carte pack : « votre installation de chauffage »
+    // reste légitime ailleurs (section « Et après ? »).
+    expect(carte!.textContent).not.toContain("votre installation");
+    expect(carte!.textContent).toContain(contenu.resultat.recommandation.intro);
+  });
+});
+
+describe("section « Et après ? » (D44)", () => {
+  beforeEach(() => {
+    repondreSimulateur();
+  });
+
+  it("place la frise, la carte et les preuves après la carte pack", () => {
+    render(<Resultat />);
+
+    const { et_apres } = contenu.resultat;
+    const titre = screen.getByRole("heading", { level: 2, name: et_apres.titre });
+    const section = titre.closest("section");
+    expect(section).not.toBeNull();
+
+    const dans = within(section!);
+    for (const etape of et_apres.etapes) {
+      expect(dans.getByText(etape.titre)).toBeDefined();
+    }
+    expect(dans.getByText(et_apres.carte.titre)).toBeDefined();
+    for (const item of et_apres.carte.items) {
+      expect(dans.getByText(item)).toBeDefined();
+    }
+    for (const preuve of et_apres.preuves) {
+      expect(dans.getByText(preuve)).toBeDefined();
+    }
+  });
+
+  it("marque la première étape comme faite et les suivantes comme à venir", () => {
+    const { et_apres } = contenu.resultat;
+
+    expect(et_apres.etapes[0]!.faite).toBe(true);
+    expect(et_apres.etapes.slice(1).every((e) => e.faite === false)).toBe(true);
+  });
+
+  it("émet sim_next_steps_viewed une seule fois", () => {
+    viderBus();
+    render(<Resultat />);
+
+    const vues = evenements().filter((e) => e.event === "sim_next_steps_viewed");
+    expect(vues).toHaveLength(1);
   });
 });
 

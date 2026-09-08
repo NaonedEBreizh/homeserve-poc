@@ -13,5 +13,6 @@ Heures en **UTC** (horloge de l'environnement d'exécution). Un bloc = un prompt
 | 3b — Résultat, effet ciseaux, variante mur | 15:33 | 15:40 | 7 min | `feat(bloc3b): résultat, effet ciseaux, variante mur` |
 | 4 — Machine à états, agenda, ICS | 14:49 | 14:57 | 8 min | `feat(bloc4): machine à états, agenda simulé, ICS` |
 | 5 — Parcours RDV, sorties, confirmation | 17:40 | 17:57 | 17 min | `feat(bloc5): parcours rendez-vous, sorties, confirmation` |
+| 5 bis — Résultat : section « Et après ? » (D44) | 17:57 | 18:01 | 4 min | `feat(resultat): section « Et après ? » (D44)` |
 | 6a — Moteur PAC et couplage (moteurs seuls) | 15:14 | 15:18 | 4 min | `feat(bloc6a): moteur PAC et couplage` |
 | 7 — Panneau debug, README, vérifications | | | | |

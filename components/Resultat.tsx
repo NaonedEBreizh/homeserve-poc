@@ -15,6 +15,7 @@ import { useHydrate, useProjet } from "@/lib/store";
 
 import { MurContact } from "./MurContact";
 import { CourbeCiseaux, type Rentabilite } from "./resultat/CourbeCiseaux";
+import { EtApres } from "./resultat/EtApres";
 import { PanneauComprendre, type OngletComprendre } from "./resultat/PanneauComprendre";
 import {
   BlocHypotheses,
@@ -308,6 +309,9 @@ export function Resultat() {
       {etat.demo ? (
         <p className="text-xs text-neutre-400">{t.rentabilite.mention}</p>
       ) : null}
+
+      {/* D44 : entre la carte pack et le CTA. */}
+      <EtApres />
 
       <BlocHypotheses />
 
