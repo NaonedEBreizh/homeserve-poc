@@ -9,8 +9,3 @@ import contenuFr from "@/content/fr-fr.json";
 export type Contenu = typeof contenuFr;
 
 export const contenu: Contenu = contenuFr;
-
-/** Numéro national, sans espaces, pour un lien `tel:`. */
-export function telNational(): string {
-  return contenu.global.appel.numero_national.replace(/\s/g, "");
-}

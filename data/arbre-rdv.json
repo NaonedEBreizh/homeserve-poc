@@ -531,8 +531,8 @@
     },
     "B19": {
       "type": "info",
-      "titre": "Votre rendez-vous",
-      "texte": "Visite technique gratuite à votre domicile, environ 1 heure, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.",
+      "titre": "Votre étude gratuite",
+      "texte": "Étude gratuite à domicile, environ 1 heure, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.",
       "next": "B19b"
     },
     "B19b": {

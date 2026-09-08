@@ -3,19 +3,23 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-import { track } from "@/lib/analytics";
-import { contenu, telNational } from "@/lib/content";
-import { setDebug, setVariant, useProjet } from "@/lib/store";
+import { contenu } from "@/lib/content";
+import { setDebug, setDemo, setVariant, useProjet } from "@/lib/store";
 
+import { BoutonAppel } from "./BoutonAppel";
 import { DebugPanel } from "./DebugPanel";
 
 /**
- * En-tête applicatif : mot-symbole, lien d'appel instrumenté, panneau debug.
- *
- * `variant` et `debug` ne sont lus que dans le navigateur (`useSearchParams`),
- * jamais côté serveur — d'où le `<Suspense>` qui entoure ce composant dans
- * `app/layout.tsx`.
+ * Chemins où le bouton d'appel a sa place (D34) : l'accueil, les écrans de
+ * sortie et la confirmation. Il disparaît dès l'entrée dans un parcours —
+ * simulateur, résultat, rendez-vous — pour ne pas court-circuiter l'étape.
  */
+function appelAutorise(chemin: string): boolean {
+  return (
+    chemin === "/" || chemin.startsWith("/sortie") || chemin === "/confirmation"
+  );
+}
+
 export function EnteteApp() {
   const parametres = useSearchParams();
   const chemin = usePathname();
@@ -23,29 +27,25 @@ export function EnteteApp() {
 
   const variantUrl = parametres.get("variant") === "mur" ? "mur" : "defaut";
   const debugUrl = parametres.get("debug") === "1";
+  const demoUrl = parametres.get("demo") === "1";
 
   useEffect(() => {
     setVariant(variantUrl);
     setDebug(debugUrl);
-  }, [variantUrl, debugUrl]);
-
-  const { marque, appel } = contenu.global;
+    setDemo(demoUrl);
+  }, [variantUrl, debugUrl, demoUrl]);
 
   return (
     <>
-      <header className="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-3">
+      <header className="flex min-h-14 items-center justify-between gap-4 border-b border-neutre-200 px-5 py-3">
         {/* Mot-symbole, pas de logo : Nunito ExtraBold, corail-600. */}
         <span className="font-sans text-[19px] font-extrabold tracking-tight text-corail-600">
-          {marque}
+          {contenu.global.marque}
         </span>
 
-        <a
-          href={`tel:${telNational()}`}
-          onClick={() => track("call_click", { source: "header", step: chemin })}
-          className="text-sm font-bold text-canard-500"
-        >
-          {appel.libelle}
-        </a>
+        {appelAutorise(chemin) ? (
+          <BoutonAppel source="header" step={chemin} />
+        ) : null}
       </header>
 
       {debug ? <DebugPanel /> : null}

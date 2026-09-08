@@ -1,9 +1,20 @@
 {
-  "_meta": { "version": "2026-09-08.1", "langue": "fr-fr", "schema": "content/model.json (type Prismic simulator_wording)", "note": "Tout le wording utilisateur vit ici. Les libellés des questions du RDV sont dans data/arbre-rdv.json." },
+  "_meta": {
+    "version": "2026-09-08.1",
+    "langue": "fr-fr",
+    "schema": "content/model.json (type Prismic simulator_wording)",
+    "note": "Tout le wording utilisateur vit ici. Les libellés des questions du RDV sont dans data/arbre-rdv.json."
+  },
   "global": {
     "marque": "HomeServe",
     "bandeau_prototype": "Prototype non officiel — aucune donnée transmise",
-    "appel": { "libelle": "Appeler mon agence", "numero_national": "09 72 03 62 09", "note": "numéro observé sur le simulateur HomeServe ; remplacé par celui de l'agence routée" },
+    "appel": {
+      "libelle": "Appeler HomeServe",
+      "libelle_ferme": "Être rappelé",
+      "horaires_mention": "Nos conseillers sont disponibles {horaires}.",
+      "ferme_mention": "C'est fermé pour le moment ({horaires}). Laissez-nous votre numéro, on vous rappelle.",
+      "note": "numéros et horaires dans data/hypotheses.json → contact"
+    },
     "badge_demo": "mode démo",
     "badge_agenda": "agenda simulé",
     "retour": "Retour",
@@ -12,72 +23,376 @@
   "accueil": {
     "surtitre": "Propriétaire d'une maison ?",
     "titre": "Votre projet énergie, chiffré en 2 minutes",
-    "badges": ["Sans coordonnées", "Gratuit", "Sans engagement"],
-    "porte_simulateur": { "titre": "J'estime mes économies", "sous_titre": "solaire, pompe à chaleur ou les deux" },
-    "porte_rdv": { "titre": "Je prends rendez-vous", "sous_titre": "visite technique gratuite dans votre agence" },
-    "chiffres": [ { "valeur": "21", "legende": "agences RGE" }, { "valeur": "1 200 000+", "legende": "clients" }, { "valeur": "2001", "legende": "depuis" } ],
-    "footer": ["Mentions légales", "Données personnelles", "Cookies"],
-    "footer_note": "Maquette de prototype — aucun contenu contractuel"
+    "badges": [
+      "Sans coordonnées",
+      "Gratuit",
+      "Sans engagement"
+    ],
+    "porte_simulateur": {
+      "titre": "J'estime mes économies",
+      "sous_titre": "solaire, pompe à chaleur ou les deux"
+    },
+    "porte_rdv": {
+      "titre": "Je réserve mon étude gratuite",
+      "sous_titre": "étude gratuite à domicile, sans engagement"
+    },
+    "chiffres": [
+      {
+        "valeur": "21",
+        "legende": "agences RGE"
+      },
+      {
+        "valeur": "1 200 000+",
+        "legende": "clients"
+      },
+      {
+        "valeur": "2001",
+        "legende": "depuis"
+      }
+    ],
+    "footer": [
+      "Mentions légales",
+      "Données personnelles",
+      "Cookies"
+    ],
+    "footer_note": "Maquette de prototype — aucun contenu contractuel",
+    "contexte_projet": "Vous venez de la page {projet}",
+    "contexte_projets": {
+      "solaire": "Solaire",
+      "pac": "Pompe à chaleur",
+      "les_deux": "Solaire et pompe à chaleur"
+    }
   },
   "simulateur": {
-    "stepper": ["Votre logement", "Vos équipements"],
+    "stepper": [
+      "Votre logement",
+      "Vos équipements"
+    ],
     "questions": {
-      "A0": { "titre": "Votre projet", "options": { "solaire": "Panneaux solaires", "pac": "Pompe à chaleur", "les_deux": "Les deux" } },
-      "A1": { "titre": "Votre code postal", "aide": "Il détermine l'ensoleillement et l'agence la plus proche.", "placeholder": "ex. 69001", "hors_zone": "Nous n'intervenons pas encore dans votre département : nous calculons quand même votre estimation." },
-      "A2": { "titre": "Combien de jours par semaine occupez-vous votre maison en journée ?", "aide": "Entre 10 h et 16 h, quand vos panneaux produisent.", "options": { "moins_de_3_jours": "Moins de 3 jours", "3_a_4_jours": "3 à 4 jours", "5_jours_et_plus": "5 jours et plus" } },
-      "A3": { "titre": "Combien de personnes vivent dans la maison ?", "options": { "1-2": "1 ou 2 personnes", "3-4": "3 ou 4 personnes", "5+": "5 personnes et plus" } },
-      "A4": { "titre": "Quelle est la surface au sol de votre maison ?", "aide": "Une estimation suffit.", "crans": ["< 70 m²", "70–99", "100–135", "136–175", "> 175 m²"] },
-      "A5": { "titre": "Comment chauffez-vous votre maison ?", "aide": "Le mode de chauffage détermine votre consommation et les économies possibles.", "options": { "radiateurs_electriques": "Radiateurs électriques", "pompe_a_chaleur": "Pompe à chaleur", "gaz_fioul_bois": "Gaz, fioul ou bois", "autre": "Autre" } },
-      "A5b": { "titre": "Quelle énergie pour votre chauffage ?", "condition": "projet pac ou les deux, et A5 = gaz_fioul_bois", "options": { "gaz": "Gaz", "fioul": "Fioul", "bois": "Bois" } },
-      "A6": { "titre": "Quels équipements possédez-vous ?", "aide": "Plusieurs choix possibles.", "options": { "vehicule_electrique": "Véhicule électrique", "borne_de_recharge": "Borne de recharge", "piscine_ou_jacuzzi": "Piscine ou jacuzzi", "climatisation": "Climatisation", "pompe_a_chaleur_equipement": "Pompe à chaleur", "lave_vaisselle": "Lave-vaisselle", "seche_linge": "Sèche-linge", "chauffe_eau_equipement": "Chauffe-eau", "aucun": "Aucun de ces équipements" } },
-      "A7": { "titre": "Quel est votre type de chauffe-eau ?", "options": { "thermodynamique": "Thermodynamique", "gaz_plus_10_ans": "Gaz, plus de 10 ans", "electrique_moins_10_ans": "Électrique, moins de 10 ans", "electrique_plus_10_ans": "Électrique, plus de 10 ans", "je_ne_sais_pas": "Je ne sais pas" } },
-      "A8": { "titre": "Quel est le montant mensuel de votre facture d'électricité ?", "aide": "Une estimation suffit.", "crans": ["< 60 €", "60–100", "101–135", "136–175", "> 175 €"] },
-      "A9": { "titre": "Revenu fiscal de référence de votre foyer", "aide": "Il détermine le montant de MaPrimeRénov'. Une tranche approximative suffit.", "bascule": { "hors_idf": "Hors Île-de-France", "idf": "Île-de-France" }, "options": { "bleu": "Environ jusqu'à 25 000 € (2 pers.)", "jaune": "Environ 25 000 à 32 500 €", "violet": "Environ 32 500 à 46 000 €", "rose": "Au-delà de 46 000 €" }, "note": "libellés hors IdF pour 2 personnes ; la maquette affiche « environ »" },
-      "A10": { "titre": "Année de construction de la maison", "options": { "<1997": "Avant 1997", "1997-2010": "Entre 1997 et 2010", ">2010": "Après 2010", "en_construction": "En construction" } }
+      "A0": {
+        "titre": "Votre projet",
+        "options": {
+          "solaire": "Panneaux solaires",
+          "pac": "Pompe à chaleur",
+          "les_deux": "Les deux"
+        }
+      },
+      "A1": {
+        "titre": "Votre code postal",
+        "aide": "Il détermine l'ensoleillement et l'agence la plus proche.",
+        "placeholder": "ex. 69001",
+        "hors_zone": "Nous n'intervenons pas encore dans votre département : nous calculons quand même votre estimation."
+      },
+      "A2": {
+        "titre": "Combien de jours par semaine occupez-vous votre maison en journée ?",
+        "aide": "Entre 10 h et 16 h, quand vos panneaux produisent.",
+        "options": {
+          "moins_de_3_jours": "Moins de 3 jours",
+          "3_a_4_jours": "3 à 4 jours",
+          "5_jours_et_plus": "5 jours et plus"
+        }
+      },
+      "A3": {
+        "titre": "Combien de personnes vivent dans la maison ?",
+        "options": {
+          "1-2": "1 ou 2 personnes",
+          "3-4": "3 ou 4 personnes",
+          "5+": "5 personnes et plus"
+        }
+      },
+      "A4": {
+        "titre": "Quelle est la surface au sol de votre maison ?",
+        "aide": "Une estimation suffit.",
+        "crans": [
+          "< 70 m²",
+          "70–99",
+          "100–135",
+          "136–175",
+          "> 175 m²"
+        ]
+      },
+      "A5": {
+        "titre": "Comment chauffez-vous votre maison ?",
+        "aide": "Le mode de chauffage détermine votre consommation et les économies possibles.",
+        "options": {
+          "radiateurs_electriques": "Radiateurs électriques",
+          "pompe_a_chaleur": "Pompe à chaleur",
+          "gaz_fioul_bois": "Gaz, fioul ou bois",
+          "autre": "Autre"
+        }
+      },
+      "A5b": {
+        "titre": "Quelle énergie pour votre chauffage ?",
+        "condition": "projet pac ou les deux, et A5 = gaz_fioul_bois",
+        "options": {
+          "gaz": "Gaz",
+          "fioul": "Fioul",
+          "bois": "Bois"
+        }
+      },
+      "A6": {
+        "titre": "Quels équipements possédez-vous ?",
+        "aide": "Plusieurs choix possibles.",
+        "options": {
+          "vehicule_electrique": "Véhicule électrique",
+          "borne_de_recharge": "Borne de recharge",
+          "piscine_ou_jacuzzi": "Piscine ou jacuzzi",
+          "climatisation": "Climatisation",
+          "pompe_a_chaleur_equipement": "Pompe à chaleur",
+          "lave_vaisselle": "Lave-vaisselle",
+          "seche_linge": "Sèche-linge",
+          "chauffe_eau_equipement": "Chauffe-eau",
+          "chauffage_secondaire": "Chauffage d'appoint électrique",
+          "aucun": "Aucun de ces équipements"
+        }
+      },
+      "A7": {
+        "titre": "Quel est votre type de chauffe-eau ?",
+        "options": {
+          "thermodynamique": "Thermodynamique",
+          "gaz_plus_10_ans": "Gaz, plus de 10 ans",
+          "electrique_moins_10_ans": "Électrique, moins de 10 ans",
+          "electrique_plus_10_ans": "Électrique, plus de 10 ans",
+          "je_ne_sais_pas": "Je ne sais pas"
+        }
+      },
+      "A8": {
+        "titre": "Quel est le montant mensuel de votre facture d'électricité ?",
+        "aide": "Une estimation suffit.",
+        "crans": [
+          "< 60 €",
+          "60–100",
+          "101–135",
+          "136–175",
+          "> 175 €"
+        ]
+      },
+      "A9": {
+        "titre": "Revenu fiscal de référence de votre foyer",
+        "aide": "Une tranche approximative suffit.",
+        "bascule": {
+          "hors_idf": "Hors Île-de-France",
+          "idf": "Île-de-France"
+        },
+        "options": {
+          "bleu": "Environ jusqu'à 25 000 € (2 pers.)",
+          "jaune": "Environ 25 000 à 32 500 €",
+          "violet": "Environ 32 500 à 46 000 €",
+          "rose": "Au-delà de 46 000 €"
+        },
+        "note": "libellés hors IdF pour 2 personnes ; la maquette affiche « environ »",
+        "intro": "Vos aides MaPrimeRénov' dépendent de vos revenus : une tranche suffit, rien n'est transmis"
+      },
+      "A10": {
+        "titre": "Année de construction de la maison",
+        "options": {
+          "<1997": "Avant 1997",
+          "1997-2010": "Entre 1997 et 2010",
+          ">2010": "Après 2010",
+          "en_construction": "En construction"
+        }
+      }
     }
   },
   "resultat": {
     "titre": "Votre estimation",
     "comprendre": "Comprendre mon résultat",
-    "taux": { "libelle": "Hausse annuelle du prix de l'électricité", "source": "moyenne 2016-2025, tarifs réglementés", "unite": "%" },
-    "horizons": { "libelle": "Vos économies cumulées sur", "unite": "ans" },
-    "hero": { "libelle": "Vos économies cumulées sur {n} ans" },
-    "tuiles": { "sans": "Sans solaire", "avec": "Avec solaire", "libelle": "Facture annuelle estimée dans {n} ans" },
-    "tuiles_pac": { "sans": "Chauffage actuel", "avec": "Avec pompe à chaleur", "libelle": "Dépense de chauffage estimée dans {n} ans" },
-    "courbe": { "titre": "L'effet ciseaux", "serie_sans": "Facture sans solaire", "serie_avec": "Facture avec solaire", "aire": "vos économies", "phrase": "Chaque point de hausse supplémentaire, c'est +{delta} € d'économies sur {n} ans." },
-    "configurateur": { "titre": "Mon installation", "solaire": { "libelle": "Centrale solaire", "options": { "3": "3 kWc", "6": "6 kWc", "9": "9 kWc" } }, "stockage": { "libelle": "Stockage", "options": { "aucun": "Aucun", "virtuel": "Virtuel (15 €/mois)", "batterie": "Batterie (sur devis)" } }, "couplage": { "libelle": "Couplage pompe à chaleur", "options": { "non": "Non", "oui": "Oui" } }, "ajouter_solaire": { "libelle": "Ajouter du solaire", "options": { "non": "Non", "oui": "Oui" } } },
-    "recommandation": { "titre": "Pack conseillé", "prix": "à partir de {prix} €", "aides": "Aides estimées", "reste": "Reste à charge", "retour": "Rentabilisé en {n} ans", "pac_prix": "Fourchette de prix", "pac_aides": "MaPrimeRénov' + CEE", "aucune_avance": "aucune avance de frais" },
-    "hypotheses": { "titre": "Nos hypothèses", "disclaimer": "Ordre de grandeur, ne constitue pas un devis." },
-    "cta_principal": "Je planifie ma visite technique gratuite",
+    "taux": {
+      "libelle": "Hausse annuelle du prix de l'électricité",
+      "source": "moyenne 2016-2025, tarifs réglementés",
+      "unite": "%"
+    },
+    "horizons": {
+      "libelle": "Vos économies cumulées sur",
+      "unite": "ans"
+    },
+    "hero": {
+      "libelle": "Vos économies cumulées sur {n} ans"
+    },
+    "tuiles": {
+      "sans": "Sans solaire",
+      "avec": "Avec solaire",
+      "libelle": "Facture annuelle estimée dans {n} ans"
+    },
+    "tuiles_pac": {
+      "sans": "Chauffage actuel",
+      "avec": "Avec pompe à chaleur",
+      "libelle": "Dépense de chauffage estimée dans {n} ans"
+    },
+    "courbe": {
+      "titre": "L'effet ciseaux",
+      "serie_sans": "Facture sans solaire",
+      "serie_avec": "Facture avec solaire",
+      "aire": "vos économies",
+      "phrase": "Chaque point de hausse supplémentaire, c'est +{delta} € d'économies sur {n} ans."
+    },
+    "configurateur": {
+      "titre": "Mon installation",
+      "solaire": {
+        "libelle": "Centrale solaire",
+        "options": {
+          "3": "3 kWc",
+          "6": "6 kWc",
+          "9": "9 kWc"
+        }
+      },
+      "stockage": {
+        "libelle": "Stockage",
+        "options": {
+          "aucun": "Aucun",
+          "virtuel": "Virtuel (15 €/mois)",
+          "batterie": "Batterie (sur devis)"
+        }
+      },
+      "couplage": {
+        "libelle": "Couplage pompe à chaleur",
+        "options": {
+          "non": "Non",
+          "oui": "Oui"
+        }
+      },
+      "ajouter_solaire": {
+        "libelle": "Ajouter du solaire",
+        "options": {
+          "non": "Non",
+          "oui": "Oui"
+        }
+      }
+    },
+    "recommandation": {
+      "titre": "Pack le plus souvent proposé",
+      "prix": "à partir de {prix} € TTC",
+      "aides": "Aides estimées",
+      "reste": "Reste à charge",
+      "retour": "Rentabilisé en {n} ans",
+      "pac_prix": "Fourchette de prix",
+      "pac_aides": "MaPrimeRénov' + CEE",
+      "aucune_avance": "aucune avance de frais",
+      "intro": "Pack le plus souvent proposé pour un logement comme le vôtre",
+      "prix_note": "prix public homeserve.fr"
+    },
+    "hypotheses": {
+      "titre": "Nos hypothèses",
+      "disclaimer": "Ordre de grandeur, ne constitue pas un devis."
+    },
+    "cta_principal": "Je réserve mon étude gratuite",
     "cta_rappel": "Je préfère être rappelé",
     "cta_appel": "Appeler mon agence",
-    "widget_sticky": "Planifier ma visite",
-    "hors_zone": { "bandeau": "Nous n'intervenons pas encore dans votre département.", "cta": "Être informé de l'ouverture" },
+    "widget_sticky": "Réserver mon étude",
+    "hors_zone": {
+      "bandeau": "Nous n'intervenons pas encore dans votre département.",
+      "cta": "Être informé de l'ouverture"
+    },
     "onboarding": [
-      { "titre": "Pourquoi le taux de hausse compte", "texte": "Sans installation, votre facture augmente chaque année. Avec, une part de votre électricité ne dépend plus du prix du marché : l'écart se creuse avec le temps." },
-      { "titre": "Jouez avec votre installation", "texte": "Ajustez la puissance, le stockage et le couplage avec une pompe à chaleur : le cumul et la courbe se recalculent immédiatement." },
-      { "titre": "Vos économies cumulées", "texte": "Le chiffre principal additionne vos économies sur l'horizon choisi, à partir de la hausse que vous avez réglée." }
+      {
+        "titre": "Pourquoi le taux de hausse compte",
+        "texte": "Sans installation, votre facture augmente chaque année. Avec, une part de votre électricité ne dépend plus du prix du marché : l'écart se creuse avec le temps."
+      },
+      {
+        "titre": "Jouez avec votre installation",
+        "texte": "Ajustez la puissance, le stockage et le couplage avec une pompe à chaleur : le cumul et la courbe se recalculent immédiatement."
+      },
+      {
+        "titre": "Vos économies cumulées",
+        "texte": "Le chiffre principal additionne vos économies sur l'horizon choisi, à partir de la hausse que vous avez réglée."
+      }
     ]
   },
   "mur": {
     "titre": "Vous n'êtes plus qu'à un clic de votre étude solaire !",
     "texte": "Un expert HomeServe Rénov', société HomeServe, vous contactera sous 48 heures ouvrées afin de vous présenter en détail les résultats de votre simulation solaire et vous recommander la solution la plus adaptée à votre situation.",
-    "champs": ["Nom", "Prénom", "Email", "Téléphone"],
+    "champs": [
+      "Nom",
+      "Prénom",
+      "Email",
+      "Téléphone"
+    ],
     "cta": "Valider ma demande",
-    "merci": { "titre": "Merci, un expert vous rappelle", "texte": "Sous 48 heures ouvrées." },
+    "merci": {
+      "titre": "Merci, un expert vous rappelle",
+      "texte": "Sous 48 heures ouvrées."
+    },
     "etiquette": "AVANT — tunnel actuel (variante mur, A/B)"
   },
   "rdv": {
-    "stepper": ["Votre situation", "Votre logement", "Votre rendez-vous"],
-    "panneau_reponses": { "titre": "Vos réponses", "badge_herite": "repris de votre estimation", "modifier": "Modifier" },
-    "coordonnees": { "cta_code": "Recevoir mon code", "mention": "Prototype : aucune donnée n'est transmise." },
-    "otp": { "titre": "Saisissez le code reçu par SMS", "demo": "Mode démo — votre code : {code}", "renvoyer": "Renvoyer le code" },
-    "calendrier": { "titre": "Choisissez votre créneau", "agence": "Agence {nom} — à {km} km", "rge": "RGE", "periodes": { "matin": "Matin", "apres_midi": "Après-midi" }, "aucun": "Aucun créneau ne me convient → être rappelé", "cta": "Je confirme ce créneau" },
-    "confirmation": { "titre": "Votre visite est confirmée", "agenda": "Ajouter à mon agenda", "preparer": { "titre": "À préparer", "items": ["Vos dernières factures d'énergie", "Votre taxe foncière", "Une photo du compteur ou du toit"] }, "deroule": { "titre": "Comment se déroule la visite", "etapes": ["Le technicien vous appelle 30 min avant", "Visite du logement et de la toiture (~1 h)", "Relevés et photos", "Vous recevez une étude chiffrée sous quelques jours"] }, "gerer": "Gérer mon rendez-vous" },
-    "gerer": { "titre": "Gérer mon rendez-vous", "modifier": "Modifier", "annuler": "Annuler", "badge": "non fonctionnel dans le prototype" },
-    "rappel": { "titre": "Un conseiller vous rappelle", "texte": "À votre demande, sous 5 jours ouvrés. Aucun démarchage : vous gardez la main.", "creneau": { "libelle": "Créneau préféré", "options": { "matin": "Matin", "apres_midi": "Après-midi" } }, "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande.", "cta": "Demander un rappel" },
+    "stepper": [
+      "Votre situation",
+      "Votre logement",
+      "Votre rendez-vous"
+    ],
+    "panneau_reponses": {
+      "titre": "Vos réponses",
+      "badge_herite": "repris de votre estimation",
+      "modifier": "Modifier"
+    },
+    "coordonnees": {
+      "cta_code": "Recevoir mon code",
+      "mention": "Prototype : aucune donnée n'est transmise."
+    },
+    "otp": {
+      "titre": "Saisissez le code reçu par SMS",
+      "demo": "Mode démo — votre code : {code}",
+      "renvoyer": "Renvoyer le code"
+    },
+    "calendrier": {
+      "titre": "Choisissez votre créneau",
+      "agence": "Agence {nom} — à {km} km",
+      "rge": "RGE",
+      "periodes": {
+        "matin": "Matin",
+        "apres_midi": "Après-midi"
+      },
+      "aucun": "Aucun créneau ne me convient → être rappelé",
+      "cta": "Je confirme ce créneau"
+    },
+    "confirmation": {
+      "titre": "Votre étude gratuite est confirmée",
+      "agenda": "Ajouter à mon agenda",
+      "preparer": {
+        "titre": "À préparer",
+        "items": [
+          "Vos dernières factures d'énergie",
+          "Votre taxe foncière",
+          "Une photo du compteur ou du toit"
+        ]
+      },
+      "deroule": {
+        "titre": "Comment se déroule l'étude",
+        "etapes": [
+          "Le technicien vous appelle 30 min avant",
+          "Visite du logement et de la toiture (~1 h)",
+          "Relevés et photos",
+          "Vous recevez une étude chiffrée sous quelques jours"
+        ]
+      },
+      "gerer": "Gérer mon rendez-vous"
+    },
+    "gerer": {
+      "titre": "Gérer mon rendez-vous",
+      "modifier": "Modifier",
+      "annuler": "Annuler",
+      "badge": "non fonctionnel dans le prototype"
+    },
+    "rappel": {
+      "titre": "Un conseiller vous rappelle",
+      "texte": "À votre demande, sous 5 jours ouvrés. Aucun démarchage : vous gardez la main.",
+      "creneau": {
+        "libelle": "Créneau préféré",
+        "options": {
+          "matin": "Matin",
+          "apres_midi": "Après-midi"
+        }
+      },
+      "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande.",
+      "cta": "Demander un rappel"
+    },
     "transmettre": "Transmettre à un proche propriétaire",
-    "etre_informe": "Être informé de l'ouverture"
+    "etre_informe": "Être informé de l'ouverture",
+    "deroule_titre": "Comment se déroule l'étude"
   },
-  "debug": { "titre": "Événements", "vide": "Aucun événement pour l'instant", "variant": "Variante" }
+  "debug": {
+    "titre": "Événements",
+    "vide": "Aucun événement pour l'instant",
+    "variant": "Variante"
+  }
 }

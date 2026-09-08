@@ -26,10 +26,14 @@ export type CleReponse =
   | "cp"
   | "dept"
   | "type_logement"
+  | "occupation"
+  | "personnes"
   | "surface_sol"
-  | "facture_mensuelle"
   | "chauffage"
+  | "energie_chauffage"
   | "equipements"
+  | "chauffe_eau"
+  | "facture_mensuelle"
   | "revenus"
   | "idf"
   | "annee_construction"
@@ -55,6 +59,8 @@ export type ProjetState = {
   version: 1;
   variant: Variant;
   debug: boolean;
+  /** Drapeau de démonstration (D41) : lu depuis `?demo=1`. */
+  demo: boolean;
   projet?: Projet;
   reponses: Partial<Record<CleReponse, ValeurReponse>>;
   resultats?: Resultats;
@@ -66,6 +72,7 @@ export const ETAT_VIDE: ProjetState = Object.freeze({
   version: 1,
   variant: "defaut",
   debug: false,
+  demo: false,
   reponses: {},
   events: [],
 }) as ProjetState;
@@ -185,6 +192,12 @@ export function setVariant(variant: Variant) {
 export function setDebug(debug: boolean) {
   if (etat.debug === debug) return;
   appliquer({ ...etat, debug });
+}
+
+/** Drapeau `?demo=1` : ouvre les affichages de rentabilité (D41). */
+export function setDemo(demo: boolean) {
+  if (etat.demo === demo) return;
+  appliquer({ ...etat, demo });
 }
 
 export function reset() {

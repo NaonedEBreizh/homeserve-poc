@@ -1,17 +1,50 @@
 @import "tailwindcss";
 
-/* Tokens HomeServe — noms identiques à ceux observés sur homeserve.fr
-   (voir docs/architecture.md §2) : un composant du POC se colle dans leur
-   monorepo sans renommage. Ne pas en inventer d'autres. */
+/* Tokens HomeServe — noms repris de docs/design/README.md (handoff Claude
+   Design) et de docs/architecture.md §2 : un composant du POC se colle dans
+   le monorepo HomeServe sans renommage. Ne pas inventer d'autre couleur :
+   tout ce qui s'affiche passe par ces tokens. */
 @theme {
   --color-corail-600: #e22c22;
+  --color-corail-500: #f0463c;
+  --color-corail-100: #fdeceb;
+
+  --color-canard-700: #1e6b6e;
   --color-canard-500: #258386;
+  --color-canard-300: #7fbdbf;
+  --color-canard-100: #e9f3f3;
+
   --color-vert-600: #255a2e;
+  --color-vert-400: #4f9a5c;
+  --color-vert-100: #e6f2e8;
+
+  --color-orange-600: #c24e00;
+  --color-orange-500: #fb6500;
+  --color-orange-100: #fff0e3;
+
+  --color-neutre-700: #1e1e1e;
+  --color-neutre-500: #5c5c5c;
+  --color-neutre-400: #8a8a8a;
+  --color-neutre-300: #c9c9c9;
+  --color-neutre-200: #e3e3e3;
+  --color-neutre-100: #f4f4f4;
+
+  --color-erreur-700: #b3231b;
+
   --font-sans: var(--font-nunito), ui-sans-serif, system-ui;
+
   --radius-card: 1rem;
+  --radius-tuile: 1.25rem;
 }
 
 :root {
-  /* Pas de palette sombre définie côté marque : on s'en tient au clair. */
+  /* Pas de palette sombre côté marque : on s'en tient au clair. */
   color-scheme: light;
+}
+
+/* Focus visible unique, repris du handoff : bordure canard + halo. */
+:where(a, button, input, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-canard-300);
+  outline-offset: 1px;
+  border-radius: 4px;
 }
