@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
+
+import { EnteteApp } from "@/components/EnteteApp";
+import { contenu } from "@/lib/content";
 
 import "./globals.css";
 
@@ -28,8 +31,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           role="note"
           className="bg-canard-500 px-4 py-2 text-center text-sm font-medium text-white"
         >
-          Prototype non officiel — aucune donnée transmise
+          {contenu.global.bandeau_prototype}
         </p>
+
+        {/* `variant` et `debug` sont lus côté client : d'où le Suspense. */}
+        <Suspense fallback={null}>
+          <EnteteApp />
+        </Suspense>
+
         {children}
       </body>
     </html>
