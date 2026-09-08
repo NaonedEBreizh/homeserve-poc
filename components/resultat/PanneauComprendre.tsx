@@ -42,17 +42,18 @@ export function PanneauComprendre({ onglets }: { onglets: OngletComprendre[] }) 
         ?
       </DialogTrigger>
 
-      <DialogContent className="flex max-h-[90dvh] max-w-md flex-col gap-3 overflow-y-auto">
-        <div className="flex items-start justify-between gap-4">
-          <DialogTitle className="text-2xl font-extrabold text-neutre-700">
+      <DialogContent pleinEcran>
+        {/* En-tête collant : le bouton fermer reste atteignable au défilement. */}
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-neutre-200 bg-white px-5 py-4">
+          <DialogTitle className="text-xl font-extrabold text-neutre-700">
             {panneau.titre}
           </DialogTitle>
-          <DialogClose className="min-h-11 text-sm font-bold text-canard-500">
+          <DialogClose className="flex min-h-11 items-center rounded-full border border-neutre-200 px-4 text-sm font-bold text-canard-500">
             {panneau.fermer}
           </DialogClose>
         </div>
 
-        <ul className="flex flex-col divide-y divide-neutre-200">
+        <ul className="flex flex-1 flex-col divide-y divide-neutre-200 overflow-y-auto px-5 pb-8">
           {onglets.map((onglet) => {
             const actif = ouvert === onglet.cle;
 

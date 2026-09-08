@@ -15,7 +15,8 @@ function DialogOverlay({
 }: ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
     <DialogPrimitive.Overlay
-      className={`fixed inset-0 bg-slate-950/50 ${className}`}
+      // z-50 : le voile doit passer au-dessus des barres collantes des écrans.
+      className={`fixed inset-0 z-50 bg-neutre-700/45 ${className}`}
       {...props}
     />
   );
@@ -24,15 +25,20 @@ function DialogOverlay({
 function DialogContent({
   className = "",
   children,
+  pleinEcran = false,
   ...props
-}: ComponentProps<typeof DialogPrimitive.Content>) {
+}: ComponentProps<typeof DialogPrimitive.Content> & {
+  /** Feuille plein écran sur mobile, carte centrée à partir de `sm`. */
+  pleinEcran?: boolean;
+}) {
+  const position = pleinEcran
+    ? "fixed inset-0 z-50 flex w-full flex-col bg-white sm:inset-auto sm:left-1/2 sm:top-1/2 sm:max-h-[90dvh] sm:max-w-md sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-tuile sm:shadow-lg"
+    : "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-tuile bg-white p-6 shadow-lg";
+
   return (
     <DialogPrimitive.Portal>
       <DialogOverlay />
-      <DialogPrimitive.Content
-        className={`fixed left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg dark:bg-slate-900 ${className}`}
-        {...props}
-      >
+      <DialogPrimitive.Content className={`${position} ${className}`} {...props}>
         {children}
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>

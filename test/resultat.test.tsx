@@ -324,4 +324,68 @@ describe("panneau « Comprendre mes résultats » (D37)", () => {
     expect(screen.getByText(blocs.stockage.texte)).toBeDefined();
     expect(screen.queryByText(blocs.taux.texte)).toBeNull();
   });
+
+  it("rend pour chaque onglet un texte non vide venant de fr-fr.json", () => {
+    repondreSimulateur();
+    setDemo(true); // avec le drapeau, les huit onglets sont présents
+    render(<Resultat />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: contenu.resultat.comprendre }),
+    );
+
+    const blocs = contenu.resultat.comprendre_panneau.blocs;
+    for (const [cle, bloc] of Object.entries(blocs)) {
+      const onglet = screen.getByRole("button", { name: bloc.titre });
+      // Cliquer un onglet déjà ouvert le refermerait.
+      if (onglet.getAttribute("aria-expanded") !== "true") {
+        fireEvent.click(onglet);
+      }
+
+      expect(bloc.texte.length, `texte de ${cle}`).toBeGreaterThan(40);
+      expect(screen.getByText(bloc.texte), `rendu de ${cle}`).toBeDefined();
+      // Une seule ligne ouverte à la fois.
+      expect(
+        screen.getAllByRole("button", { expanded: true }),
+      ).toHaveLength(1);
+    }
+  });
+
+  it("affiche une vignette du bloc et l'impact chiffré quand il existe", () => {
+    repondreSimulateur();
+    render(<Resultat />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: contenu.resultat.comprendre }),
+    );
+
+    const blocs = contenu.resultat.comprendre_panneau.blocs;
+    fireEvent.click(screen.getByRole("button", { name: blocs.stockage.titre }));
+
+    // Vignette : le libellé du bloc réel, rendu en mode aperçu.
+    expect(
+      screen.getAllByText(contenu.resultat.configurateur.stockage.libelle).length,
+    ).toBeGreaterThan(0);
+    // Impact chiffré : « Batterie (sur devis) : +N € sur 25 ans ».
+    // Une ligne par autre option de stockage.
+    const impacts = screen.getAllByText((texte) =>
+      / : [+−].+ € sur 25 ans$/.test(texte),
+    );
+    expect(impacts.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("garde le bouton fermer accessible", () => {
+    repondreSimulateur();
+    render(<Resultat />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: contenu.resultat.comprendre }),
+    );
+
+    expect(
+      screen.getByRole("button", {
+        name: contenu.resultat.comprendre_panneau.fermer,
+      }),
+    ).toBeDefined();
+  });
 });
