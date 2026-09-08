@@ -1,0 +1,12 @@
+# gitleaks configuration — extends the bundled default ruleset.
+title = "homeserve-poc"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Paths that never contain real credentials"
+paths = [
+  '''pnpm-lock\.yaml$''',
+  '''\.env\.example$''',
+]

@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+#
+# Block commits that contain secrets.
+#
+# Secret scanning is a security gate: if gitleaks cannot be found we fail the
+# commit rather than skipping the check silently. Set GITLEAKS_SKIP=1 for a
+# deliberate, one-off bypass.
+
+if [ "${GITLEAKS_SKIP:-0}" = "1" ]; then
+  echo "pre-commit: GITLEAKS_SKIP=1 — skipping secret scan."
+  exit 0
+fi
+
+# Resolve the binary: PATH first, then a Go install, then Docker.
+if command -v gitleaks >/dev/null 2>&1; then
+  GITLEAKS="gitleaks"
+elif [ -x "${GOPATH:-$HOME/go}/bin/gitleaks" ]; then
+  GITLEAKS="${GOPATH:-$HOME/go}/bin/gitleaks"
+elif command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+  GITLEAKS="docker run --rm -v $(pwd):/repo -w /repo zricethezav/gitleaks:latest"
+else
+  echo "pre-commit: gitleaks not found — commit blocked." >&2
+  echo "" >&2
+  echo "Install it with one of:" >&2
+  echo "  brew install gitleaks" >&2
+  echo "  go install github.com/zricethezav/gitleaks/v8@latest" >&2
+  echo "  https://github.com/gitleaks/gitleaks/releases" >&2
+  echo "" >&2
+  echo "To bypass deliberately: GITLEAKS_SKIP=1 git commit ..." >&2
+  exit 1
+fi
+
+# `git --staged` is the gitleaks 8.19+ syntax; older builds use `protect`.
+if $GITLEAKS git --help >/dev/null 2>&1; then
+  SCAN="git --staged"
+else
+  SCAN="protect --staged"
+fi
+
+echo "pre-commit: scanning staged changes for secrets..."
+
+if ! $GITLEAKS $SCAN --redact --verbose; then
+  echo "" >&2
+  echo "pre-commit: secrets detected in staged changes — commit blocked." >&2
+  echo "Remove them, or annotate a false positive with a 'gitleaks:allow' comment." >&2
+  exit 1
+fi
+
+echo "pre-commit: no secrets found."
