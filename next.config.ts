@@ -78,7 +78,12 @@ export const staticSecurityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Vercel fait son propre empaquetage (fonctions serverless) et son étape
+  // `onBuildComplete` échoue sur `.next/next-server.js.nft.json` quand le
+  // build a produit une sortie standalone. On désactive donc `standalone` sur
+  // Vercel uniquement ; il reste actif partout ailleurs, où il est requis :
+  // `docker build` (image GKE, voir Dockerfile) et `pnpm start` en local.
+  output: process.env.VERCEL ? undefined : "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
   async headers() {
