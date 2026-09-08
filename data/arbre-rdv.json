@@ -9,110 +9,694 @@
       "pe": "règle de non-rentabilité : ajoute `regle` à nonEligible sans arrêter le parcours ; l'écran B18 oriente",
       "condition": "le nœud n'est posé que si le projet courant est dans la liste"
     },
-    "seuils_affiches": ["Facture d'électricité inférieure à 60 €/mois", "Surface au sol inférieure à 70 m²", "Résidence secondaire", "Maison en construction"]
+    "seuils_affiches": [
+      "Facture d'électricité inférieure à 60 €/mois",
+      "Surface au sol inférieure à 70 m²",
+      "Résidence secondaire",
+      "Maison en construction"
+    ]
   },
   "start": "B0",
   "noeuds": {
-    "B0": { "type": "choix", "question": "Votre projet concerne…", "options": [
-      { "valeur": "maison", "libelle": "Une maison", "cible": "B1" },
-      { "valeur": "appartement", "libelle": "Un appartement", "cible": "@S2" },
-      { "valeur": "pro", "libelle": "Un local professionnel", "cible": "@S1" } ] },
-    "B1": { "type": "choix", "question": "Vous êtes…", "options": [
-      { "valeur": "proprietaire", "libelle": "Propriétaire", "cible": "B2" },
-      { "valeur": "locataire", "libelle": "Locataire", "cible": "@S3" } ] },
-    "B2": { "type": "choix", "question": "Avez-vous déjà des panneaux solaires ?", "options": [
-      { "valeur": "non", "libelle": "Non", "cible": "B3" },
-      { "valeur": "oui", "libelle": "Oui", "cible": "B2a" } ] },
-    "B2a": { "type": "choix", "question": "Ont-ils été installés par HomeServe ?", "options": [
-      { "valeur": "oui", "libelle": "Oui", "cible": "B2b" },
-      { "valeur": "non", "libelle": "Non, par un autre installateur", "cible": "@S4c" } ] },
-    "B2b": { "type": "choix", "question": "Quel est votre besoin ?", "options": [
-      { "valeur": "depannage", "libelle": "Un dépannage", "cible": "@S4a" },
-      { "valeur": "entretien", "libelle": "Un entretien", "cible": "@S4b" },
-      { "valeur": "nouveau_projet", "libelle": "Un nouveau projet", "cible": "B3" } ] },
-    "B3": { "type": "choix", "question": "Votre projet", "prefill": "projet", "options": [
-      { "valeur": "solaire", "libelle": "Panneaux solaires", "cible": "B5" },
-      { "valeur": "pac", "libelle": "Pompe à chaleur", "cible": "B5" },
-      { "valeur": "les_deux", "libelle": "Les deux", "cible": "B5" } ] },
-    "B5": { "type": "choix", "question": "Votre facture d'électricité mensuelle", "prefill": "facture_mensuelle",
-      "pe": { "op": "eq", "valeur": "<60", "regle": "facture_faible" }, "next": "B6", "options": [
-      { "valeur": "<60", "libelle": "Moins de 60 €" }, { "valeur": "60-100", "libelle": "60 à 100 €" }, { "valeur": "101-135", "libelle": "101 à 135 €" }, { "valeur": "136-175", "libelle": "136 à 175 €" }, { "valeur": ">175", "libelle": "Plus de 175 €" } ] },
-    "B6": { "type": "choix", "question": "Ce logement est…", "pe": { "op": "eq", "valeur": "secondaire", "regle": "residence_secondaire" }, "next": "B7", "options": [
-      { "valeur": "principale", "libelle": "Votre résidence principale" },
-      { "valeur": "secondaire", "libelle": "Une résidence secondaire" } ] },
-    "B7": { "type": "choix", "question": "Surface au sol de la maison", "prefill": "surface_sol",
-      "pe": { "op": "eq", "valeur": "<70", "regle": "surface_faible", "condition": { "projet": ["solaire", "les_deux"] } }, "next": "B9", "options": [
-      { "valeur": "<70", "libelle": "Moins de 70 m²" }, { "valeur": "70-99", "libelle": "70 à 99 m²" }, { "valeur": "100-135", "libelle": "100 à 135 m²" }, { "valeur": "136-175", "libelle": "136 à 175 m²" }, { "valeur": ">175", "libelle": "Plus de 175 m²" } ] },
-    "B9": { "type": "choix", "question": "Année de construction", "prefill": "annee_construction",
-      "pe": { "op": "eq", "valeur": "en_construction", "regle": "en_construction" }, "next": "B10", "options": [
-      { "valeur": "<1997", "libelle": "Avant 1997" }, { "valeur": "1997-2010", "libelle": "Entre 1997 et 2010" }, { "valeur": ">2010", "libelle": "Après 2010" }, { "valeur": "en_construction", "libelle": "En construction" } ] },
-    "B10": { "type": "choix", "question": "État de votre toiture", "condition": { "projet": ["solaire", "les_deux"] }, "aide": "Une toiture d'origine sur une maison d'avant 1997 peut contenir de l'amiante : nous vérifions.", "options": [
-      { "valeur": "renovee", "libelle": "Rénovée", "cible": "B12", "cible_si": { "annee_construction": "<1997", "cible": "B11" } },
-      { "valeur": "origine", "libelle": "D'origine", "cible": "B11" },
-      { "valeur": "nsp", "libelle": "Je ne sais pas", "cible": "B11" } ], "next_sinon": "B10p" },
-    "B11": { "type": "choix", "question": "Présence d'amiante connue ?", "condition": { "projet": ["solaire", "les_deux"] }, "options": [
-      { "valeur": "non", "libelle": "Non", "cible": "B12" },
-      { "valeur": "oui", "libelle": "Oui", "cible": "B13" },
-      { "valeur": "nsp", "libelle": "Je ne sais pas", "cible": "B12", "note_technicien": "vérifier amiante" } ] },
-    "B12": { "type": "choix", "question": "Revêtement de la toiture", "condition": { "projet": ["solaire", "les_deux"] }, "options": [
-      { "valeur": "tuile", "libelle": "Tuiles", "cible": "B10p" },
-      { "valeur": "ardoise", "libelle": "Ardoises", "cible": "B10p" },
-      { "valeur": "bac_acier", "libelle": "Bac acier", "cible": "B10p" },
-      { "valeur": "autre", "libelle": "Autre matériau", "cible": "B13" } ] },
-    "B13": { "type": "choix", "question": "Une alternative au toit ?", "condition": { "projet": ["solaire", "les_deux"] }, "options": [
-      { "valeur": "toit_terrasse", "libelle": "Un toit-terrasse", "cible": "B10p" },
-      { "valeur": "jardin", "libelle": "Une installation au sol dans le jardin", "cible": "B10p" },
-      { "valeur": "aucune", "libelle": "Aucune", "cible": "@S5" } ] },
-    "B10p": { "type": "choix", "question": "Vos émetteurs de chauffage", "condition": { "projet": ["pac", "les_deux"] }, "prefill_si": { "chauffage": { "radiateurs_electriques": "electrique" } }, "next_sinon": "B14", "options": [
-      { "valeur": "radiateurs_eau", "libelle": "Radiateurs à eau", "cible": "B11p" },
-      { "valeur": "plancher_chauffant", "libelle": "Plancher chauffant", "cible": "B11p" },
-      { "valeur": "electrique", "libelle": "Radiateurs électriques", "cible": "B11p", "note_technicien": "réseau hydraulique à créer ou PAC air/air" } ] },
-    "B11p": { "type": "choix", "question": "Un espace extérieur pour l'unité ?", "condition": { "projet": ["pac", "les_deux"] }, "options": [
-      { "valeur": "oui", "libelle": "Oui", "cible": "B14" },
-      { "valeur": "nsp", "libelle": "Je ne sais pas", "cible": "B14" },
-      { "valeur": "non", "libelle": "Non", "cible": "B14", "note_technicien": "emplacement unité extérieure à étudier" } ] },
-    "B14": { "type": "form", "question": "L'adresse du projet", "champs": [
-      { "id": "adresse", "libelle": "Adresse", "type": "text", "requis": true },
-      { "id": "cp", "libelle": "Code postal", "type": "cp", "requis": true, "prefill": "cp" },
-      { "id": "ville", "libelle": "Ville", "type": "text", "requis": true } ],
-      "guard": { "type": "zone", "hors_zone_prefixes": ["20", "75", "96", "97", "98", "99"], "exception_test": "99999", "rayon_km": 60, "cible": "@S6" }, "next": "B15" },
-    "B15": { "type": "form", "question": "Vos coordonnées", "champs": [
-      { "id": "prenom", "libelle": "Prénom", "type": "text", "requis": true },
-      { "id": "nom", "libelle": "Nom", "type": "text", "requis": true } ], "next": "B16" },
-    "B16": { "type": "form", "question": "Pour confirmer votre rendez-vous", "champs": [
-      { "id": "email", "libelle": "Email", "type": "email", "requis": true },
-      { "id": "telephone", "libelle": "Téléphone mobile", "type": "tel", "requis": true, "aide": "Uniquement pour le SMS de confirmation" },
-      { "id": "ne_pas_appeler", "libelle": "Je ne souhaite pas être appelé, uniquement le SMS de confirmation", "type": "checkbox", "requis": false } ],
-      "mention": "Prototype : aucune donnée n'est transmise ni conservée au-delà de cette session.", "next": "B17" },
-    "B17": { "type": "otp", "question": "Saisissez le code reçu par SMS", "mock": true, "code_demo": "4821", "next": "B17b" },
-    "B17b": { "type": "regle", "regle": "prospect_existant", "mock": true, "cas": [
-      { "test": "rdv_localstorage_meme_tel_ou_email", "cible": "@DOUBLON" },
-      { "test": "telephone_egal", "valeur": "0600000001", "cible": "B17c" } ], "sinon": "B18" },
-    "B17c": { "type": "info", "titre": "Un conseiller vous a déjà contacté", "texte": "Votre demande est connue de notre équipe. Vous pouvez tout de même choisir votre créneau : votre conseiller en sera informé et n'aura plus besoin de vous rappeler.", "badge": "règle simulée (D29)", "next": "B18" },
-    "B18": { "type": "regle", "regle": "eligibilite", "si_non_eligible": "@O1", "sinon": "B19" },
-    "B19": { "type": "info", "titre": "Votre rendez-vous", "texte": "Visite technique gratuite à votre domicile, environ 1 heure, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.", "next": "B19b" },
-    "B19b": { "type": "regle", "regle": "disponibilite_agence", "mock": true, "parametres": { "fenetre_jours": 10, "seuil_creneaux_libres": 4 }, "si_surbookee": "@SURBOOKEE", "sinon": "B20" },
-    "B20": { "type": "calendrier", "parametres": { "horizon_jours": 14, "delai_min_jours_ouvres": 1, "duree_visite_min": 60, "periodes": ["matin", "apres_midi"] }, "aucun_creneau": "@R1", "next": "B21" },
-    "B21": { "type": "info", "modale": true, "titre": "Ce rendez-vous mobilise un technicien", "texte": "Environ 1 heure sur place. Vous pourrez le modifier ou l'annuler par email ou SMS.", "bouton": "Je confirme", "next": "B22" },
-    "B22": { "type": "info", "ecran": "confirmation", "next": null }
+    "B0": {
+      "type": "choix",
+      "question": "Votre projet concerne…",
+      "options": [
+        {
+          "valeur": "maison",
+          "libelle": "Une maison",
+          "cible": "B1"
+        },
+        {
+          "valeur": "appartement",
+          "libelle": "Un appartement",
+          "cible": "@S2"
+        },
+        {
+          "valeur": "pro",
+          "libelle": "Un local professionnel",
+          "cible": "@S1"
+        }
+      ]
+    },
+    "B1": {
+      "type": "choix",
+      "question": "Vous êtes…",
+      "options": [
+        {
+          "valeur": "proprietaire",
+          "libelle": "Propriétaire",
+          "cible": "B2"
+        },
+        {
+          "valeur": "locataire",
+          "libelle": "Locataire",
+          "cible": "@S3"
+        }
+      ]
+    },
+    "B2": {
+      "type": "choix",
+      "question": "Avez-vous déjà des panneaux solaires ?",
+      "options": [
+        {
+          "valeur": "non",
+          "libelle": "Non",
+          "cible": "B3"
+        },
+        {
+          "valeur": "oui",
+          "libelle": "Oui",
+          "cible": "B2a"
+        }
+      ]
+    },
+    "B2a": {
+      "type": "choix",
+      "question": "Ont-ils été installés par HomeServe ?",
+      "options": [
+        {
+          "valeur": "oui",
+          "libelle": "Oui",
+          "cible": "B2b"
+        },
+        {
+          "valeur": "non",
+          "libelle": "Non, par un autre installateur",
+          "cible": "@S4c"
+        }
+      ]
+    },
+    "B2b": {
+      "type": "choix",
+      "question": "Quel est votre besoin ?",
+      "options": [
+        {
+          "valeur": "depannage",
+          "libelle": "Un dépannage",
+          "cible": "@S4a"
+        },
+        {
+          "valeur": "entretien",
+          "libelle": "Un entretien",
+          "cible": "@S4b"
+        },
+        {
+          "valeur": "nouveau_projet",
+          "libelle": "Un nouveau projet",
+          "cible": "B3"
+        }
+      ]
+    },
+    "B3": {
+      "type": "choix",
+      "question": "Votre projet",
+      "prefill": "projet",
+      "options": [
+        {
+          "valeur": "solaire",
+          "libelle": "Panneaux solaires",
+          "cible": "B5"
+        },
+        {
+          "valeur": "pac",
+          "libelle": "Pompe à chaleur",
+          "cible": "B5"
+        },
+        {
+          "valeur": "les_deux",
+          "libelle": "Les deux",
+          "cible": "B5"
+        }
+      ]
+    },
+    "B5": {
+      "type": "choix",
+      "question": "Votre facture d'électricité mensuelle",
+      "prefill": "facture_mensuelle",
+      "pe": {
+        "op": "eq",
+        "valeur": "<60",
+        "regle": "facture_faible"
+      },
+      "next": "B6",
+      "options": [
+        {
+          "valeur": "<60",
+          "libelle": "Moins de 60 €"
+        },
+        {
+          "valeur": "60-100",
+          "libelle": "60 à 100 €"
+        },
+        {
+          "valeur": "101-135",
+          "libelle": "101 à 135 €"
+        },
+        {
+          "valeur": "136-175",
+          "libelle": "136 à 175 €"
+        },
+        {
+          "valeur": ">175",
+          "libelle": "Plus de 175 €"
+        }
+      ]
+    },
+    "B6": {
+      "type": "choix",
+      "question": "Ce logement est…",
+      "pe": {
+        "op": "eq",
+        "valeur": "secondaire",
+        "regle": "residence_secondaire"
+      },
+      "next": "B7",
+      "options": [
+        {
+          "valeur": "principale",
+          "libelle": "Votre résidence principale"
+        },
+        {
+          "valeur": "secondaire",
+          "libelle": "Une résidence secondaire"
+        }
+      ]
+    },
+    "B7": {
+      "type": "choix",
+      "question": "Surface au sol de la maison",
+      "prefill": "surface_sol",
+      "pe": {
+        "op": "eq",
+        "valeur": "<70",
+        "regle": "surface_faible",
+        "condition": {
+          "projet": [
+            "solaire",
+            "les_deux"
+          ]
+        }
+      },
+      "next": "B9",
+      "options": [
+        {
+          "valeur": "<70",
+          "libelle": "Moins de 70 m²"
+        },
+        {
+          "valeur": "70-99",
+          "libelle": "70 à 99 m²"
+        },
+        {
+          "valeur": "100-135",
+          "libelle": "100 à 135 m²"
+        },
+        {
+          "valeur": "136-175",
+          "libelle": "136 à 175 m²"
+        },
+        {
+          "valeur": ">175",
+          "libelle": "Plus de 175 m²"
+        }
+      ]
+    },
+    "B9": {
+      "type": "choix",
+      "question": "Année de construction",
+      "prefill": "annee_construction",
+      "pe": {
+        "op": "eq",
+        "valeur": "en_construction",
+        "regle": "en_construction"
+      },
+      "next": "B10",
+      "options": [
+        {
+          "valeur": "<1997",
+          "libelle": "Avant 1997"
+        },
+        {
+          "valeur": "1997-2010",
+          "libelle": "Entre 1997 et 2010"
+        },
+        {
+          "valeur": ">2010",
+          "libelle": "Après 2010"
+        },
+        {
+          "valeur": "en_construction",
+          "libelle": "En construction"
+        }
+      ]
+    },
+    "B10": {
+      "type": "choix",
+      "question": "État de votre toiture",
+      "condition": {
+        "projet": [
+          "solaire",
+          "les_deux"
+        ]
+      },
+      "aide": "Une toiture d'origine sur une maison d'avant 1997 peut contenir de l'amiante : nous vérifions.",
+      "options": [
+        {
+          "valeur": "renovee",
+          "libelle": "Rénovée",
+          "cible": "B12",
+          "cible_si": {
+            "annee_construction": "<1997",
+            "cible": "B11"
+          }
+        },
+        {
+          "valeur": "origine",
+          "libelle": "D'origine",
+          "cible": "B11"
+        },
+        {
+          "valeur": "nsp",
+          "libelle": "Je ne sais pas",
+          "cible": "B11"
+        }
+      ],
+      "next_sinon": "B10p"
+    },
+    "B11": {
+      "type": "choix",
+      "question": "Présence d'amiante connue ?",
+      "condition": {
+        "projet": [
+          "solaire",
+          "les_deux"
+        ]
+      },
+      "options": [
+        {
+          "valeur": "non",
+          "libelle": "Non",
+          "cible": "B12"
+        },
+        {
+          "valeur": "oui",
+          "libelle": "Oui",
+          "cible": "@S5"
+        },
+        {
+          "valeur": "nsp",
+          "libelle": "Je ne sais pas",
+          "cible": "B12",
+          "note_technicien": "vérifier amiante"
+        }
+      ]
+    },
+    "B12": {
+      "type": "choix",
+      "question": "Revêtement de la toiture",
+      "condition": {
+        "projet": [
+          "solaire",
+          "les_deux"
+        ]
+      },
+      "options": [
+        {
+          "valeur": "tuile",
+          "libelle": "Tuiles",
+          "cible": "B10p"
+        },
+        {
+          "valeur": "ardoise",
+          "libelle": "Ardoises",
+          "cible": "B10p"
+        },
+        {
+          "valeur": "bac_acier",
+          "libelle": "Bac acier",
+          "cible": "B10p"
+        },
+        {
+          "valeur": "autre",
+          "libelle": "Autre matériau",
+          "cible": "@S5"
+        }
+      ]
+    },
+    "B10p": {
+      "type": "choix",
+      "question": "Vos émetteurs de chauffage",
+      "condition": {
+        "projet": [
+          "pac",
+          "les_deux"
+        ]
+      },
+      "prefill_si": {
+        "chauffage": {
+          "radiateurs_electriques": "electrique"
+        }
+      },
+      "next_sinon": "B14",
+      "options": [
+        {
+          "valeur": "radiateurs_eau",
+          "libelle": "Radiateurs à eau",
+          "cible": "B11p"
+        },
+        {
+          "valeur": "plancher_chauffant",
+          "libelle": "Plancher chauffant",
+          "cible": "B11p"
+        },
+        {
+          "valeur": "electrique",
+          "libelle": "Radiateurs électriques",
+          "cible": "B11p",
+          "note_technicien": "réseau hydraulique à créer ou PAC air/air"
+        }
+      ]
+    },
+    "B11p": {
+      "type": "choix",
+      "question": "Un espace extérieur pour l'unité ?",
+      "condition": {
+        "projet": [
+          "pac",
+          "les_deux"
+        ]
+      },
+      "options": [
+        {
+          "valeur": "oui",
+          "libelle": "Oui",
+          "cible": "B14"
+        },
+        {
+          "valeur": "nsp",
+          "libelle": "Je ne sais pas",
+          "cible": "B14"
+        },
+        {
+          "valeur": "non",
+          "libelle": "Non",
+          "cible": "B14",
+          "note_technicien": "emplacement unité extérieure à étudier"
+        }
+      ]
+    },
+    "B14": {
+      "type": "form",
+      "question": "L'adresse du projet",
+      "champs": [
+        {
+          "id": "adresse",
+          "libelle": "Adresse",
+          "type": "text",
+          "requis": true
+        },
+        {
+          "id": "cp",
+          "libelle": "Code postal",
+          "type": "cp",
+          "requis": true,
+          "prefill": "cp"
+        },
+        {
+          "id": "ville",
+          "libelle": "Ville",
+          "type": "text",
+          "requis": true
+        }
+      ],
+      "guard": {
+        "type": "zone",
+        "hors_zone_prefixes": [
+          "20",
+          "75",
+          "96",
+          "97",
+          "98",
+          "99"
+        ],
+        "exception_test": "99999",
+        "rayon_km": 60,
+        "cible": "@S6"
+      },
+      "next": "B15"
+    },
+    "B15": {
+      "type": "form",
+      "question": "Vos coordonnées",
+      "champs": [
+        {
+          "id": "prenom",
+          "libelle": "Prénom",
+          "type": "text",
+          "requis": true
+        },
+        {
+          "id": "nom",
+          "libelle": "Nom",
+          "type": "text",
+          "requis": true
+        }
+      ],
+      "next": "B16"
+    },
+    "B16": {
+      "type": "form",
+      "question": "Pour confirmer votre rendez-vous",
+      "champs": [
+        {
+          "id": "email",
+          "libelle": "Email",
+          "type": "email",
+          "requis": true
+        },
+        {
+          "id": "telephone",
+          "libelle": "Téléphone mobile",
+          "type": "tel",
+          "requis": true,
+          "aide": "Uniquement pour le SMS de confirmation"
+        },
+        {
+          "id": "ne_pas_appeler",
+          "libelle": "Je ne souhaite pas être appelé, uniquement le SMS de confirmation",
+          "type": "checkbox",
+          "requis": false
+        }
+      ],
+      "mention": "Prototype : aucune donnée n'est transmise ni conservée au-delà de cette session.",
+      "next": "B17"
+    },
+    "B17": {
+      "type": "otp",
+      "question": "Saisissez le code reçu par SMS",
+      "mock": true,
+      "code_demo": "4821",
+      "next": "B17b"
+    },
+    "B17b": {
+      "type": "regle",
+      "regle": "prospect_existant",
+      "mock": true,
+      "cas": [
+        {
+          "test": "rdv_localstorage_meme_tel_ou_email",
+          "cible": "@DOUBLON"
+        },
+        {
+          "test": "telephone_egal",
+          "valeur": "0600000001",
+          "cible": "B17c"
+        }
+      ],
+      "sinon": "B18"
+    },
+    "B17c": {
+      "type": "info",
+      "titre": "Un conseiller vous a déjà contacté",
+      "texte": "Votre demande est connue de notre équipe. Vous pouvez tout de même choisir votre créneau : votre conseiller en sera informé et n'aura plus besoin de vous rappeler.",
+      "badge": "règle simulée (D29)",
+      "next": "B18"
+    },
+    "B18": {
+      "type": "regle",
+      "regle": "eligibilite",
+      "si_non_eligible": "@O1",
+      "sinon": "B19"
+    },
+    "B19": {
+      "type": "info",
+      "titre": "Votre rendez-vous",
+      "texte": "Visite technique gratuite à votre domicile, environ 1 heure, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.",
+      "next": "B19b"
+    },
+    "B19b": {
+      "type": "regle",
+      "regle": "disponibilite_agence",
+      "mock": true,
+      "parametres": {
+        "fenetre_jours": 10,
+        "seuil_creneaux_libres": 4
+      },
+      "si_surbookee": "@SURBOOKEE",
+      "sinon": "B20"
+    },
+    "B20": {
+      "type": "calendrier",
+      "parametres": {
+        "horizon_jours": 14,
+        "delai_min_jours_ouvres": 1,
+        "duree_visite_min": 60,
+        "periodes": [
+          "matin",
+          "apres_midi"
+        ]
+      },
+      "aucun_creneau": "@R1",
+      "next": "B21"
+    },
+    "B21": {
+      "type": "info",
+      "modale": true,
+      "titre": "Ce rendez-vous mobilise un technicien",
+      "texte": "Environ 1 heure sur place. Vous pourrez le modifier ou l'annuler par email ou SMS.",
+      "bouton": "Je confirme",
+      "next": "B22"
+    },
+    "B22": {
+      "type": "info",
+      "ecran": "confirmation",
+      "next": null
+    }
   },
   "sorties": {
-    "@S1": { "code": "S1", "titre": "Un projet pour votre entreprise ?", "texte": "Nous accompagnons les particuliers. Pour un projet professionnel, notre équipe partenariats est à votre écoute.", "offre": { "libelle": "Devenir partenaire HomeServe", "url": "https://groupe.homeserve.fr/partenaire-commercial", "en_ligne": false }, "cta_secondaire": "email" },
-    "@S2": { "code": "S2", "titre": "En appartement, voici ce que nous pouvons faire", "texte": "Le solaire individuel n'est pas possible en copropriété, mais votre chaudière et votre logement peuvent être protégés.", "offre": { "libelle": "Entretien de chaudière", "url": "https://www.homeserve.fr/entretien/chaudiere", "en_ligne": false }, "offre_2": { "libelle": "Assistance Dépannez-moi", "url": "https://assistance.homeserve.fr/", "en_ligne": false }, "cta_secondaire": "transmettre" },
-    "@S3": { "code": "S3", "titre": "Locataire ? Protégez votre logement sans travaux", "texte": "L'installation solaire ou d'une pompe à chaleur relève du propriétaire. Vous pouvez en revanche vous protéger des pannes.", "offre": { "libelle": "Dépannez-moi Plomberie Locataire — 6 €/mois", "url": "https://assistance.homeserve.fr/assistance/plomberie/", "en_ligne": false, "note": "souscription par téléphone" }, "cta_secondaire": "transmettre_proprietaire" },
-    "@S4a": { "code": "S4a", "titre": "Nous prenons le relais pour votre dépannage", "offre": { "libelle": "Dépannage et entretien", "url": "https://www.homeserve.fr/depannage-entretien", "en_ligne": false } },
-    "@S4b": { "code": "S4b", "titre": "Planifions l'entretien de votre installation", "offre": { "libelle": "Dépannage et entretien", "url": "https://www.homeserve.fr/depannage-entretien", "en_ligne": false } },
-    "@S4c": { "code": "S4c", "titre": "Un diagnostic pour votre installation existante", "texte": "Même installée par un autre professionnel, nous pouvons la diagnostiquer et la dépanner.", "offre": { "libelle": "Diagnostic et dépannage en ligne", "url": "https://www.homeserve.fr/diagnostic/oe", "en_ligne": true } },
-    "@S5": { "code": "S5", "titre": "Votre toit ne permet pas le solaire, votre facture peut baisser autrement", "offre": { "libelle": "Pompe à chaleur", "url": "https://www.homeserve.fr/chauffage-climatisation/pompes-a-chaleur", "en_ligne": false }, "cta_secondaire": "relancer_simulateur_pac" },
-    "@S6": { "code": "S6", "titre": "Nous n'intervenons pas encore dans votre secteur", "texte": "Nos 21 agences couvrent une partie de la France ; votre secteur est en cours d'ouverture.", "cta_secondaire": "etre_informe" },
-    "@O1": { "code": "O1", "titre": "D'après vos réponses, une visite ne serait pas la bonne étape aujourd'hui", "texte_par_regle": {
-      "facture_faible": "Avec une facture inférieure à 60 €/mois, une installation solaire ne serait pas rentable pour vous.",
-      "surface_faible": "Une surface au sol inférieure à 70 m² laisse rarement assez de toiture exploitable.",
-      "residence_secondaire": "Une résidence secondaire, occupée par intermittence, valorise mal l'autoconsommation.",
-      "en_construction": "Nous intervenons une fois le logement livré ; nous pouvons vous recontacter à ce moment-là." },
-      "orientations": { "facture_faible": "entretien", "surface_faible": "pac", "residence_secondaire": "assistance", "en_construction": "rappel_differe" }, "cta_secondaire": "etre_rappele" },
-    "@R1": { "code": "R1", "titre": "Un conseiller de votre agence vous rappelle", "texte": "À votre demande, sous 5 jours ouvrés. Aucun démarchage : vous gardez la main.", "champs": ["creneau_prefere"], "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande (consentement horodaté, révocable)." },
-    "@DOUBLON": { "code": "DOUBLON", "titre": "Vous avez déjà un rendez-vous", "texte": "Un rendez-vous existe déjà pour ce téléphone ou cet email. Vous pouvez le consulter ou le modifier.", "cta": "gerer_rdv", "badge": "règle simulée (D32)" },
-    "@SURBOOKEE": { "code": "SURBOOKEE", "titre": "Forte demande dans votre secteur", "texte": "Notre agence n'a que très peu de créneaux dans les 10 prochains jours. Pour ne pas vous faire attendre devant un calendrier vide, un conseiller vous rappelle pour convenir d'une date.", "cta": "etre_rappele", "badge": "règle simulée (D30)" }
+    "@S1": {
+      "code": "S1",
+      "titre": "Un projet pour votre entreprise ?",
+      "texte": "Nous accompagnons les particuliers. Pour un projet professionnel, notre équipe partenariats est à votre écoute.",
+      "offre": {
+        "libelle": "Devenir partenaire HomeServe",
+        "url": "https://groupe.homeserve.fr/partenaire-commercial",
+        "en_ligne": false
+      },
+      "cta_secondaire": "email"
+    },
+    "@S2": {
+      "code": "S2",
+      "titre": "En appartement, voici ce que nous pouvons faire",
+      "texte": "Le solaire individuel n'est pas possible en copropriété, mais votre chaudière et votre logement peuvent être protégés.",
+      "offre": {
+        "libelle": "Entretien de chaudière",
+        "url": "https://www.homeserve.fr/entretien/chaudiere",
+        "en_ligne": false
+      },
+      "offre_2": {
+        "libelle": "Assistance Dépannez-moi",
+        "url": "https://assistance.homeserve.fr/",
+        "en_ligne": false
+      },
+      "cta_secondaire": "transmettre"
+    },
+    "@S3": {
+      "code": "S3",
+      "titre": "Locataire ? Protégez votre logement sans travaux",
+      "texte": "L'installation solaire ou d'une pompe à chaleur relève du propriétaire. Vous pouvez en revanche vous protéger des pannes.",
+      "offre": {
+        "libelle": "Dépannez-moi Plomberie Locataire — 6 €/mois",
+        "url": "https://assistance.homeserve.fr/assistance/plomberie/",
+        "en_ligne": false,
+        "note": "souscription par téléphone"
+      },
+      "cta_secondaire": "transmettre_proprietaire"
+    },
+    "@S4a": {
+      "code": "S4a",
+      "titre": "Nous prenons le relais pour votre dépannage",
+      "offre": {
+        "libelle": "Dépannage et entretien",
+        "url": "https://www.homeserve.fr/depannage-entretien",
+        "en_ligne": false
+      }
+    },
+    "@S4b": {
+      "code": "S4b",
+      "titre": "Planifions l'entretien de votre installation",
+      "offre": {
+        "libelle": "Dépannage et entretien",
+        "url": "https://www.homeserve.fr/depannage-entretien",
+        "en_ligne": false
+      }
+    },
+    "@S4c": {
+      "code": "S4c",
+      "titre": "Un diagnostic pour votre installation existante",
+      "texte": "Même installée par un autre professionnel, nous pouvons la diagnostiquer et la dépanner.",
+      "offre": {
+        "libelle": "Diagnostic et dépannage en ligne",
+        "url": "https://www.homeserve.fr/diagnostic/oe",
+        "en_ligne": true
+      }
+    },
+    "@S5": {
+      "code": "S5",
+      "titre": "Votre toit ne permet pas le solaire, votre facture peut baisser autrement",
+      "offre": {
+        "libelle": "Pompe à chaleur",
+        "url": "https://www.homeserve.fr/chauffage-climatisation/pompes-a-chaleur",
+        "en_ligne": false
+      },
+      "cta_secondaire": "relancer_simulateur_pac"
+    },
+    "@S6": {
+      "code": "S6",
+      "titre": "Nous n'intervenons pas encore dans votre secteur",
+      "texte": "Nos 21 agences couvrent une partie de la France ; votre secteur est en cours d'ouverture.",
+      "cta_secondaire": "etre_informe"
+    },
+    "@O1": {
+      "code": "O1",
+      "titre": "D'après vos réponses, une visite ne serait pas la bonne étape aujourd'hui",
+      "texte_par_regle": {
+        "facture_faible": "Avec une facture inférieure à 60 €/mois, une installation solaire ne serait pas rentable pour vous.",
+        "surface_faible": "Une surface au sol inférieure à 70 m² laisse rarement assez de toiture exploitable.",
+        "residence_secondaire": "Une résidence secondaire, occupée par intermittence, valorise mal l'autoconsommation.",
+        "en_construction": "Nous intervenons une fois le logement livré ; nous pouvons vous recontacter à ce moment-là."
+      },
+      "orientations": {
+        "facture_faible": "entretien",
+        "surface_faible": "pac",
+        "residence_secondaire": "assistance",
+        "en_construction": "rappel_differe"
+      },
+      "cta_secondaire": "etre_rappele"
+    },
+    "@R1": {
+      "code": "R1",
+      "titre": "Un conseiller de votre agence vous rappelle",
+      "texte": "À votre demande, sous 5 jours ouvrés. Aucun démarchage : vous gardez la main.",
+      "champs": [
+        "creneau_prefere"
+      ],
+      "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande (consentement horodaté, révocable)."
+    },
+    "@DOUBLON": {
+      "code": "DOUBLON",
+      "titre": "Vous avez déjà un rendez-vous",
+      "texte": "Un rendez-vous existe déjà pour ce téléphone ou cet email. Vous pouvez le consulter ou le modifier.",
+      "cta": "gerer_rdv",
+      "badge": "règle simulée (D32)"
+    },
+    "@SURBOOKEE": {
+      "code": "SURBOOKEE",
+      "titre": "Forte demande dans votre secteur",
+      "texte": "Notre agence n'a que très peu de créneaux dans les 10 prochains jours. Pour ne pas vous faire attendre devant un calendrier vide, un conseiller vous rappelle pour convenir d'une date.",
+      "cta": "etre_rappele",
+      "badge": "règle simulée (D30)"
+    }
   }
 }

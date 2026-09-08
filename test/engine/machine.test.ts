@@ -90,9 +90,9 @@ describe("sous-arbres par projet", () => {
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B10p" });
   });
 
-  it("projet solaire : toit d'origine avant 1997 → question amiante ; amiante oui + aucune alternative → S5", () => {
+  it("projet solaire : toit d'origine avant 1997 → question amiante ; amiante oui → S5", () => {
     const m = creerMachine(arbre, { projet: "solaire" });
-    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", "<1997"], ["B10", "origine"], ["B11", "oui"], ["B13", "aucune"]]);
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", "<1997"], ["B10", "origine"], ["B11", "oui"]]);
     expect(m.courant()).toMatchObject({ type: "sortie", code: "S5" });
   });
 });

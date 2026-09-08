@@ -10,7 +10,7 @@ Heures en **UTC** (horloge de l'environnement d'exécution). Un bloc = un prompt
 | 1 — Socle : store, analytics, contenu, layout | 14:03 | 14:11 | 8 min | `feat(bloc1): socle store, analytics, contenu, layout` |
 | 2 — Moteur solaire | 14:18 | 14:24 | 6 min | `feat(bloc2): moteur solaire calibré EDF + police Nunito` |
 | 3 — Simulateur, résultat, variante mur | | | | |
-| 4 — Machine à états, agenda, ICS | | | | |
+| 4 — Machine à états, agenda, ICS | 14:49 | 14:57 | 8 min | `feat(bloc4): machine à états, agenda simulé, ICS` |
 | 5 — Parcours RDV, sorties, confirmation | | | | |
 | 6 — Moteur PAC et couplage | | | | |
 | 7 — Panneau debug, README, vérifications | | | | |
