@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prepare": "husky",
-    "prestart": "node scripts/prepare-standalone.mjs"
+    "prestart": "node scripts/prepare-standalone.mjs",
+    "screenshots": "node scripts/captures.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
@@ -32,6 +33,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "husky": "^9.1.7",
     "jsdom": "^28.0.1",
+    "playwright-core": "^1.63.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11"
