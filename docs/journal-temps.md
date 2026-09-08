@@ -15,4 +15,5 @@ Heures en **UTC** (horloge de l'environnement d'exécution). Un bloc = un prompt
 | 5 — Parcours RDV, sorties, confirmation | 17:40 | 17:57 | 17 min | `feat(bloc5): parcours rendez-vous, sorties, confirmation` |
 | 5 bis — Résultat : section « Et après ? » (D44) | 17:57 | 18:01 | 4 min | `feat(resultat): section « Et après ? » (D44)` |
 | 6a — Moteur PAC et couplage (moteurs seuls) | 15:14 | 15:18 | 4 min | `feat(bloc6a): moteur PAC et couplage` |
+| Lot 1 de recette (5 points) | 18:02 | 18:22 | 20 min | `fix(resultat)` recalcul · `feat(resultat)` D45 · `fix(resultat)` panneau 390 px · `feat(ui)` D46-A · `chore(captures)` |
 | 7 — Panneau debug, README, vérifications | | | | |
