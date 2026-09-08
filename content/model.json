@@ -1,0 +1,14 @@
+{
+  "_meta": { "version": "2026-09-08.1", "description": "Schéma de contenu à la manière d'un custom type Prismic (cf. type `simulator_wording` observé chez HomeServe). Le POC lit content/fr-fr.json ; en cible, la même structure est servie par Prismic. Champs : Text (chaîne courte), RichText, Group (répétable), Select." },
+  "id": "simulator_wording",
+  "label": "Wording simulateur & rendez-vous",
+  "tabs": {
+    "Global": { "marque": "Text", "bandeau_prototype": "Text", "appel": { "libelle": "Text", "numero_national": "Text" }, "badge_demo": "Text", "badge_agenda": "Text" },
+    "Accueil": { "surtitre": "Text", "titre": "Text", "badges": "Group<Text>", "porte_simulateur": { "titre": "Text", "sous_titre": "Text" }, "porte_rdv": { "titre": "Text", "sous_titre": "Text" }, "chiffres": "Group<{valeur: Text, legende: Text}>" },
+    "Simulateur": { "stepper": "Group<Text>", "questions": "Group<{id: Text, titre: Text, aide: Text, options: Group<{valeur: Text, libelle: Text}>, crans: Group<Text>}>" },
+    "Résultat": { "titre": "Text", "taux": "Group", "horizons": "Group", "hero": "Text", "tuiles": "Group", "courbe": "Group", "configurateur": "Group", "recommandation": "Group", "hypotheses": "Group", "ctas": "Group<Text>", "onboarding": "Group<{titre: Text, texte: RichText}>" },
+    "Mur (A/B)": { "titre": "Text", "texte": "RichText", "champs": "Group<Text>", "cta": "Text" },
+    "Rendez-vous": { "stepper": "Group<Text>", "panneau_reponses": "Group", "coordonnees": "Group", "otp": "Group", "calendrier": "Group", "confirmation": "Group", "rappel": "Group" },
+    "Sorties": { "note": "Titres, textes, offres et URLs des sorties vivent dans data/arbre-rdv.json (sorties) ; en cible, Group<{code, titre, texte, offre_libelle, offre_url, en_ligne: Boolean}>" }
+  }
+}
