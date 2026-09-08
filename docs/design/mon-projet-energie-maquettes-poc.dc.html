@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800&display=swap">
+<script src="https://unpkg.com/lucide@0.474.0/dist/umd/lucide.min.js"></script>
+<style>
+  body { margin:0; background:#f4f4f4; font-family:Nunito, system-ui, sans-serif; color:#1e1e1e; }
+  a { color:#258386; }
+  a:hover { color:#e22c22; }
+</style>
+</helmet>
+<section id="1a" style="display:flex;flex-direction:column;gap:64px;padding:56px;background:#f4f4f4">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:900px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="background:#1e1e1e;color:#ffffff;font-size:13px;font-weight:800;padding:4px 10px;border-radius:999px">1a</span>
+      <span style="font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#8a8a8a">POC « Mon projet énergie » — 20 planches</span>
+    </div>
+    <div style="font-size:40px;font-weight:800;line-height:1.1;letter-spacing:-0.02em">Maquettes du parcours — v1</div>
+    <div style="font-size:17px;line-height:1.5;color:#5c5c5c;text-wrap:pretty">Grammaire HomeServe (cartes contour neutre-200, sélection corail, stepper à pastilles, boutons pilule, Nunito), structure inspirée du simulateur EDF. Mobile 390 px ; E0, AR-solaire et B-calendrier également en desktop 1440 px. Aucun logo reproduit, aucune photo, aucune donnée réelle.</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div style="font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8a8a8a">Tokens couleur employés</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#e22c22"></span><span style="font-size:13px;font-weight:700">corail-600 #e22c22</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#f0463c"></span><span style="font-size:13px;font-weight:700">corail-500 #f0463c</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#fdeceb"></span><span style="font-size:13px;font-weight:700">corail-100 #fdeceb</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#258386"></span><span style="font-size:13px;font-weight:700">canard-500 #258386</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#e9f3f3"></span><span style="font-size:13px;font-weight:700">canard-100 #e9f3f3</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#255a2e"></span><span style="font-size:13px;font-weight:700">vert-600 #255a2e</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#e6f2e8"></span><span style="font-size:13px;font-weight:700">vert-100 #e6f2e8</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#fb6500"></span><span style="font-size:13px;font-weight:700">orange-500 #fb6500</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#fff0e3"></span><span style="font-size:13px;font-weight:700">orange-100 #fff0e3</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#1e1e1e"></span><span style="font-size:13px;font-weight:700">neutre-700 #1e1e1e</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#5c5c5c"></span><span style="font-size:13px;font-weight:700">neutre-500 #5c5c5c</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#8a8a8a"></span><span style="font-size:13px;font-weight:700">neutre-400 #8a8a8a</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#c9c9c9"></span><span style="font-size:13px;font-weight:700">neutre-300 #c9c9c9</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#e3e3e3"></span><span style="font-size:13px;font-weight:700">neutre-200 #e3e3e3</span></div>
+      <div style="display:flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:8px 12px"><span style="width:18px;height:18px;border-radius:5px;background:#f4f4f4"></span><span style="font-size:13px;font-weight:700">neutre-100 #f4f4f4</span></div>
+    </div>
+  </div>
+
+  
+<div id="planches" style="display:flex;flex-direction:column;gap:72px">
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="E0" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">E0 · Accueil</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(30,30,30,.06)">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #f4f4f4">
+            <div style="font-size:19px;font-weight:800;color:#e22c22;letter-spacing:-0.01em">HomeServe</div>
+            <div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>04 XX XX XX XX</div>
+          </div>
+          <div style="padding:24px 20px 20px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#258386">Propriétaire d'une maison ?</div>
+            <div style="font-size:29px;line-height:1.15;font-weight:800;letter-spacing:-0.02em;text-wrap:pretty">Votre projet énergie, chiffré en 2 minutes</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="background:#e6f2e8;color:#255a2e;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px">Sans coordonnées</span>
+              <span style="background:#e6f2e8;color:#255a2e;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px">Gratuit</span>
+              <span style="background:#e6f2e8;color:#255a2e;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px">Sans engagement</span>
+            </div>
+          </div>
+          <div style="padding:4px 20px 8px;display:flex;flex-direction:column;gap:12px">
+            <div style="background:#e22c22;color:#ffffff;border-radius:20px;padding:20px;display:flex;align-items:center;gap:16px;min-height:44px;box-shadow:0 2px 6px rgba(226,44,34,.24)">
+              <div style="width:52px;height:52px;flex:none;border-radius:16px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center"><i data-lucide="sun" width="28" height="28"></i></div>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="font-size:19px;font-weight:800">J'estime mes économies</div>
+                <div style="font-size:14px;font-weight:600;opacity:.92">solaire, pompe à chaleur ou les deux</div>
+              </div>
+              <i data-lucide="chevron-right" width="22" height="22" style="margin-left:auto"></i>
+            </div>
+            <div style="background:#ffffff;color:#1e1e1e;border:2px solid #1e1e1e;border-radius:20px;padding:20px;display:flex;align-items:center;gap:16px;min-height:44px">
+              <div style="width:52px;height:52px;flex:none;border-radius:16px;background:#f4f4f4;display:flex;align-items:center;justify-content:center;color:#1e1e1e"><i data-lucide="calendar-check" width="28" height="28"></i></div>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="font-size:19px;font-weight:800">Je prends rendez-vous</div>
+                <div style="font-size:14px;font-weight:600;color:#5c5c5c">visite technique gratuite dans votre agence</div>
+              </div>
+              <i data-lucide="chevron-right" width="22" height="22" style="margin-left:auto;color:#8a8a8a"></i>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 0;color:#258386;font-size:15px;font-weight:700"><i data-lucide="phone-call" width="18" height="18"></i>Appeler mon agence</div>
+          </div>
+          <div style="margin:8px 20px 20px;background:#f4f4f4;border-radius:16px;padding:16px;display:flex;justify-content:space-between;text-align:center">
+            <div style="display:flex;flex-direction:column;gap:2px;flex:1"><span style="font-size:17px;font-weight:800;color:#1e1e1e">21</span><span style="font-size:12px;font-weight:600;color:#5c5c5c">agences RGE</span></div>
+            <div style="width:1px;background:#e3e3e3"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;flex:1"><span style="font-size:17px;font-weight:800;color:#1e1e1e">1 200 000+</span><span style="font-size:12px;font-weight:600;color:#5c5c5c">clients</span></div>
+            <div style="width:1px;background:#e3e3e3"></div>
+            <div style="display:flex;flex-direction:column;gap:2px;flex:1"><span style="font-size:17px;font-weight:800;color:#1e1e1e">2001</span><span style="font-size:12px;font-weight:600;color:#5c5c5c">depuis</span></div>
+          </div>
+          <div style="background:#1e1e1e;color:#c9c9c9;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:15px;font-weight:800;color:#ffffff">HomeServe</div>
+            <div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12px;font-weight:600"><span>Mentions légales</span><span>Données personnelles</span><span>Cookies</span></div>
+            <div style="font-size:11px;color:#8a8a8a">Maquette de prototype — aucun contenu contractuel</div>
+          </div>
+        </div>
+        <div style="width:390px;display:flex;flex-wrap:wrap;gap:6px">
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">carte primaire : corail-600 / blanc</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">carte 2 : contour neutre-700</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">badges vert-100 / vert-600</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">lien canard-500</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">bandeau orange-100 / orange-600</span>
+        </div>
+      </div><div id="E0-desktop" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">E0 · Accueil</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">desktop 1440</span></div>
+        <div style="width:1440px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:14px;font-weight:700;padding:10px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 64px;border-bottom:1px solid #f4f4f4">
+            <div style="font-size:24px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="display:flex;align-items:center;gap:32px;font-size:15px;font-weight:700;color:#1e1e1e">
+              <span>Nos offres</span><span>Nos agences</span><span>Aides &amp; financement</span>
+              <span style="display:flex;align-items:center;gap:8px;color:#258386"><i data-lucide="phone" width="18" height="18"></i>04 XX XX XX XX</span>
+            </div>
+          </div>
+          <div style="padding:56px 64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:64px;align-items:center">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#258386">Propriétaire d'une maison ?</div>
+              <div style="font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-0.02em;max-width:15ch;text-wrap:pretty">Votre projet énergie, chiffré en 2 minutes</div>
+              <div style="font-size:18px;line-height:1.5;color:#5c5c5c;max-width:46ch">Solaire, pompe à chaleur ou les deux : huit questions, une estimation d'économies, un créneau de visite technique dans l'agence la plus proche.</div>
+              <div style="display:flex;gap:10px">
+                <span style="background:#e6f2e8;color:#255a2e;font-size:15px;font-weight:700;padding:8px 16px;border-radius:999px">Sans coordonnées</span>
+                <span style="background:#e6f2e8;color:#255a2e;font-size:15px;font-weight:700;padding:8px 16px;border-radius:999px">Gratuit</span>
+                <span style="background:#e6f2e8;color:#255a2e;font-size:15px;font-weight:700;padding:8px 16px;border-radius:999px">Sans engagement</span>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:40px">
+                <div style="display:flex;flex-direction:column"><span style="font-size:26px;font-weight:800">21</span><span style="font-size:14px;font-weight:600;color:#5c5c5c">agences RGE</span></div>
+                <div style="display:flex;flex-direction:column"><span style="font-size:26px;font-weight:800">1 200 000+</span><span style="font-size:14px;font-weight:600;color:#5c5c5c">clients</span></div>
+                <div style="display:flex;flex-direction:column"><span style="font-size:26px;font-weight:800">2001</span><span style="font-size:14px;font-weight:600;color:#5c5c5c">depuis</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="background:#e22c22;color:#ffffff;border-radius:24px;padding:28px;display:flex;align-items:center;gap:20px;box-shadow:0 2px 8px rgba(226,44,34,.22)">
+                <div style="width:64px;height:64px;flex:none;border-radius:20px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center"><i data-lucide="sun" width="34" height="34"></i></div>
+                <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:24px;font-weight:800">J'estime mes économies</div><div style="font-size:16px;font-weight:600;opacity:.92">solaire, pompe à chaleur ou les deux</div></div>
+                <i data-lucide="arrow-right" width="26" height="26" style="margin-left:auto"></i>
+              </div>
+              <div style="background:#ffffff;border:2px solid #1e1e1e;border-radius:24px;padding:28px;display:flex;align-items:center;gap:20px">
+                <div style="width:64px;height:64px;flex:none;border-radius:20px;background:#f4f4f4;display:flex;align-items:center;justify-content:center"><i data-lucide="calendar-check" width="34" height="34"></i></div>
+                <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:24px;font-weight:800">Je prends rendez-vous</div><div style="font-size:16px;font-weight:600;color:#5c5c5c">visite technique gratuite dans votre agence</div></div>
+                <i data-lucide="arrow-right" width="26" height="26" style="margin-left:auto;color:#8a8a8a"></i>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;color:#258386;font-size:16px;font-weight:700;padding-left:8px"><i data-lucide="phone-call" width="20" height="20"></i>Appeler mon agence</div>
+            </div>
+          </div>
+          <div style="background:#1e1e1e;color:#c9c9c9;padding:32px 64px;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:18px;font-weight:800;color:#ffffff">HomeServe</div>
+            <div style="display:flex;gap:24px;font-size:14px;font-weight:600"><span>Mentions légales</span><span>Données personnelles</span><span>Cookies</span><span>Nos agences</span></div>
+          </div>
+        </div>
+      </div></div>
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="Q-choix" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">Q-choix · A5 chauffage</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;height:780px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;position:relative">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px 12px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #f4f4f4">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+              <div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span><span style="font-size:13px;font-weight:800;color:#1e1e1e">Votre logement</span></div>
+              <span style="flex:1;height:2px;background:#e3e3e3"></span>
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:999px;background:#c9c9c9;color:#ffffff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:13px;font-weight:700;color:#8a8a8a">Vos équipements</span></div>
+            </div>
+          </div>
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:13px;font-weight:700;color:#8a8a8a">3 / 8</div>
+            <div style="font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-0.01em;text-wrap:pretty">Comment chauffez-vous votre maison ?</div>
+            <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Le mode de chauffage actuel détermine les économies possibles.</div>
+          </div>
+          <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px">
+              <i data-lucide="thermometer" width="32" height="32" style="color:#e22c22"></i>
+              <span style="font-size:16px;font-weight:700;line-height:1.25">Radiateurs électriques</span>
+            </div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px">
+              <i data-lucide="fan" width="32" height="32" style="color:#1e1e1e"></i>
+              <span style="font-size:16px;font-weight:700;line-height:1.25">Pompe à chaleur</span>
+            </div>
+            <div style="background:#ffffff;border:1px solid #8a8a8a;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px">
+              <i data-lucide="flame" width="32" height="32" style="color:#1e1e1e"></i>
+              <span style="font-size:16px;font-weight:700;line-height:1.25">Gaz, fioul ou bois</span>
+            </div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px">
+              <i data-lucide="circle-help" width="32" height="32" style="color:#1e1e1e"></i>
+              <span style="font-size:16px;font-weight:700;line-height:1.25">Autre</span>
+            </div>
+          </div>
+          <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px;background:#ffffff">
+            <div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div>
+            <div style="font-size:13px;font-weight:600;color:#8a8a8a">Votre choix enregistre et passe à la suite</div>
+          </div>
+        </div>
+        <div style="width:390px;display:flex;flex-wrap:wrap;gap:6px">
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">1 sélectionnée : corail-600 2 px + corail-100</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">3 survol : contour neutre-400</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">2 et 4 défaut : contour neutre-200</span>
+        </div>
+      </div><div id="Q-curseur" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">Q-curseur · A8 facture</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;height:780px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px 12px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #f4f4f4">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+              <div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span><span style="font-size:13px;font-weight:800;color:#1e1e1e">Votre logement</span></div>
+              <span style="flex:1;height:2px;background:#e3e3e3"></span>
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:999px;background:#c9c9c9;color:#ffffff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:13px;font-weight:700;color:#8a8a8a">Vos équipements</span></div>
+            </div>
+          </div>
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:13px;font-weight:700;color:#8a8a8a">6 / 8</div>
+            <div style="font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-0.01em">Votre facture d'électricité mensuelle</div>
+            <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Une estimation suffit.</div>
+          </div>
+          <div style="padding:32px 20px 20px;display:flex;flex-direction:column;gap:8px">
+            <div style="text-align:center;font-size:22px;font-weight:800;color:#e22c22">101 – 135 €/mois</div>
+            <div style="padding:20px 8px 0;position:relative">
+              <div style="height:8px;border-radius:999px;background:#e3e3e3;position:relative">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:56%;background:#f0463c;border-radius:999px"></div>
+                <div style="position:absolute;left:0;top:-8px;width:100%;display:flex;justify-content:space-between">
+                  <span style="width:6px;height:24px;border-radius:3px;background:#c9c9c9"></span>
+                  <span style="width:6px;height:24px;border-radius:3px;background:#c9c9c9"></span>
+                  <span style="width:6px;height:24px;border-radius:3px;background:#c9c9c9"></span>
+                  <span style="width:6px;height:24px;border-radius:3px;background:#c9c9c9"></span>
+                  <span style="width:6px;height:24px;border-radius:3px;background:#c9c9c9"></span>
+                </div>
+                <div style="position:absolute;left:56%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:999px;background:#e22c22;border:3px solid #ffffff;box-shadow:0 2px 6px rgba(30,30,30,.2)"></div>
+              </div>
+              <div style="margin-top:22px;display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:#5c5c5c;text-align:center">
+                <span style="width:52px">&lt; 60</span><span style="width:52px">60–100</span><span style="width:52px;color:#e22c22">101–135</span><span style="width:52px">136–175</span><span style="width:52px">&gt; 175</span>
+              </div>
+            </div>
+            <div style="margin-top:14px;background:#e9f3f3;border-radius:14px;padding:14px;display:flex;gap:10px;align-items:flex-start">
+              <i data-lucide="info" width="20" height="20" style="color:#258386;flex:none"></i>
+              <span style="font-size:14px;line-height:1.4;color:#1e1e1e">Vous trouverez ce montant sur votre échéancier ou votre dernière facture annuelle divisée par 12.</span>
+            </div>
+          </div>
+          <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px">
+            <div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div>
+            <div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Continuer</div>
+          </div>
+        </div>
+      </div><div id="Q-multi" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">Q-multi · A6 équipements</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;height:1000px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px 12px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #f4f4f4">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+              <div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:999px;background:#1e1e1e;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="14" height="14"></i></span><span style="font-size:13px;font-weight:700;color:#1e1e1e">Votre logement</span></div>
+              <span style="flex:1;height:2px;background:#1e1e1e"></span>
+              <div style="display:flex;align-items:center;gap:8px"><span style="width:24px;height:24px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:13px;font-weight:800;color:#1e1e1e">Vos équipements</span></div>
+            </div>
+          </div>
+          <div style="padding:18px 20px 0;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">7 / 8</div>
+              <div style="background:#fdeceb;color:#e22c22;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px">3 sélectionnés</div>
+            </div>
+            <div style="font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-0.01em">Quels équipements possédez-vous ?</div>
+            <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Plusieurs réponses possibles.</div>
+          </div>
+          <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px;position:relative"><i data-lucide="car" width="28" height="28" style="color:#e22c22"></i><span style="font-size:15px;font-weight:700">Voiture électrique</span><span style="position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:6px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="14" height="14"></i></span></div>
+            <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px;position:relative"><i data-lucide="waves" width="28" height="28" style="color:#e22c22"></i><span style="font-size:15px;font-weight:700">Piscine</span><span style="position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:6px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="14" height="14"></i></span></div>
+            <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px;position:relative"><i data-lucide="droplet" width="28" height="28" style="color:#e22c22"></i><span style="font-size:15px;font-weight:700">Ballon d'eau chaude</span><span style="position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:6px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="14" height="14"></i></span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px"><i data-lucide="air-vent" width="28" height="28"></i><span style="font-size:15px;font-weight:700">Climatisation</span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px"><i data-lucide="washing-machine" width="28" height="28"></i><span style="font-size:15px;font-weight:700">Sèche-linge</span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px"><i data-lucide="refrigerator" width="28" height="28"></i><span style="font-size:15px;font-weight:700">Congélateur</span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px"><i data-lucide="flame-kindling" width="28" height="28"></i><span style="font-size:15px;font-weight:700">Poêle ou insert</span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:96px"><i data-lucide="battery-charging" width="28" height="28"></i><span style="font-size:15px;font-weight:700">Borne de recharge</span></div>
+            <div style="grid-column:1 / -1;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:14px;display:flex;align-items:center;gap:10px;min-height:44px"><i data-lucide="circle-slash" width="24" height="24" style="color:#8a8a8a"></i><span style="font-size:15px;font-weight:700">Aucun de ces équipements</span></div>
+          </div>
+          <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px">
+            <div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div>
+            <div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Continuer</div>
+          </div>
+        </div>
+      </div><div id="Q-pac" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">Q-choix · variante PAC (A9 · A10)</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="display:flex;gap:24px">
+          <div style="width:390px;height:780px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">A9 · 5 / 8</div>
+              <div style="font-size:24px;line-height:1.2;font-weight:800">Vos revenus annuels du foyer</div>
+              <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Ils déterminent le montant de MaPrimeRénov'.</div>
+            </div>
+            <div style="padding:16px 20px 0;display:flex;background:#f4f4f4;border-radius:999px;margin:16px 20px 0;padding:4px">
+              <span style="flex:1;text-align:center;font-size:14px;font-weight:800;padding:9px;border-radius:999px;background:#ffffff;color:#1e1e1e">Hors Île-de-France</span>
+              <span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:9px;color:#5c5c5c">Île-de-France</span>
+            </div>
+            <div style="padding:16px 20px;display:flex;flex-direction:column;gap:10px">
+              <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;min-height:44px"><i data-lucide="users" width="28" height="28"></i><div><div style="font-size:16px;font-weight:700">jusqu'à 22 000 €</div><div style="font-size:13px;color:#5c5c5c;font-weight:600">pour 2 personnes</div></div></div>
+              <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;min-height:44px"><i data-lucide="users" width="28" height="28" style="color:#e22c22"></i><div><div style="font-size:16px;font-weight:700">environ 22 000 – 33 000 €</div><div style="font-size:13px;color:#5c5c5c;font-weight:600">pour 2 personnes</div></div></div>
+              <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;min-height:44px"><i data-lucide="users" width="28" height="28"></i><div><div style="font-size:16px;font-weight:700">environ 33 000 – 46 000 €</div><div style="font-size:13px;color:#5c5c5c;font-weight:600">pour 2 personnes</div></div></div>
+              <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;min-height:44px"><i data-lucide="users" width="28" height="28"></i><div><div style="font-size:16px;font-weight:700">plus de 46 000 €</div><div style="font-size:13px;color:#5c5c5c;font-weight:600">pour 2 personnes</div></div></div>
+              <div style="font-size:13px;color:#8a8a8a;font-weight:600">Barème simulé — extrapolé, à caler sur le barème ANAH en vigueur.</div>
+            </div>
+            <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div><div style="font-size:13px;font-weight:600;color:#8a8a8a">Votre choix passe à la suite</div></div>
+          </div>
+          <div style="width:390px;height:780px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">A10 · 6 / 8</div>
+              <div style="font-size:24px;line-height:1.2;font-weight:800">Année de construction de la maison</div>
+            </div>
+            <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px"><i data-lucide="house" width="32" height="32"></i><span style="font-size:16px;font-weight:700">Avant 1975</span></div>
+              <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px"><i data-lucide="house" width="32" height="32"></i><span style="font-size:16px;font-weight:700">1975 – 1999</span></div>
+              <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px"><i data-lucide="house" width="32" height="32" style="color:#e22c22"></i><span style="font-size:16px;font-weight:700">2000 – 2012</span></div>
+              <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:112px"><i data-lucide="house" width="32" height="32"></i><span style="font-size:16px;font-weight:700">Après 2012</span></div>
+            </div>
+            <div style="margin:0 20px;background:#e9f3f3;border-radius:14px;padding:14px;display:flex;gap:10px"><i data-lucide="shield-check" width="20" height="20" style="color:#258386;flex:none"></i><span style="font-size:14px;line-height:1.4">Vos réponses servent uniquement au calcul. Aucune donnée n'est transmise dans ce prototype.</span></div>
+            <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div><div style="font-size:13px;font-weight:600;color:#8a8a8a">Votre choix passe à la suite</div></div>
+          </div>
+        </div>
+      </div></div>
+
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="AR-solaire" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">AR-solaire · Résultat</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390 · corps 18 px</span></div>
+        <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4">
+            <div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div>
+          </div>
+
+          <div style="padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div style="font-size:26px;font-weight:800;letter-spacing:-0.01em">Votre estimation</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:44px;height:44px;flex:none;border-radius:999px;border:2px solid #258386;color:#258386;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center">?</span><span style="font-size:13px;font-weight:700;color:#258386;max-width:9ch;line-height:1.2">Comprendre mon résultat</span></div>
+          </div>
+
+          <div style="margin:20px;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:16px;font-weight:700;line-height:1.3">Hausse annuelle du prix de l'électricité</div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div style="width:48px;height:48px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#1e1e1e">−</div>
+              <div style="flex:1;text-align:center;font-size:32px;font-weight:800;color:#e22c22">4 %</div>
+              <div style="width:48px;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">+</div>
+            </div>
+            <div style="font-size:12px;color:#8a8a8a;font-weight:600;line-height:1.35">Moyenne 2016-2025, tarifs réglementés. Bornes 0 – 15 %. Tout se recalcule en direct.</div>
+          </div>
+
+          <div style="padding:0 20px;display:flex;gap:8px;flex-wrap:wrap">
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3;color:#1e1e1e">10 ans</span>
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3;color:#1e1e1e">15 ans</span>
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3;color:#1e1e1e">20 ans</span>
+            <span style="font-size:15px;font-weight:800;padding:9px 16px;border-radius:999px;background:#e22c22;color:#ffffff">25 ans</span>
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3;color:#1e1e1e">30 ans</span>
+          </div>
+
+          <div style="margin:20px;border:2px solid #e22c22;border-radius:20px;background:#ffffff;padding:24px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center">
+            <div style="font-size:14px;font-weight:700;color:#5c5c5c">Vos économies cumulées sur 25 ans</div>
+            <div style="font-size:46px;line-height:1;font-weight:800;color:#e22c22;letter-spacing:-0.02em">33 188 €</div>
+            <div style="font-size:14px;font-weight:600;color:#5c5c5c">avec une hausse de 4 %/an</div>
+          </div>
+
+          <div style="padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:#f4f4f4;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;font-weight:700;color:#5c5c5c;line-height:1.3">Facture annuelle dans 25 ans</div>
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">Sans solaire</div>
+              <div style="font-size:24px;font-weight:800;color:#1e1e1e">10 402 €</div>
+            </div>
+            <div style="background:#ffffff;border:1px solid #258386;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;font-weight:700;color:#5c5c5c;line-height:1.3">Facture annuelle dans 25 ans</div>
+              <div style="display:flex;align-items:center;gap:6px;color:#258386"><i data-lucide="sun" width="16" height="16"></i><span style="font-size:13px;font-weight:700">Avec solaire</span></div>
+              <div style="font-size:24px;font-weight:800;color:#258386">7 988 €</div>
+            </div>
+          </div>
+
+          <div style="margin:20px;display:flex;flex-direction:column;gap:12px">
+            <svg viewBox="0 0 326 170" style="width:100%;height:auto;overflow:visible" aria-label="Courbe effet ciseaux">
+              <polygon points="0,94 65,85 130,73 196,58 261,40 326,27 326,54 261,66 196,78 130,89 65,98 0,105" fill="#e9f3f3"></polygon>
+              <polyline points="0,94 65,85 130,73 196,58 261,40 326,27" fill="none" stroke="#8a8a8a" stroke-width="2.5"></polyline>
+              <polyline points="0,105 65,98 130,89 196,78 261,66 326,54" fill="none" stroke="#258386" stroke-width="2.5"></polyline>
+              <text x="140" y="76" font-family="Nunito" font-size="11" font-weight="700" fill="#258386">vos économies</text>
+              <text x="326" y="20" text-anchor="end" font-family="Nunito" font-size="11" font-weight="700" fill="#8a8a8a">sans solaire</text>
+              <text x="326" y="68" text-anchor="end" font-family="Nunito" font-size="11" font-weight="700" fill="#258386">avec solaire</text>
+              <line x1="0" y1="145" x2="326" y2="145" stroke="#e3e3e3" stroke-width="1"></line>
+              <text x="0" y="160" font-family="Nunito" font-size="11" fill="#8a8a8a">2026</text>
+              <text x="130" y="160" font-family="Nunito" font-size="11" fill="#8a8a8a">2036</text>
+              <text x="261" y="160" font-family="Nunito" font-size="11" fill="#8a8a8a">2046</text>
+              <text x="326" y="160" text-anchor="end" font-family="Nunito" font-size="11" fill="#8a8a8a">2051</text>
+            </svg>
+            <div style="font-size:17px;font-weight:600;line-height:1.4;text-wrap:pretty">Chaque point de hausse supplémentaire, c'est <strong style="font-weight:800;color:#e22c22">+2 100 €</strong> d'économies sur 25 ans.</div>
+          </div>
+
+          <div style="margin:0 20px 20px;background:#f4f4f4;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:19px;font-weight:800">Mon installation</div><span style="font-size:12px;font-weight:700;color:#5c5c5c;background:#ffffff;border-radius:999px;padding:4px 10px">recalcul immédiat</span></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:15px;font-weight:700;color:#5c5c5c">Centrale solaire</div>
+              <div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px">
+                <span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px;color:#1e1e1e">3 kWc</span>
+                <span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">6 kWc</span>
+                <span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px;color:#1e1e1e">9 kWc</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:15px;font-weight:700;color:#5c5c5c">Stockage</div>
+              <div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px">
+                <span style="flex:1;text-align:center;font-size:14px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">Aucun</span>
+                <span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:10px 0;border-radius:999px;color:#1e1e1e">Virtuel<br><span style="font-size:11px;font-weight:600;color:#5c5c5c">15 €/mois</span></span>
+                <span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:10px 0;border-radius:999px;color:#1e1e1e">Batterie<br><span style="font-size:11px;font-weight:600;color:#5c5c5c">sur devis</span></span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:15px;font-weight:700;color:#5c5c5c">Couplage pompe à chaleur</div>
+              <div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px">
+                <span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">Non</span>
+                <span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px;color:#1e1e1e">Oui</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin:0 20px 20px;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden">
+            <div style="background:#fdeceb;padding:14px 16px;display:flex;align-items:center;gap:10px"><i data-lucide="badge-check" width="20" height="20" style="color:#e22c22"></i><span style="font-size:14px;font-weight:800;color:#e22c22">Pack conseillé</span></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:20px;font-weight:800;line-height:1.25">Sol&amp;Go 6 kWc — à partir de 10 190 €</div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Aides estimées</span><span style="font-weight:800;color:#255a2e">− 1 140 €</span></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Reste à charge</span><span style="font-weight:800">9 050 €</span></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Rentabilisé en</span><span style="font-weight:800">11 ans</span></div>
+            </div>
+          </div>
+
+          <div style="margin:0 20px 20px;background:#f4f4f4;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:16px;font-weight:800">Nos hypothèses</span><i data-lucide="chevron-up" width="20" height="20" style="color:#5c5c5c"></i></div>
+            <div style="display:flex;flex-direction:column;gap:7px;font-size:15px;color:#1e1e1e;line-height:1.35">
+              <div>· Prix du kWh <strong style="font-weight:800">0,2001 €</strong> (août 2026)</div>
+              <div>· Surplus revendu <strong style="font-weight:800">0,011 €/kWh</strong></div>
+              <div>· TVA <strong style="font-weight:800">5,5 %</strong></div>
+              <div>· Prime autoconsommation <strong style="font-weight:800">0 €</strong> depuis le 05/06/2026</div>
+              <div>· Hausse par défaut <strong style="font-weight:800">4 %/an</strong></div>
+            </div>
+            <div style="font-size:13px;color:#5c5c5c;font-weight:600">Ordre de grandeur, ne constitue pas un devis.</div>
+          </div>
+
+          <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 12px">Je planifie ma visite technique gratuite</div>
+            <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;color:#1e1e1e;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Je préfère être rappelé</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#258386;font-size:16px;font-weight:700;padding:6px"><i data-lucide="phone-call" width="18" height="18"></i>Appeler mon agence</div>
+          </div>
+
+          <div style="border-top:1px solid #e3e3e3;background:#ffffff;padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -2px 8px rgba(30,30,30,.08)">
+            <div style="display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:#5c5c5c">Économies 25 ans</span><span style="font-size:18px;font-weight:800;color:#e22c22">33 188 €</span></div>
+            <div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:15px;font-weight:800;display:flex;align-items:center;justify-content:center">Planifier ma visite</div>
+          </div>
+        </div>
+        <div style="width:390px;display:flex;flex-wrap:wrap;gap:6px">
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">tuile héros : contour corail-600, valeur corail-600</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">série avec solaire : canard-500, aire canard-100</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">configurateur : fond neutre-100</span>
+          <span style="font-size:11px;font-weight:700;color:#5c5c5c;background:#ffffff;border:1px dashed #c9c9c9;border-radius:8px;padding:3px 7px">bandeau bas = widget collant au défilement</span>
+        </div>
+      </div><div style="display:flex;flex-direction:column;gap:48px"><div id="AR-config-alt" style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">Configurateur — alternative</span><span style="font-size:11px;font-weight:700;color:#fb6500">ALTERNATIVE · accordéon guidé</span></div>
+          <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:20px;font-weight:800">Mon installation</div>
+              <div style="font-size:15px;color:#5c5c5c;line-height:1.4">Une ligne ouverte à la fois : le résumé reste lisible, l'impact chiffré s'affiche dans la ligne ouverte.</div>
+            </div>
+            <div style="border:1px solid #e3e3e3;border-radius:16px;overflow:hidden">
+              <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:#ffffff;border-bottom:1px solid #f4f4f4"><div><div style="font-size:16px;font-weight:800">Centrale solaire</div><div style="font-size:14px;color:#5c5c5c;font-weight:600">6 kWc · 14 panneaux</div></div><i data-lucide="chevron-down" width="20" height="20" style="color:#8a8a8a"></i></div>
+              <div style="padding:14px 16px;background:#f4f4f4;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid #e3e3e3">
+                <div style="font-size:16px;font-weight:800">Stockage</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div style="background:#ffffff;border:2px solid #e22c22;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px;font-weight:700">Aucun</span><span style="font-size:14px;font-weight:800;color:#e22c22">33 188 €</span></div>
+                  <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px;font-weight:700">Virtuel <span style="color:#5c5c5c;font-weight:600">15 €/mois</span></span><span style="font-size:14px;font-weight:700;color:#5c5c5c">+ 3 900 €</span></div>
+                  <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px;font-weight:700">Batterie <span style="color:#5c5c5c;font-weight:600">sur devis</span></span><span style="font-size:14px;font-weight:700;color:#5c5c5c">estimé en visite</span></div>
+                </div>
+              </div>
+              <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:#ffffff"><div><div style="font-size:16px;font-weight:800">Couplage pompe à chaleur</div><div style="font-size:14px;color:#5c5c5c;font-weight:600">Non</div></div><i data-lucide="chevron-down" width="20" height="20" style="color:#8a8a8a"></i></div>
+            </div>
+            <div style="background:#fff0e3;color:#c24e00;border-radius:12px;padding:12px;font-size:13px;font-weight:700;line-height:1.4">Recommandation : garder les segmented controls (planche AR-solaire) — voir la note en fin de board.</div>
+          </div>
+        </div><div id="AR-onboarding" style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">AR-onboarding · Comprendre mon résultat</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390 · 3 volets</span></div>
+          <div style="display:flex;gap:24px">
+            <div style="width:390px;height:640px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+              <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+              <div style="padding:16px 20px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:800;color:#8a8a8a">1 / 3</span><i data-lucide="x" width="22" height="22" style="color:#8a8a8a"></i></div>
+              <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;justify-content:center">
+                <div style="width:120px;height:120px;border-radius:999px;background:#e9f3f3;display:flex;align-items:center;justify-content:center"><i data-lucide="trending-up" width="56" height="56" style="color:#258386"></i></div>
+                <div style="font-size:26px;font-weight:800;line-height:1.2">Pourquoi le taux de hausse compte</div>
+                <div style="font-size:18px;line-height:1.5;color:#5c5c5c;text-wrap:pretty">Le prix de l'électricité a augmenté en moyenne de 4 %/an sur dix ans. Plus il monte, plus votre installation vous fait économiser.</div>
+              </div>
+              <div style="padding:20px;display:flex;align-items:center;gap:12px">
+                <div style="width:48px;height:48px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center;color:#c9c9c9"><i data-lucide="arrow-left" width="20" height="20"></i></div>
+                <div style="flex:1;display:flex;gap:6px;justify-content:center"><span style="width:24px;height:6px;border-radius:999px;background:#e22c22"></span><span style="width:6px;height:6px;border-radius:999px;background:#c9c9c9"></span><span style="width:6px;height:6px;border-radius:999px;background:#c9c9c9"></span></div>
+                <div style="width:48px;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-right" width="20" height="20"></i></div>
+              </div>
+            </div>
+            <div style="width:390px;height:640px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+              <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+              <div style="padding:16px 20px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:800;color:#8a8a8a">2 / 3</span><i data-lucide="x" width="22" height="22" style="color:#8a8a8a"></i></div>
+              <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;justify-content:center">
+                <div style="width:120px;height:120px;border-radius:999px;background:#fdeceb;display:flex;align-items:center;justify-content:center"><i data-lucide="sliders-horizontal" width="56" height="56" style="color:#e22c22"></i></div>
+                <div style="font-size:26px;font-weight:800;line-height:1.2">Jouer avec l'installation</div>
+                <div style="font-size:18px;line-height:1.5;color:#5c5c5c;text-wrap:pretty">Puissance, stockage, couplage pompe à chaleur : changez un réglage, tout se recalcule aussitôt.</div>
+              </div>
+              <div style="padding:20px;display:flex;align-items:center;gap:12px">
+                <div style="width:48px;height:48px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div>
+                <div style="flex:1;display:flex;gap:6px;justify-content:center"><span style="width:6px;height:6px;border-radius:999px;background:#c9c9c9"></span><span style="width:24px;height:6px;border-radius:999px;background:#e22c22"></span><span style="width:6px;height:6px;border-radius:999px;background:#c9c9c9"></span></div>
+                <div style="width:48px;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-right" width="20" height="20"></i></div>
+              </div>
+            </div>
+            <div style="width:390px;height:640px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+              <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+              <div style="padding:16px 20px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:800;color:#8a8a8a">3 / 3</span><i data-lucide="x" width="22" height="22" style="color:#8a8a8a"></i></div>
+              <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;justify-content:center">
+                <div style="width:120px;height:120px;border-radius:999px;background:#e6f2e8;display:flex;align-items:center;justify-content:center"><i data-lucide="piggy-bank" width="56" height="56" style="color:#255a2e"></i></div>
+                <div style="font-size:26px;font-weight:800;line-height:1.2">Vos économies cumulées</div>
+                <div style="font-size:18px;line-height:1.5;color:#5c5c5c;text-wrap:pretty">C'est la somme de ce que vous ne payez plus à votre fournisseur sur l'horizon choisi. Ordre de grandeur, pas un devis.</div>
+              </div>
+              <div style="padding:20px;display:flex;align-items:center;gap:12px">
+                <div style="width:48px;height:48px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div>
+                <div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">Voir mon résultat</div>
+              </div>
+            </div>
+          </div>
+        </div></div></div>
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="AR-pac" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">AR-pac · Résultat pompe à chaleur</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+          <div style="padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between"><div style="font-size:26px;font-weight:800">Votre estimation</div><span style="width:44px;height:44px;border-radius:999px;border:2px solid #258386;color:#258386;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center">?</span></div>
+          <div style="margin:20px;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:16px;font-weight:700">Hausse annuelle du prix de l'énergie</div>
+            <div style="display:flex;align-items:center;gap:16px"><div style="width:48px;height:48px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">−</div><div style="flex:1;text-align:center;font-size:32px;font-weight:800;color:#e22c22">4 %</div><div style="width:48px;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">+</div></div>
+            <div style="font-size:12px;color:#8a8a8a;font-weight:600">Moyenne 2016-2025, tarifs réglementés.</div>
+          </div>
+          <div style="padding:0 20px;display:flex;gap:8px;flex-wrap:wrap">
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3">10 ans</span>
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3">15 ans</span>
+            <span style="font-size:15px;font-weight:800;padding:9px 16px;border-radius:999px;background:#e22c22;color:#ffffff">20 ans</span>
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3">25 ans</span>
+          </div>
+          <div style="margin:20px;border:2px solid #e22c22;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center">
+            <div style="font-size:14px;font-weight:700;color:#5c5c5c">Vos économies cumulées sur 20 ans</div>
+            <div style="font-size:46px;line-height:1;font-weight:800;color:#e22c22;letter-spacing:-0.02em">27 440 €</div>
+            <div style="font-size:14px;font-weight:600;color:#5c5c5c">remplacement d'une chaudière fioul</div>
+          </div>
+          <div style="padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:#f4f4f4;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px"><div style="font-size:13px;font-weight:700;color:#5c5c5c;line-height:1.3">Facture chauffage dans 20 ans</div><div style="font-size:13px;font-weight:700;color:#8a8a8a">Sans PAC</div><div style="font-size:24px;font-weight:800">4 380 €</div></div>
+            <div style="background:#ffffff;border:1px solid #258386;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px"><div style="font-size:13px;font-weight:700;color:#5c5c5c;line-height:1.3">Facture chauffage dans 20 ans</div><div style="display:flex;align-items:center;gap:6px;color:#258386"><i data-lucide="fan" width="16" height="16"></i><span style="font-size:13px;font-weight:700">Avec PAC</span></div><div style="font-size:24px;font-weight:800;color:#258386">1 640 €</div></div>
+          </div>
+          <div style="margin:20px;display:flex;flex-direction:column;gap:12px">
+            <svg viewBox="0 0 326 170" style="width:100%;height:auto">
+              <polygon points="0,100 65,90 130,80 196,68 261,54 326,42 326,120 261,118 196,116 130,113 65,110 0,108" fill="#e9f3f3"></polygon>
+              <polyline points="0,100 65,90 130,80 196,68 261,54 326,42" fill="none" stroke="#8a8a8a" stroke-width="2.5"></polyline>
+              <polyline points="0,108 65,110 130,113 196,116 261,118 326,120" fill="none" stroke="#258386" stroke-width="2.5"></polyline>
+              <text x="130" y="98" font-family="Nunito" font-size="11" font-weight="700" fill="#258386">vos économies</text>
+              <line x1="0" y1="145" x2="326" y2="145" stroke="#e3e3e3" stroke-width="1"></line>
+              <text x="0" y="160" font-family="Nunito" font-size="11" fill="#8a8a8a">2026</text><text x="163" y="160" font-family="Nunito" font-size="11" fill="#8a8a8a">2036</text><text x="326" y="160" text-anchor="end" font-family="Nunito" font-size="11" fill="#8a8a8a">2046</text>
+            </svg>
+            <div style="font-size:17px;font-weight:600;line-height:1.4">Chaque point de hausse supplémentaire, c'est <strong style="font-weight:800;color:#e22c22">+1 750 €</strong> d'économies sur 20 ans.</div>
+          </div>
+          <div style="margin:0 20px 20px;background:#f4f4f4;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:16px">
+            <div style="font-size:19px;font-weight:800">Mon installation</div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:15px;font-weight:700;color:#5c5c5c">Ajouter du solaire</div><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">Non</span><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px">Oui</span></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:15px;font-weight:700;color:#5c5c5c">Eau chaude sanitaire</div><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px">Non incluse</span><span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">Incluse</span></div></div>
+          </div>
+          <div style="margin:0 20px 20px;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden">
+            <div style="background:#fdeceb;padding:14px 16px;display:flex;align-items:center;gap:10px"><i data-lucide="badge-check" width="20" height="20" style="color:#e22c22"></i><span style="font-size:14px;font-weight:800;color:#e22c22">Pack conseillé</span></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:20px;font-weight:800;line-height:1.25">Pompe à chaleur air/eau — 11 000 à 16 000 €</div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">MaPrimeRénov' + CEE</span><span style="font-weight:800;color:#255a2e">− 5 800 €</span></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Reste à charge</span><span style="font-weight:800">7 200 €</span></div>
+              <div style="background:#e6f2e8;color:#255a2e;border-radius:12px;padding:12px;font-size:15px;font-weight:700">Aucune avance de frais : les aides sont déduites du devis.</div>
+            </div>
+          </div>
+          <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 12px">Je planifie ma visite technique gratuite</div>
+            <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Je préfère être rappelé</div>
+          </div>
+        </div>
+      </div><div id="AR-lesdeux" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">AR-lesdeux · Solaire + PAC</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390 · couplage activé</span></div>
+        <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:26px;font-weight:800">Votre estimation</div>
+            <div style="display:flex;gap:8px"><span style="background:#e9f3f3;color:#1e6b6e;font-size:13px;font-weight:800;padding:6px 12px;border-radius:999px">Solaire</span><span style="background:#e9f3f3;color:#1e6b6e;font-size:13px;font-weight:800;padding:6px 12px;border-radius:999px">Pompe à chaleur</span></div>
+          </div>
+          <div style="margin:20px;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:16px;font-weight:700">Hausse annuelle du prix de l'électricité</div>
+            <div style="display:flex;align-items:center;gap:16px"><div style="width:48px;height:48px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">−</div><div style="flex:1;text-align:center;font-size:32px;font-weight:800;color:#e22c22">4 %</div><div style="width:48px;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800">+</div></div>
+          </div>
+          <div style="padding:0 20px;display:flex;gap:8px;flex-wrap:wrap">
+            <span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3">10 ans</span><span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3">15 ans</span><span style="font-size:15px;font-weight:700;padding:9px 16px;border-radius:999px;border:1px solid #e3e3e3">20 ans</span><span style="font-size:15px;font-weight:800;padding:9px 16px;border-radius:999px;background:#e22c22;color:#ffffff">25 ans</span>
+          </div>
+          <div style="margin:20px;border:2px solid #e22c22;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center">
+            <div style="font-size:14px;font-weight:700;color:#5c5c5c">Vos économies cumulées sur 25 ans</div>
+            <div style="font-size:46px;line-height:1;font-weight:800;color:#e22c22;letter-spacing:-0.02em">52 610 €</div>
+            <div style="font-size:14px;font-weight:600;color:#5c5c5c">solaire et pompe à chaleur couplés</div>
+          </div>
+          <div style="padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:#f4f4f4;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px"><div style="font-size:13px;font-weight:700;color:#5c5c5c;line-height:1.3">Facture annuelle dans 25 ans</div><div style="font-size:13px;font-weight:700;color:#8a8a8a">Sans travaux</div><div style="font-size:24px;font-weight:800">14 780 €</div></div>
+            <div style="background:#ffffff;border:1px solid #258386;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px"><div style="font-size:13px;font-weight:700;color:#5c5c5c;line-height:1.3">Facture annuelle dans 25 ans</div><div style="display:flex;align-items:center;gap:6px;color:#258386"><i data-lucide="zap" width="16" height="16"></i><span style="font-size:13px;font-weight:700">Avec les deux</span></div><div style="font-size:24px;font-weight:800;color:#258386">6 120 €</div></div>
+          </div>
+          <div style="margin:20px 20px 0;background:#f4f4f4;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:16px">
+            <div style="font-size:19px;font-weight:800">Mon installation</div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:15px;font-weight:700;color:#5c5c5c">Centrale solaire</div><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px">3 kWc</span><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px">6 kWc</span><span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">9 kWc</span></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:15px;font-weight:700;color:#5c5c5c">Stockage</div><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:10px 0;border-radius:999px">Aucun</span><span style="flex:1;text-align:center;font-size:14px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">Virtuel</span><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:10px 0;border-radius:999px">Batterie</span></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:15px;font-weight:700;color:#5c5c5c">Couplage pompe à chaleur</div><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px 0;border-radius:999px">Non</span><span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px 0;border-radius:999px;background:#e22c22;color:#ffffff">Oui</span></div></div>
+          </div>
+          <div style="margin:20px;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden">
+            <div style="background:#fdeceb;padding:14px 16px;display:flex;align-items:center;gap:10px"><i data-lucide="badge-check" width="20" height="20" style="color:#e22c22"></i><span style="font-size:14px;font-weight:800;color:#e22c22">Pack conseillé</span></div>
+            <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:20px;font-weight:800;line-height:1.25">Sol&amp;Go 9 kWc + PAC air/eau — à partir de 24 900 €</div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Aides estimées</span><span style="font-weight:800;color:#255a2e">− 6 940 €</span></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Reste à charge</span><span style="font-weight:800">17 960 €</span></div>
+              <div style="height:1px;background:#f4f4f4"></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Rentabilisé en</span><span style="font-weight:800">13 ans</span></div>
+            </div>
+          </div>
+          <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 12px">Je planifie ma visite technique gratuite</div>
+            <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Je préfère être rappelé</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#258386;font-size:16px;font-weight:700"><i data-lucide="phone-call" width="18" height="18"></i>Appeler mon agence</div>
+          </div>
+        </div>
+      </div><div id="M1-mur" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">M1-mur</span><span style="font-size:11px;font-weight:800;color:#c24e00;background:#fff0e3;padding:3px 8px;border-radius:6px">AVANT — tunnel actuel (A/B variante mur)</span></div>
+        <div style="display:flex;gap:24px">
+          <div style="width:390px;height:800px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="padding:24px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="font-size:24px;font-weight:800;color:#e22c22;line-height:1.2">Vous n'êtes plus qu'à un clic de votre étude solaire !</div>
+              <div style="font-size:16px;line-height:1.5;color:#1e1e1e">Un expert HomeServe Rénov' vous contactera sous 48 heures ouvrées afin de vous présenter en détail les résultats de votre simulation.</div>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:700">Nom</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px"></div></div>
+                <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:700">Prénom</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px"></div></div>
+                <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:700">Email</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px"></div></div>
+                <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:700">Téléphone</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px"></div></div>
+              </div>
+              <div style="background:#e9f3f3;border-radius:12px;padding:12px;font-size:13px;line-height:1.4;color:#1e1e1e">Vos données sont utilisées pour traiter votre demande. Maquette : aucune donnée n'est transmise.</div>
+              <div style="height:52px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Valider ma demande</div>
+            </div>
+          </div>
+          <div style="width:390px;height:800px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="flex:1;padding:32px 24px;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;justify-content:center">
+              <div style="width:104px;height:104px;border-radius:999px;background:#e6f2e8;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="52" height="52" style="color:#255a2e"></i></div>
+              <div style="font-size:26px;font-weight:800;line-height:1.2">Merci, un expert vous rappelle</div>
+              <div style="font-size:17px;line-height:1.5;color:#5c5c5c">Votre demande est enregistrée. Un expert HomeServe Rénov' vous contacte sous 48 heures ouvrées.</div>
+              <div style="background:#f4f4f4;border-radius:16px;padding:16px;font-size:15px;color:#5c5c5c;line-height:1.4">Aucune estimation n'est affichée : le résultat est délivré par téléphone.</div>
+            </div>
+          </div>
+        </div>
+        <div style="width:804px;background:#fff0e3;color:#c24e00;border-radius:12px;padding:12px;font-size:13px;font-weight:700;line-height:1.4">Planche de comparaison A/B : le mur de coordonnées bloque le résultat. Le POC le remplace par AR-solaire (résultat immédiat, coordonnées seulement au moment du RDV).</div>
+      </div></div>
+<div id="AR-solaire-desktop" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">AR-solaire · Résultat</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">desktop 1440</span></div>
+      <div style="width:1440px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="background:#fff0e3;color:#c24e00;font-size:14px;font-weight:700;padding:10px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+        <div style="padding:20px 64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:24px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:10px;color:#258386;font-size:16px;font-weight:700"><i data-lucide="phone" width="20" height="20"></i>04 XX XX XX XX</div></div>
+        <div style="padding:40px 64px 48px;display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:48px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:24px">
+            <div style="display:flex;align-items:center;gap:16px"><div style="font-size:36px;font-weight:800;letter-spacing:-0.02em">Votre estimation</div><span style="display:flex;align-items:center;gap:8px;color:#258386;font-size:15px;font-weight:700"><span style="width:36px;height:36px;border-radius:999px;border:2px solid #258386;display:flex;align-items:center;justify-content:center;font-weight:800">?</span>Comprendre mon résultat</span></div>
+            <div style="display:flex;gap:24px;align-items:stretch">
+              <div style="flex:1;border:1px solid #e3e3e3;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+                <div style="font-size:16px;font-weight:700">Hausse annuelle du prix de l'électricité</div>
+                <div style="display:flex;align-items:center;gap:16px"><div style="width:44px;height:44px;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800">−</div><div style="flex:1;text-align:center;font-size:30px;font-weight:800;color:#e22c22">4 %</div><div style="width:44px;height:44px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800">+</div></div>
+                <div style="font-size:12px;color:#8a8a8a;font-weight:600">Moyenne 2016-2025, tarifs réglementés · bornes 0 – 15 %</div>
+              </div>
+              <div style="flex:1;border:1px solid #e3e3e3;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+                <div style="font-size:16px;font-weight:700">Horizon</div>
+                <div style="display:flex;gap:8px"><span style="font-size:15px;font-weight:700;padding:9px 14px;border-radius:999px;border:1px solid #e3e3e3">10</span><span style="font-size:15px;font-weight:700;padding:9px 14px;border-radius:999px;border:1px solid #e3e3e3">15</span><span style="font-size:15px;font-weight:700;padding:9px 14px;border-radius:999px;border:1px solid #e3e3e3">20</span><span style="font-size:15px;font-weight:800;padding:9px 14px;border-radius:999px;background:#e22c22;color:#ffffff">25 ans</span><span style="font-size:15px;font-weight:700;padding:9px 14px;border-radius:999px;border:1px solid #e3e3e3">30</span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:24px;align-items:stretch">
+              <div style="flex:1.2;border:2px solid #e22c22;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:6px;justify-content:center"><div style="font-size:15px;font-weight:700;color:#5c5c5c">Vos économies cumulées sur 25 ans</div><div style="font-size:58px;line-height:1;font-weight:800;color:#e22c22;letter-spacing:-0.02em">33 188 €</div></div>
+              <div style="flex:1;background:#f4f4f4;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px;justify-content:center"><div style="font-size:14px;font-weight:700;color:#5c5c5c">Facture annuelle dans 25 ans</div><div style="font-size:14px;font-weight:700;color:#8a8a8a">Sans solaire</div><div style="font-size:30px;font-weight:800">10 402 €</div></div>
+              <div style="flex:1;border:1px solid #258386;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:6px;justify-content:center"><div style="font-size:14px;font-weight:700;color:#5c5c5c">Facture annuelle dans 25 ans</div><div style="display:flex;align-items:center;gap:6px;color:#258386"><i data-lucide="sun" width="16" height="16"></i><span style="font-size:14px;font-weight:700">Avec solaire</span></div><div style="font-size:30px;font-weight:800;color:#258386">7 988 €</div></div>
+            </div>
+            <div style="border:1px solid #e3e3e3;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:16px">
+              <svg viewBox="0 0 800 240" style="width:100%;height:auto">
+                <polygon points="0,140 160,124 320,104 480,80 640,54 800,36 800,74 640,90 480,110 320,126 160,140 0,150" fill="#e9f3f3"></polygon>
+                <polyline points="0,140 160,124 320,104 480,80 640,54 800,36" fill="none" stroke="#8a8a8a" stroke-width="3"></polyline>
+                <polyline points="0,150 160,140 320,126 480,110 640,90 800,74" fill="none" stroke="#258386" stroke-width="3"></polyline>
+                <text x="330" y="112" font-family="Nunito" font-size="14" font-weight="700" fill="#258386">vos économies</text>
+                <text x="800" y="26" text-anchor="end" font-family="Nunito" font-size="14" font-weight="700" fill="#8a8a8a">sans solaire</text>
+                <line x1="0" y1="200" x2="800" y2="200" stroke="#e3e3e3" stroke-width="1"></line>
+                <text x="0" y="220" font-family="Nunito" font-size="13" fill="#8a8a8a">2026</text><text x="160" y="220" font-family="Nunito" font-size="13" fill="#8a8a8a">2031</text><text x="320" y="220" font-family="Nunito" font-size="13" fill="#8a8a8a">2036</text><text x="480" y="220" font-family="Nunito" font-size="13" fill="#8a8a8a">2041</text><text x="640" y="220" font-family="Nunito" font-size="13" fill="#8a8a8a">2046</text><text x="800" y="220" text-anchor="end" font-family="Nunito" font-size="13" fill="#8a8a8a">2051</text>
+              </svg>
+              <div style="font-size:18px;font-weight:600">Chaque point de hausse supplémentaire, c'est <strong style="font-weight:800;color:#e22c22">+2 100 €</strong> d'économies sur 25 ans.</div>
+            </div>
+            <div style="background:#f4f4f4;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:16px">
+              <div style="font-size:20px;font-weight:800">Mon installation</div>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+                <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:15px;font-weight:700;color:#5c5c5c">Centrale solaire</span><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:9px 0;border-radius:999px">3</span><span style="flex:1;text-align:center;font-size:14px;font-weight:800;padding:9px 0;border-radius:999px;background:#e22c22;color:#ffffff">6 kWc</span><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:9px 0;border-radius:999px">9</span></div></div>
+                <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:15px;font-weight:700;color:#5c5c5c">Stockage</span><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:14px;font-weight:800;padding:9px 0;border-radius:999px;background:#e22c22;color:#ffffff">Aucun</span><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:9px 0;border-radius:999px">Virtuel</span><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:9px 0;border-radius:999px">Batterie</span></div></div>
+                <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:15px;font-weight:700;color:#5c5c5c">Couplage pompe à chaleur</span><div style="display:flex;background:#ffffff;border-radius:999px;padding:4px;gap:4px"><span style="flex:1;text-align:center;font-size:14px;font-weight:800;padding:9px 0;border-radius:999px;background:#e22c22;color:#ffffff">Non</span><span style="flex:1;text-align:center;font-size:14px;font-weight:700;padding:9px 0;border-radius:999px">Oui</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px;position:sticky;top:24px">
+            <div style="border:1px solid #e3e3e3;border-radius:20px;overflow:hidden">
+              <div style="background:#fdeceb;padding:14px 20px;display:flex;align-items:center;gap:10px"><i data-lucide="badge-check" width="20" height="20" style="color:#e22c22"></i><span style="font-size:14px;font-weight:800;color:#e22c22">Pack conseillé</span></div>
+              <div style="padding:20px;display:flex;flex-direction:column;gap:14px">
+                <div style="font-size:22px;font-weight:800;line-height:1.25">Sol&amp;Go 6 kWc — à partir de 10 190 €</div>
+                <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Aides estimées</span><span style="font-weight:800;color:#255a2e">− 1 140 €</span></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Reste à charge</span><span style="font-weight:800">9 050 €</span></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Rentabilisé en</span><span style="font-weight:800">11 ans</span></div>
+                <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 12px">Je planifie ma visite technique gratuite</div>
+                <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Je préfère être rappelé</div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#258386;font-size:16px;font-weight:700"><i data-lucide="phone-call" width="18" height="18"></i>Appeler mon agence</div>
+              </div>
+            </div>
+            <div style="background:#f4f4f4;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:16px;font-weight:800">Nos hypothèses</span><i data-lucide="chevron-down" width="20" height="20" style="color:#5c5c5c"></i></div>
+              <div style="font-size:14px;color:#5c5c5c;font-weight:600;line-height:1.4">Prix du kWh 0,2001 € (août 2026) · surplus 0,011 €/kWh · TVA 5,5 % · prime autoconsommation 0 € depuis le 05/06/2026 · hausse par défaut 4 %. Ordre de grandeur, ne constitue pas un devis.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="B-question" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-question · B0 logement</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;height:820px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px 12px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #f4f4f4">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="width:22px;height:22px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span><span style="font-size:12px;font-weight:800">Votre situation</span>
+              <span style="flex:1;height:2px;background:#e3e3e3"></span>
+              <span style="width:22px;height:22px;border-radius:999px;background:#c9c9c9;color:#ffffff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:12px;font-weight:700;color:#8a8a8a">Votre logement</span>
+              <span style="flex:1;height:2px;background:#e3e3e3"></span>
+              <span style="width:22px;height:22px;border-radius:999px;background:#c9c9c9;color:#ffffff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span><span style="font-size:12px;font-weight:700;color:#8a8a8a">Votre RDV</span>
+            </div>
+          </div>
+          <div style="margin:16px 20px 0;border:1px solid #e3e3e3;border-radius:16px;overflow:hidden">
+            <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:#ffffff">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:16px;font-weight:800">Vos réponses</span><span style="background:#e9f3f3;color:#1e6b6e;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px">repris de votre estimation</span></div>
+              <i data-lucide="chevron-up" width="20" height="20" style="color:#8a8a8a"></i>
+            </div>
+            <div style="padding:0 16px 14px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:600;color:#1e1e1e">Code postal <strong style="font-weight:800">69001</strong></span><i data-lucide="pencil" width="16" height="16" style="color:#f0463c"></i></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:600">Surface <strong style="font-weight:800">100–135 m²</strong></span><i data-lucide="pencil" width="16" height="16" style="color:#f0463c"></i></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:600">Facture <strong style="font-weight:800">101–135 €/mois</strong></span><i data-lucide="pencil" width="16" height="16" style="color:#f0463c"></i></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:600">Projet <strong style="font-weight:800">solaire</strong></span><i data-lucide="pencil" width="16" height="16" style="color:#f0463c"></i></div>
+            </div>
+          </div>
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:13px;font-weight:700;color:#8a8a8a">B0 · 1 / 9</div>
+            <div style="font-size:24px;line-height:1.2;font-weight:800">Votre logement</div>
+          </div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-height:44px"><i data-lucide="house" width="32" height="32" style="color:#e22c22"></i><span style="font-size:17px;font-weight:700">Maison</span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-height:44px"><i data-lucide="building-2" width="32" height="32"></i><span style="font-size:17px;font-weight:700">Appartement</span></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-height:44px"><i data-lucide="store" width="32" height="32"></i><span style="font-size:17px;font-weight:700">Local professionnel</span></div>
+          </div>
+          <div style="margin:0 20px;background:#f4f4f4;border-radius:16px;padding:16px;display:flex;gap:10px"><i data-lucide="info" width="20" height="20" style="color:#5c5c5c;flex:none"></i><div style="font-size:14px;line-height:1.4;color:#5c5c5c"><strong style="font-weight:800;color:#1e1e1e">Accès direct sans estimation.</strong> Le panneau « Vos réponses » est vide : les questions du simulateur sont posées ici, une seule fois.</div></div>
+          <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div><div style="font-size:13px;font-weight:600;color:#8a8a8a">Votre choix passe à la suite</div></div>
+        </div>
+      </div><div id="B-toiture" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-toiture · B10 état de la toiture</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;height:1080px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px 12px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid #f4f4f4">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="width:22px;height:22px;border-radius:999px;background:#1e1e1e;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="12" height="12"></i></span><span style="font-size:12px;font-weight:700">Votre situation</span>
+              <span style="flex:1;height:2px;background:#1e1e1e"></span>
+              <span style="width:22px;height:22px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:12px;font-weight:800">Votre logement</span>
+              <span style="flex:1;height:2px;background:#e3e3e3"></span>
+              <span style="width:22px;height:22px;border-radius:999px;background:#c9c9c9;color:#ffffff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span><span style="font-size:12px;font-weight:700;color:#8a8a8a">Votre RDV</span>
+            </div>
+          </div>
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:13px;font-weight:700;color:#8a8a8a">B10 · 5 / 9</div>
+            <div style="font-size:24px;line-height:1.2;font-weight:800">Dans quel état est votre toiture ?</div>
+            <div style="display:flex;align-items:center;gap:8px;color:#258386;font-size:14px;font-weight:700"><i data-lucide="circle-help" width="18" height="18"></i>Pourquoi cette question ?</div>
+            <div style="background:#e9f3f3;border-radius:14px;padding:14px;font-size:14px;line-height:1.45;color:#1e1e1e">Une toiture d'origine peut nécessiter une reprise avant la pose des panneaux. Le technicien le vérifie pendant la visite ; cela ne bloque pas votre rendez-vous.</div>
+          </div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-height:44px"><i data-lucide="hammer" width="32" height="32"></i><div><div style="font-size:17px;font-weight:700">Rénovée</div><div style="font-size:14px;color:#5c5c5c;font-weight:600">moins de 15 ans</div></div></div>
+            <div style="background:#fdeceb;border:2px solid #e22c22;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-height:44px"><i data-lucide="house" width="32" height="32" style="color:#e22c22"></i><div><div style="font-size:17px;font-weight:700">D'origine</div><div style="font-size:14px;color:#5c5c5c;font-weight:600">jamais refaite</div></div></div>
+            <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-height:44px"><i data-lucide="circle-help" width="32" height="32"></i><span style="font-size:17px;font-weight:700">Je ne sais pas</span></div>
+          </div>
+          <div style="margin:0 20px;border:1px solid #e3e3e3;border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:16px;font-weight:800">Vos réponses</span><span style="background:#e9f3f3;color:#1e6b6e;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px">4 valeurs reprises</span></div><i data-lucide="chevron-down" width="20" height="20" style="color:#8a8a8a"></i></div>
+          <div style="margin:16px 20px 0;border:1px solid #e3e3e3;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:13px;font-weight:800;color:#5c5c5c">États transverses</div>
+            <div style="height:48px;border:1.5px solid #258386;outline:3px solid #7fbdbf;border-radius:12px;display:flex;align-items:center;padding:0 12px;font-size:15px;color:#5c5c5c">Champ avec focus — anneau canard-300</div>
+            <div style="height:48px;border:1.5px solid #f0463c;border-radius:12px;display:flex;align-items:center;padding:0 12px;font-size:15px;color:#1e1e1e">06 12 34 56</div>
+            <div style="font-size:13px;font-weight:700;color:#b3231b">Numéro incomplet — 10 chiffres attendus</div>
+            <div style="display:flex;gap:8px"><div style="height:20px;flex:1;background:#f4f4f4;border-radius:6px"></div><div style="height:20px;width:60px;background:#f4f4f4;border-radius:6px"></div></div>
+            <div style="font-size:12px;font-weight:600;color:#8a8a8a">Chargement : squelette neutre-100</div>
+          </div>
+          <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div><div style="font-size:13px;font-weight:600;color:#8a8a8a">Votre choix passe à la suite</div></div>
+        </div>
+      </div><div id="B-coordonnees-otp" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-coordonnees-otp · B15–B17 · B19</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="display:flex;gap:24px">
+          <div style="width:390px;height:820px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">B15 · 8 / 9</div>
+              <div style="font-size:24px;line-height:1.2;font-weight:800">Vos coordonnées</div>
+              <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Pour confirmer le créneau et vous envoyer le rappel.</div>
+            </div>
+            <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Prénom</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px;display:flex;align-items:center;padding:0 14px;font-size:16px">Sarah</div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Nom</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px;display:flex;align-items:center;padding:0 14px;font-size:16px;color:#8a8a8a">Votre nom</div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Email</span><div style="height:48px;border:1.5px solid #258386;outline:3px solid #7fbdbf;border-radius:12px;display:flex;align-items:center;padding:0 14px;font-size:16px;color:#8a8a8a">prenom@exemple.fr</div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;font-weight:600">Téléphone</span><div style="height:48px;border:1px solid #c9c9c9;border-radius:12px;display:flex;align-items:center;padding:0 14px;font-size:16px;color:#8a8a8a">06 00 00 00 00</div></div>
+              <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:24px;height:24px;flex:none;border:2px solid #1e1e1e;border-radius:6px"></span><span style="font-size:15px;line-height:1.4">Je ne souhaite pas être appelé, uniquement le SMS de confirmation</span></div>
+              <div style="background:#e9f3f3;border-radius:14px;padding:14px;display:flex;gap:10px"><i data-lucide="lock" width="20" height="20" style="color:#258386;flex:none"></i><span style="font-size:14px;line-height:1.4">Prototype : aucune donnée n'est transmise ni conservée.</span></div>
+            </div>
+            <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div><div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Recevoir mon code</div></div>
+          </div>
+          <div style="width:390px;height:820px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">B17 · 9 / 9</div>
+              <div style="font-size:24px;line-height:1.2;font-weight:800">Votre code de confirmation</div>
+              <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Envoyé au 06 •• •• •• 34.</div>
+            </div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;gap:12px">
+                <div style="flex:1;height:64px;border:2px solid #e22c22;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800">4</div>
+                <div style="flex:1;height:64px;border:1px solid #c9c9c9;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800">8</div>
+                <div style="flex:1;height:64px;border:1px solid #c9c9c9;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#c9c9c9">–</div>
+                <div style="flex:1;height:64px;border:1px solid #c9c9c9;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#c9c9c9">–</div>
+              </div>
+              <div style="background:#fff0e3;color:#c24e00;border-radius:12px;padding:12px;font-size:14px;font-weight:800">Mode démo — votre code : 4821</div>
+              <div style="font-size:15px;font-weight:700;color:#258386">Renvoyer le code</div>
+            </div>
+            <div style="margin:8px 20px;border-top:1px solid #f4f4f4;padding-top:20px;display:flex;flex-direction:column;gap:12px">
+              <div style="font-size:13px;font-weight:700;color:#8a8a8a">B19 · Info visite (fusionnable en tête du calendrier)</div>
+              <div style="border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><i data-lucide="clipboard-check" width="24" height="24" style="color:#258386"></i><span style="font-size:17px;font-weight:800">Visite technique à domicile</span></div>
+                <div style="font-size:16px;line-height:1.5;color:#1e1e1e">Environ 1 h, en présence d'un propriétaire du logement. Vous pouvez être accompagné d'un proche.</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap"><span style="background:#f4f4f4;font-size:13px;font-weight:700;padding:5px 10px;border-radius:999px">Gratuite</span><span style="background:#f4f4f4;font-size:13px;font-weight:700;padding:5px 10px;border-radius:999px">Sans engagement</span><span style="background:#e6f2e8;color:#255a2e;font-size:13px;font-weight:800;padding:5px 10px;border-radius:999px">Technicien RGE</span></div>
+              </div>
+            </div>
+            <div style="margin-top:auto;padding:14px 20px;border-top:1px solid #f4f4f4;display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;flex:none;border-radius:999px;border:1px solid #e3e3e3;display:flex;align-items:center;justify-content:center"><i data-lucide="arrow-left" width="20" height="20"></i></div><div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Valider</div></div>
+          </div>
+        </div>
+      </div></div>
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="B-calendrier" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-calendrier · B20 + modale B21</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="display:flex;gap:24px">
+          <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:19px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:6px;color:#258386;font-size:13px;font-weight:700"><i data-lucide="phone" width="16" height="16"></i>Appeler mon agence</div></div>
+            <div style="margin:16px 20px 0;background:#f4f4f4;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+              <i data-lucide="map-pin" width="24" height="24" style="color:#e22c22;flex:none"></i>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:17px;font-weight:800;line-height:1.25">Agence HomeServe Rénov' Lyon</div>
+                <div style="font-size:15px;color:#5c5c5c;font-weight:600">à 12 km de votre logement</div>
+                <span style="background:#e6f2e8;color:#255a2e;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;align-self:flex-start">Certifiée RGE</span>
+              </div>
+            </div>
+            <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:4px">
+              <div style="font-size:24px;font-weight:800;line-height:1.2">Choisissez votre créneau</div>
+              <div style="font-size:15px;color:#5c5c5c;font-weight:600">14 jours ouvrés à partir de demain</div>
+            </div>
+            <div style="padding:16px 20px 0;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;justify-content:space-between"><i data-lucide="chevron-left" width="20" height="20" style="color:#c9c9c9"></i><span style="font-size:16px;font-weight:800">Septembre 2026</span><i data-lucide="chevron-right" width="20" height="20"></i></div>
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:12px;font-weight:700;color:#8a8a8a"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center">
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">7</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">8</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">9</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">10</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">11</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">12</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">13</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">14</span>
+                <span style="height:44px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800">15</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">16</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">17</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">18</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">19</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">20</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">21</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">22</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">23</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">24</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">25</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">26</span>
+                <span style="height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#c9c9c9">27</span>
+              </div>
+              <div style="display:flex;gap:14px;font-size:12px;font-weight:700;color:#5c5c5c"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:999px;background:#1e1e1e"></span>disponible</span><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:999px;background:#c9c9c9"></span>indisponible</span></div>
+            </div>
+            <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;background:#f4f4f4;border-radius:999px;padding:4px"><span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px;border-radius:999px;background:#ffffff">Matin</span><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px;border-radius:999px;color:#5c5c5c">Après-midi</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <span style="font-size:15px;font-weight:700;padding:11px 16px;border-radius:999px;border:1px solid #e3e3e3">08:30</span>
+                <span style="font-size:15px;font-weight:700;padding:11px 16px;border-radius:999px;border:1px solid #e3e3e3">09:00</span>
+                <span style="font-size:15px;font-weight:800;padding:11px 16px;border-radius:999px;background:#e22c22;color:#ffffff">09:30</span>
+                <span style="font-size:15px;font-weight:700;padding:11px 16px;border-radius:999px;border:1px solid #e3e3e3">10:00</span>
+                <span style="font-size:15px;font-weight:700;padding:11px 16px;border-radius:999px;border:1px solid #e3e3e3;color:#c9c9c9;text-decoration:line-through">10:30</span>
+                <span style="font-size:15px;font-weight:700;padding:11px 16px;border-radius:999px;border:1px solid #e3e3e3">11:00</span>
+              </div>
+              <div style="background:#fff0e3;color:#c24e00;border-radius:12px;padding:10px 12px;font-size:13px;font-weight:800">Agenda simulé</div>
+              <div style="font-size:15px;font-weight:700;color:#258386;line-height:1.4">Aucun créneau ne me convient → être rappelé</div>
+            </div>
+            <div style="margin-top:20px;border-top:1px solid #e3e3e3;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 -2px 8px rgba(30,30,30,.08)">
+              <div style="display:flex;flex-direction:column"><span style="font-size:12px;font-weight:700;color:#5c5c5c">Mardi 15 sept.</span><span style="font-size:16px;font-weight:800">09:30 – 10:30</span></div>
+              <div style="flex:1;height:48px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">Je confirme ce créneau</div>
+            </div>
+          </div>
+          <div style="width:390px;height:820px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;position:relative">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="flex:1;background:#f4f4f4;position:relative;display:flex;align-items:flex-end">
+              <div style="position:absolute;inset:0;background:rgba(30,30,30,.45)"></div>
+              <div style="position:relative;margin:16px;background:#ffffff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:16px;width:100%;box-sizing:border-box">
+                <div style="width:56px;height:56px;border-radius:999px;background:#fdeceb;display:flex;align-items:center;justify-content:center"><i data-lucide="user-check" width="28" height="28" style="color:#e22c22"></i></div>
+                <div style="font-size:24px;font-weight:800;line-height:1.2">Ce rendez-vous mobilise un technicien</div>
+                <div style="font-size:17px;line-height:1.5;color:#5c5c5c;text-wrap:pretty">Un technicien HomeServe Rénov' se déplacera chez vous le mardi 15 septembre à 09:30, pour environ 1 h. Merci de prévenir l'agence si vous ne pouvez plus être présent.</div>
+                <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Je confirme</div>
+                <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Modifier</div>
+              </div>
+            </div>
+            <div style="padding:12px 20px;font-size:12px;font-weight:700;color:#8a8a8a;text-align:center">Modale B21 — rayon 2xl, fond neutre-700 45 %</div>
+          </div>
+        </div>
+      </div><div id="B-conditionnels" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-conditionnels</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390 · 2 vignettes</span></div>
+        <div style="display:flex;gap:24px">
+          <div style="width:390px;height:640px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="padding:24px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="width:72px;height:72px;border-radius:999px;background:#e9f3f3;display:flex;align-items:center;justify-content:center"><i data-lucide="calendar-clock" width="36" height="36" style="color:#258386"></i></div>
+              <div style="font-size:24px;font-weight:800;line-height:1.2">Vous avez déjà un rendez-vous</div>
+              <div style="font-size:17px;line-height:1.5;color:#5c5c5c">Inutile d'en prendre un second : votre visite technique est déjà planifiée.</div>
+              <div style="border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;font-size:16px"><span style="color:#5c5c5c;font-weight:600">Date</span><span style="font-weight:800">Mardi 15 sept. · 09:30</span></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex;justify-content:space-between;font-size:16px"><span style="color:#5c5c5c;font-weight:600">Agence</span><span style="font-weight:800">Lyon</span></div>
+                <div style="height:1px;background:#f4f4f4"></div>
+                <div style="display:flex;justify-content:space-between;font-size:16px"><span style="color:#5c5c5c;font-weight:600">Type</span><span style="font-weight:800">Visite technique</span></div>
+              </div>
+              <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Gérer mon rendez-vous</div>
+              <div style="font-size:15px;font-weight:700;color:#258386;text-align:center">Appeler mon agence</div>
+            </div>
+          </div>
+          <div style="width:390px;height:640px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="padding:24px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="width:72px;height:72px;border-radius:999px;background:#fff0e3;display:flex;align-items:center;justify-content:center"><i data-lucide="users" width="36" height="36" style="color:#fb6500"></i></div>
+              <div style="font-size:24px;font-weight:800;line-height:1.2">Forte demande dans votre secteur</div>
+              <div style="font-size:17px;line-height:1.5;color:#5c5c5c">Les créneaux de l'agence de Lyon sont complets pour les 14 prochains jours. Un conseiller vous rappelle pour trouver une date au plus tôt.</div>
+              <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Je préfère être rappelé</div>
+              <div style="height:56px;border-radius:999px;border:2px solid #1e1e1e;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">Voir les dates suivantes</div>
+              <div style="background:#fff0e3;color:#c24e00;border-radius:12px;padding:10px 12px;font-size:13px;font-weight:800;align-self:flex-start">Règle simulée</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+<div id="B-calendrier-desktop" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-calendrier · B20</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">desktop 1440</span></div>
+      <div style="width:1440px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="background:#fff0e3;color:#c24e00;font-size:14px;font-weight:700;padding:10px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+        <div style="padding:20px 64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f4f4f4"><div style="font-size:24px;font-weight:800;color:#e22c22">HomeServe</div><div style="display:flex;align-items:center;gap:10px;color:#258386;font-size:16px;font-weight:700"><i data-lucide="phone" width="20" height="20"></i>04 XX XX XX XX</div></div>
+        <div style="padding:32px 64px 12px;display:flex;align-items:center;gap:12px">
+          <span style="width:26px;height:26px;border-radius:999px;background:#1e1e1e;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="14" height="14"></i></span><span style="font-size:15px;font-weight:700">Votre situation</span>
+          <span style="width:80px;height:2px;background:#1e1e1e"></span>
+          <span style="width:26px;height:26px;border-radius:999px;background:#1e1e1e;color:#ffffff;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="14" height="14"></i></span><span style="font-size:15px;font-weight:700">Votre logement</span>
+          <span style="width:80px;height:2px;background:#1e1e1e"></span>
+          <span style="width:26px;height:26px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span><span style="font-size:15px;font-weight:800">Votre rendez-vous</span>
+        </div>
+        <div style="padding:20px 64px 48px;display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:48px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:24px">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:34px;font-weight:800;letter-spacing:-0.02em">Choisissez votre créneau</div>
+              <div style="font-size:17px;color:#5c5c5c;font-weight:600">14 jours ouvrés à partir de demain · visite d'environ 1 h</div>
+            </div>
+            <div style="display:flex;gap:24px;align-items:flex-start">
+              <div style="flex:1;border:1px solid #e3e3e3;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;align-items:center;justify-content:space-between"><i data-lucide="chevron-left" width="22" height="22" style="color:#c9c9c9"></i><span style="font-size:18px;font-weight:800">Septembre 2026</span><i data-lucide="chevron-right" width="22" height="22"></i></div>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center;font-size:13px;font-weight:700;color:#8a8a8a"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center">
+                  <span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">7</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">8</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">9</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">10</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">11</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">12</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">13</span>
+                  <span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">14</span><span style="height:48px;border-radius:999px;background:#e22c22;color:#ffffff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800">15</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">16</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">17</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">18</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">19</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">20</span>
+                  <span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">21</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">22</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">23</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">24</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">25</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">26</span><span style="height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#c9c9c9">27</span>
+                </div>
+              </div>
+              <div style="flex:1;border:1px solid #e3e3e3;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:16px">
+                <div style="font-size:18px;font-weight:800">Mardi 15 septembre</div>
+                <div style="display:flex;background:#f4f4f4;border-radius:999px;padding:4px"><span style="flex:1;text-align:center;font-size:15px;font-weight:800;padding:10px;border-radius:999px;background:#ffffff">Matin</span><span style="flex:1;text-align:center;font-size:15px;font-weight:700;padding:10px;border-radius:999px;color:#5c5c5c">Après-midi</span></div>
+                <div style="display:flex;flex-wrap:wrap;gap:10px">
+                  <span style="font-size:15px;font-weight:700;padding:11px 18px;border-radius:999px;border:1px solid #e3e3e3">08:30</span><span style="font-size:15px;font-weight:700;padding:11px 18px;border-radius:999px;border:1px solid #e3e3e3">09:00</span><span style="font-size:15px;font-weight:800;padding:11px 18px;border-radius:999px;background:#e22c22;color:#ffffff">09:30</span><span style="font-size:15px;font-weight:700;padding:11px 18px;border-radius:999px;border:1px solid #e3e3e3">10:00</span><span style="font-size:15px;font-weight:700;padding:11px 18px;border-radius:999px;border:1px solid #e3e3e3;color:#c9c9c9;text-decoration:line-through">10:30</span><span style="font-size:15px;font-weight:700;padding:11px 18px;border-radius:999px;border:1px solid #e3e3e3">11:00</span>
+                </div>
+                <div style="background:#fff0e3;color:#c24e00;border-radius:12px;padding:10px 12px;font-size:13px;font-weight:800;align-self:flex-start">Agenda simulé</div>
+                <div style="font-size:16px;font-weight:700;color:#258386">Aucun créneau ne me convient → être rappelé</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:#f4f4f4;border-radius:20px;padding:24px;display:flex;gap:14px;align-items:flex-start">
+              <i data-lucide="map-pin" width="26" height="26" style="color:#e22c22;flex:none"></i>
+              <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:18px;font-weight:800;line-height:1.25">Agence HomeServe Rénov' Lyon</div><div style="font-size:15px;color:#5c5c5c;font-weight:600">à 12 km de votre logement</div><span style="background:#e6f2e8;color:#255a2e;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;align-self:flex-start">Certifiée RGE</span></div>
+            </div>
+            <div style="border:1px solid #e3e3e3;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px">
+              <div style="font-size:18px;font-weight:800">Votre rendez-vous</div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Date</span><span style="font-weight:800">Mardi 15 sept.</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Créneau</span><span style="font-weight:800">09:30 – 10:30</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Durée</span><span style="font-weight:800">environ 1 h</span></div>
+              <div style="height:56px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Je confirme ce créneau</div>
+              <div style="font-size:14px;color:#5c5c5c;font-weight:600;line-height:1.4">En présence d'un propriétaire du logement. Vous pouvez être accompagné d'un proche.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div style="display:flex;gap:48px;align-items:flex-start"><div id="B-confirmation" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">B-confirmation · B22</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390</span></div>
+        <div style="width:390px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+          <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+          <div style="padding:28px 20px 20px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center">
+            <div style="width:88px;height:88px;border-radius:999px;background:#e6f2e8;display:flex;align-items:center;justify-content:center"><i data-lucide="check" width="44" height="44" style="color:#4f9a5c"></i></div>
+            <div style="font-size:27px;font-weight:800;line-height:1.2">Votre visite est confirmée</div>
+            <div style="font-size:17px;color:#5c5c5c;line-height:1.45">Vous recevez un SMS de confirmation. L'agence vous rappelle la veille.</div>
+          </div>
+          <div style="margin:0 20px;border:1px solid #e3e3e3;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;font-size:17px;gap:12px"><span style="color:#5c5c5c;font-weight:600">Date</span><span style="font-weight:800;text-align:right">Mardi 15 septembre 2026</span></div>
+            <div style="height:1px;background:#f4f4f4"></div>
+            <div style="display:flex;justify-content:space-between;font-size:17px"><span style="color:#5c5c5c;font-weight:600">Créneau</span><span style="font-weight:800">09:30 – 10:30</span></div>
+            <div style="height:1px;background:#f4f4f4"></div>
+            <div style="display:flex;justify-content:space-between;font-size:17px;gap:12px"><span style="color:#5c5c5c;font-weight:600">Agence</span><span style="font-weight:800;text-align:right">HomeServe Rénov' Lyon</span></div>
+            <div style="height:1px;background:#f4f4f4"></div>
+            <div style="display:flex;justify-content:space-between;font-size:17px;gap:12px"><span style="color:#5c5c5c;font-weight:600">Adresse</span><span style="font-weight:800;text-align:right">Chez vous — 69001 Lyon</span></div>
+            <div style="height:1px;background:#f4f4f4"></div>
+            <div style="display:flex;justify-content:space-between;font-size:17px;gap:12px"><span style="color:#5c5c5c;font-weight:600">Type</span><span style="font-weight:800;text-align:right">Visite technique · env. 1 h</span></div>
+          </div>
+          <div style="padding:16px 20px 0"><div style="height:52px;border-radius:999px;border:2px solid #1e1e1e;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px"><i data-lucide="calendar-plus" width="20" height="20"></i>Ajouter à mon agenda</div></div>
+          <div style="margin:20px;background:#f4f4f4;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:19px;font-weight:800">À préparer</div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><i data-lucide="file-text" width="22" height="22" style="color:#258386;flex:none"></i><span style="font-size:16px;line-height:1.4">Vos dernières factures d'énergie</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><i data-lucide="receipt" width="22" height="22" style="color:#258386;flex:none"></i><span style="font-size:16px;line-height:1.4">Votre avis de taxe foncière</span></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><i data-lucide="camera" width="22" height="22" style="color:#258386;flex:none"></i><span style="font-size:16px;line-height:1.4">Une photo du compteur ou du toit</span></div>
+          </div>
+          <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:19px;font-weight:800">Comment se déroule la visite</div>
+            <div style="border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start"><span style="width:34px;height:34px;flex:none;border-radius:999px;background:#fdeceb;color:#e22c22;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">1</span><div><div style="font-size:17px;font-weight:800">Le technicien appelle</div><div style="font-size:15px;color:#5c5c5c;line-height:1.4">Il confirme l'heure la veille de la visite.</div></div></div>
+            <div style="border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start"><span style="width:34px;height:34px;flex:none;border-radius:999px;background:#fdeceb;color:#e22c22;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">2</span><div><div style="font-size:17px;font-weight:800">Relevé sur place</div><div style="font-size:15px;color:#5c5c5c;line-height:1.4">Toiture, tableau électrique, consommation.</div></div></div>
+            <div style="border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start"><span style="width:34px;height:34px;flex:none;border-radius:999px;background:#fdeceb;color:#e22c22;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">3</span><div><div style="font-size:17px;font-weight:800">Étude chiffrée</div><div style="font-size:15px;color:#5c5c5c;line-height:1.4">Puissance retenue, aides, reste à charge.</div></div></div>
+            <div style="border:1px solid #e3e3e3;border-radius:16px;padding:16px;display:flex;gap:14px;align-items:flex-start"><span style="width:34px;height:34px;flex:none;border-radius:999px;background:#fdeceb;color:#e22c22;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center">4</span><div><div style="font-size:17px;font-weight:800">Devis, sans engagement</div><div style="font-size:15px;color:#5c5c5c;line-height:1.4">Vous décidez après réception.</div></div></div>
+            <div style="text-align:center;font-size:16px;font-weight:700;color:#258386;padding-top:4px">Gérer mon rendez-vous</div>
+          </div>
+        </div>
+      </div><div id="S-orientation" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">S-orientation · S3 locataire · O1 non éligible</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">mobile 390 · 2 vignettes</span></div>
+        <div style="display:flex;gap:24px">
+          <div style="width:390px;height:900px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="padding:24px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="width:72px;height:72px;border-radius:999px;background:#e9f3f3;display:flex;align-items:center;justify-content:center"><i data-lucide="key-round" width="36" height="36" style="color:#258386"></i></div>
+              <div style="font-size:25px;font-weight:800;line-height:1.2">Locataire ? Protégez votre logement sans travaux</div>
+              <div style="font-size:17px;line-height:1.5;color:#5c5c5c">L'installation solaire relève du propriétaire. En revanche, vous pouvez sécuriser vos équipements du quotidien.</div>
+              <div style="border:1px solid #e3e3e3;border-radius:20px;overflow:hidden">
+                <div style="background:#f4f4f4;padding:14px 16px;display:flex;align-items:center;gap:10px"><i data-lucide="shield-check" width="22" height="22" style="color:#e22c22"></i><span style="font-size:15px;font-weight:800">Offre HomeServe</span></div>
+                <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+                  <div style="font-size:19px;font-weight:800">Assistance plomberie &amp; électricité</div>
+                  <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Dépannage d'urgence 7 j/7, main-d'œuvre et déplacement inclus.</div>
+                  <div style="font-size:28px;font-weight:800;color:#e22c22">6 €/mois</div>
+                  <a href="https://www.homeserve.fr" style="height:52px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;text-decoration:none">Découvrir</a>
+                </div>
+              </div>
+              <div style="height:52px;border-radius:999px;border:2px solid #1e1e1e;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Être rappelé</div>
+              <div style="text-align:center;font-size:15px;font-weight:700;color:#258386">Transmettre à un proche propriétaire</div>
+            </div>
+          </div>
+          <div style="width:390px;height:900px;flex:none;background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;overflow:hidden;display:flex;flex-direction:column">
+            <div style="background:#fff0e3;color:#c24e00;font-size:12px;font-weight:700;padding:8px 12px;text-align:center">Prototype non officiel — aucune donnée transmise</div>
+            <div style="padding:14px 20px;border-bottom:1px solid #f4f4f4;font-size:19px;font-weight:800;color:#e22c22">HomeServe</div>
+            <div style="padding:24px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="width:72px;height:72px;border-radius:999px;background:#f4f4f4;display:flex;align-items:center;justify-content:center"><i data-lucide="scale" width="36" height="36" style="color:#5c5c5c"></i></div>
+              <div style="font-size:25px;font-weight:800;line-height:1.2">Le solaire ne serait pas rentable chez vous aujourd'hui</div>
+              <div style="background:#f4f4f4;border-radius:16px;padding:16px;font-size:16px;line-height:1.5">D'après vos réponses, votre facture d'électricité est inférieure à 60 €/mois : les économies ne couvriraient pas l'installation.</div>
+              <div style="font-size:16px;line-height:1.5;color:#5c5c5c">Si votre consommation augmente (voiture électrique, pompe à chaleur, agrandissement), revenez faire le calcul.</div>
+              <div style="border:1px solid #e3e3e3;border-radius:20px;overflow:hidden">
+                <div style="background:#f4f4f4;padding:14px 16px;display:flex;align-items:center;gap:10px"><i data-lucide="shield-check" width="22" height="22" style="color:#e22c22"></i><span style="font-size:15px;font-weight:800">Offre HomeServe</span></div>
+                <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+                  <div style="font-size:19px;font-weight:800">Entretien chauffage</div>
+                  <div style="font-size:16px;color:#5c5c5c;line-height:1.4">Visite annuelle et dépannage, par des techniciens certifiés.</div>
+                  <div style="font-size:28px;font-weight:800;color:#e22c22">6 €/mois</div>
+                  <a href="https://www.homeserve.fr" style="height:52px;border-radius:999px;background:#e22c22;color:#ffffff;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;text-decoration:none">Découvrir</a>
+                </div>
+              </div>
+              <div style="height:52px;border-radius:999px;border:2px solid #1e1e1e;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center">Être rappelé</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+<div id="Parcours" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:10px"><span style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1e1e1e">Parcours · enchaînement des écrans</span><span style="font-size:11px;font-weight:700;color:#8a8a8a">vue d'ensemble</span></div>
+      <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:28px;width:1440px;box-sizing:border-box">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="width:150px;height:104px;border:2px solid #e22c22;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#e22c22">E0</span><span style="font-size:14px;font-weight:800;line-height:1.2">Accueil<br>2 entrées</span></div>
+          <i data-lucide="arrow-right" width="22" height="22" style="color:#8a8a8a"></i>
+          <div style="width:150px;height:104px;border:1px solid #e3e3e3;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#8a8a8a">Q ×8</span><span style="font-size:14px;font-weight:800;line-height:1.2">Simulateur<br>cartes · curseur · multi</span></div>
+          <i data-lucide="arrow-right" width="22" height="22" style="color:#8a8a8a"></i>
+          <div style="width:150px;height:104px;border:2px solid #258386;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#258386">AR</span><span style="font-size:14px;font-weight:800;line-height:1.2">Résultat chiffré<br>sans coordonnées</span></div>
+          <i data-lucide="arrow-right" width="22" height="22" style="color:#8a8a8a"></i>
+          <div style="width:150px;height:104px;border:1px solid #e3e3e3;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#8a8a8a">B0 → B10</span><span style="font-size:14px;font-weight:800;line-height:1.2">Qualification<br>réponses héritées</span></div>
+          <i data-lucide="arrow-right" width="22" height="22" style="color:#8a8a8a"></i>
+          <div style="width:150px;height:104px;border:1px solid #e3e3e3;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#8a8a8a">B15 → B17</span><span style="font-size:14px;font-weight:800;line-height:1.2">Coordonnées<br>code SMS</span></div>
+          <i data-lucide="arrow-right" width="22" height="22" style="color:#8a8a8a"></i>
+          <div style="width:150px;height:104px;border:1px solid #e3e3e3;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#8a8a8a">B20 · B21</span><span style="font-size:14px;font-weight:800;line-height:1.2">Calendrier<br>+ engagement</span></div>
+          <i data-lucide="arrow-right" width="22" height="22" style="color:#8a8a8a"></i>
+          <div style="width:150px;height:104px;border:2px solid #255a2e;border-radius:14px;padding:10px;display:flex;flex-direction:column;justify-content:space-between"><span style="font-size:11px;font-weight:800;color:#255a2e">B22</span><span style="font-size:14px;font-weight:800;line-height:1.2">Confirmation<br>à préparer</span></div>
+        </div>
+        <div style="display:flex;gap:32px;flex-wrap:wrap">
+          <div style="flex:1;min-width:320px;background:#f4f4f4;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:16px;font-weight:800">Bifurcation « Je prends rendez-vous »</div>
+            <div style="font-size:15px;line-height:1.5;color:#5c5c5c">E0 → B0 directement. Le panneau « Vos réponses » est vide et les questions du simulateur sont posées ici, une seule fois. Le résultat chiffré est présenté par le technicien.</div>
+          </div>
+          <div style="flex:1;min-width:320px;background:#f4f4f4;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:16px;font-weight:800">Bouton d'appel</div>
+            <div style="font-size:15px;line-height:1.5;color:#5c5c5c">Présent en en-tête de chaque écran, discret (canard-500). Sortie possible à tout moment, sans perdre les réponses.</div>
+          </div>
+          <div style="flex:1;min-width:320px;background:#f4f4f4;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:16px;font-weight:800">Sorties, jamais d'impasse</div>
+            <div style="font-size:15px;line-height:1.5;color:#5c5c5c">S3 locataire · O1 non rentable · « déjà un rendez-vous » · « forte demande » → orientation vers une autre offre HomeServe ou « être rappelé ».</div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<sc-if value="{{ showNotes }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:960px">
+        <div style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8a8a8a">Notes de conception</div>
+        <div style="background:#ffffff;border:1px solid #e3e3e3;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:20px;font-weight:800">Configurateur « Mon installation » — recommandation</div>
+            <div style="font-size:16px;line-height:1.55;color:#1e1e1e;text-wrap:pretty"><strong style="font-weight:800">Disposition retenue (planche AR-solaire) : trois segmented controls empilés.</strong> Les trois réglages restent visibles ensemble, donc l'utilisateur voit ce qu'il change et l'effet sur la tuile héros dans le même écran ; c'est aussi la grammaire des chips d'horizon déjà présentes juste au-dessus, donc aucun nouveau geste à apprendre. Trois lignes de pilules tiennent en 390 px sans repli.</div>
+            <div style="font-size:16px;line-height:1.55;color:#5c5c5c;text-wrap:pretty"><strong style="font-weight:800;color:#1e1e1e">Alternative (planche « Configurateur — alternative ») : accordéon guidé</strong>, une ligne ouverte à la fois avec l'impact chiffré affiché sur chaque option. Plus pédagogique et plus adapté aux personas seniors, mais il masque deux réglages sur trois et ajoute un clic par changement. À privilégier seulement si les tests montrent que les segmented controls ne sont pas compris comme des réglages de simulation.</div>
+          </div>
+          <div style="height:1px;background:#f4f4f4"></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:20px;font-weight:800">Extrapolé — à valider</div>
+            <div style="font-size:16px;line-height:1.6;color:#1e1e1e">
+              · Valeurs chiffrées des planches AR-pac et AR-lesdeux (économies, fourchettes de prix, aides, rentabilité) : ordres de grandeur composés pour la maquette, à remplacer par le moteur de calcul.<br>
+              · Nuances non listées dans la charte : corail-500 #f0463c, corail-100 #fdeceb, canard-300 #7fbdbf, canard-100 #e9f3f3, vert-400 #4f9a5c, vert-100 #e6f2e8, orange-600 #c24e00, error-700 #b3231b, neutres intermédiaires #5c5c5c / #8a8a8a / #c9c9c9 / #e3e3e3.<br>
+              · Barème de revenus A9 (« environ 22 000 – 33 000 € pour 2 personnes ») : tranches simulées, à caler sur le barème ANAH en vigueur.<br>
+              · Libellés des équipements A6 (8 cartes) : la cartographie n'en fixe pas la liste exacte.<br>
+              · Pictogrammes : bibliothèque Lucide en trait 1,75 px, monochromes — le bicolore trait neutre-700 / accent corail-500 de la grammaire HomeServe est rendu par la couleur d'accent sur les cartes sélectionnées.<br>
+              · Contenus des 4 cartes « Comment se déroule la visite » (B22) et des textes d'offre S3 / O1 (titre, prix 6 €/mois) : rédaction à valider par HomeServe.<br>
+              · Vignette « code SMS » : 4 cases, conformément au brief ; à confirmer si le SMS réel utilise 6 chiffres.
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Board&quot;},&quot;showTokenLabels&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Board&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { this.paintIcons(0); }
+  componentDidUpdate() { this.paintIcons(0); }
+  paintIcons(tries) {
+    if (window.lucide && window.lucide.createIcons) {
+      try { window.lucide.createIcons({ attrs: { 'stroke-width': 1.75 } }); } catch (e) {}
+      return;
+    }
+    if (tries < 25) setTimeout(() => this.paintIcons(tries + 1), 250);
+  }
+  renderVals() {
+    return {
+      showNotes: this.props.showNotes ?? true,
+      showTokenLabels: this.props.showTokenLabels ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
