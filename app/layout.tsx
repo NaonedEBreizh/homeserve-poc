@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Nunito } from "next/font/google";
 import { Suspense, type ReactNode } from "react";
 
 import { EnteteApp } from "@/components/EnteteApp";
@@ -14,6 +15,20 @@ import "./globals.css";
  */
 export const dynamic = "force-dynamic";
 
+/**
+ * Nunito auto-hébergée par `next/font` : les fichiers sont téléchargés au
+ * build et servis depuis `/_next/static`. Aucune requête vers Google au
+ * runtime — la contrainte « aucune requête externe » reste tenue.
+ * La variable alimente `--font-nunito`, que `--font-sans` consomme déjà
+ * dans app/globals.css (tokens inchangés).
+ */
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-nunito",
+});
+
 export const metadata: Metadata = {
   title: "Mon projet énergie — prototype HomeServe",
   description:
@@ -24,7 +39,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="fr" className={nunito.variable}>
       <body className="min-h-dvh bg-white font-sans text-slate-900 antialiased">
         {/* Bandeau exigé sur toutes les pages (CLAUDE.md). */}
         <p
