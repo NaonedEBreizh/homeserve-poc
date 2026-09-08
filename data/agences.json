@@ -1,0 +1,1111 @@
+{
+  "_meta": {
+    "date": "2026-09-08",
+    "sources": [
+      "https://www.homeserve.fr/qui-sommes-nous/nous-trouver  (liste des sites HomeServe Energies Services / HomeServe Rénov' — fournie par le donneur d'ordre, non re-vérifiée depuis ce script)",
+      "Communiqués du groupe HomeServe (acquisitions d'entreprises régionales : Aujard, SMEC, VB Gaz, Chauffage du Nord, Leprêtre, Prigent Abiven/Scotti, Geo-Dis, VIK, Cerise, DEC, GD, EGS, Roussin, SBF, SMT, JCM Confort) — liste fournie par le donneur d'ordre",
+      "https://raw.githubusercontent.com/high54/Communes-France-JSON/master/france.json  (base officielle des codes postaux La Poste avec coordonnées GPS, data.gouv.fr — coordonnées des communes d'implantation et des chefs-lieux ; geo.api.gouv.fr inaccessible depuis l'environnement de génération)"
+    ],
+    "methode_depts": "Pour chaque agence, `depts` = départements métropolitains dont le chef-lieu (préfecture) est à <= 60 km à vol d'oiseau (formule de Haversine, rayon terrestre 6371 km) de la commune d'implantation, triés par distance croissante ; le département siège est toujours inclus. Coordonnées = moyenne des points GPS des codes postaux de la commune (base La Poste ; pour Lyon : 3e arrondissement, siège HomeServe). `depts_distances_km` conserve la distance calculée pour audit. Le rayon de 60 km est une hypothèse de prototype (zone de chalandise d'un technicien en visite technique).",
+    "couverture": {
+      "departements_couverts": [
+        "01",
+        "06",
+        "14",
+        "16",
+        "21",
+        "24",
+        "29",
+        "30",
+        "31",
+        "34",
+        "38",
+        "40",
+        "42",
+        "49",
+        "50",
+        "59",
+        "61",
+        "62",
+        "69",
+        "72",
+        "73",
+        "74",
+        "75",
+        "77",
+        "78",
+        "80",
+        "82",
+        "84",
+        "91",
+        "92",
+        "93",
+        "94",
+        "95"
+      ],
+      "nb_departements_couverts": 33,
+      "departements_non_couverts": [
+        "02",
+        "03",
+        "04",
+        "05",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "15",
+        "17",
+        "18",
+        "19",
+        "22",
+        "23",
+        "25",
+        "26",
+        "27",
+        "28",
+        "2A",
+        "2B",
+        "32",
+        "33",
+        "35",
+        "36",
+        "37",
+        "39",
+        "41",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "60",
+        "63",
+        "64",
+        "65",
+        "66",
+        "67",
+        "68",
+        "70",
+        "71",
+        "76",
+        "79",
+        "81",
+        "83",
+        "85",
+        "86",
+        "87",
+        "88",
+        "89",
+        "90"
+      ],
+      "note": "Les départements non couverts renvoient vers la prise de RDV téléphonique dans le prototype (règle D30 / fallback). Le département 75 apparaît géométriquement dans `depts` des agences IdF (AUJ, SMEC, VBG) mais reste non éligible via zones.json (`eligible: false`) : la vérification d'éligibilité doit passer par zones.json avant la recherche d'agence."
+    },
+    "valeurs_estimees": [
+      "competences (hypothèse : solaire + PAC partout)",
+      "depts (calcul géométrique 60 km, pas la vraie zone d'intervention commerciale)",
+      "parametres d'agenda : seuil_surbooking, fenetre_surbooking_jours, horizon_jours, delai_min_jours_ouvres, duree_visite_min, jours_travailles, creneaux_debut (règles du prototype)",
+      "telephone (numéro national, pas celui de l'agence)",
+      "enseignes / noms d'agence (reconstitués à partir de la liste fournie)"
+    ],
+    "avertissement": "Ordres de grandeur pour un prototype, ne constitue pas une étude. Liste d'agences à valider avec HomeServe.",
+    "nb_agences": 22,
+    "structure": "objet { _meta, agences: [...] } ; l'agence fictive TEST est la dernière du tableau"
+  },
+  "agences": [
+    {
+      "id": "LYO",
+      "nom": "HomeServe Rénov' — Lyon (siège)",
+      "ville": "Lyon",
+      "dept": "69",
+      "lat": 45.7534,
+      "lon": 4.8692,
+      "depts": [
+        "69",
+        "42",
+        "01"
+      ],
+      "depts_distances_km": {
+        "69": 4,
+        "42": 53,
+        "01": 57
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "ANG",
+      "nom": "HomeServe Rénov' / JCM Confort — Angers",
+      "ville": "Beaucouzé",
+      "dept": "49",
+      "lat": 47.4753,
+      "lon": -0.6623,
+      "depts": [
+        "49"
+      ],
+      "depts_distances_km": {
+        "49": 8
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "CAE",
+      "nom": "HomeServe Rénov' — Caen",
+      "ville": "Fleury-sur-Orne",
+      "dept": "14",
+      "lat": 49.1448,
+      "lon": -0.3521,
+      "depts": [
+        "14",
+        "50"
+      ],
+      "depts_distances_km": {
+        "14": 5,
+        "50": 54
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "ANL",
+      "nom": "HomeServe Rénov' — Angoulême",
+      "ville": "Puymoyen",
+      "dept": "16",
+      "lat": 45.6075,
+      "lon": 0.129,
+      "depts": [
+        "16"
+      ],
+      "depts_distances_km": {
+        "16": 5
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "TLS",
+      "nom": "HomeServe Rénov' — Toulouse",
+      "ville": "Colomiers",
+      "dept": "31",
+      "lat": 43.6115,
+      "lon": 1.3274,
+      "depts": [
+        "31",
+        "82"
+      ],
+      "depts_distances_km": {
+        "31": 9,
+        "82": 46
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "DIJ",
+      "nom": "HomeServe — Dijon",
+      "ville": "Dijon",
+      "dept": "21",
+      "lat": 47.3229,
+      "lon": 5.0375,
+      "depts": [
+        "21"
+      ],
+      "depts_distances_km": {
+        "21": 0
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "AUJ",
+      "nom": "Aujard — Vulaines-sur-Seine",
+      "ville": "Vulaines-sur-Seine",
+      "dept": "77",
+      "lat": 48.4316,
+      "lon": 2.7693,
+      "depts": [
+        "77",
+        "91",
+        "94",
+        "75",
+        "93"
+      ],
+      "depts_distances_km": {
+        "77": 12,
+        "91": 33,
+        "94": 45,
+        "75": 58,
+        "93": 58
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "SMEC",
+      "nom": "SMEC — Saint-Maur-des-Fossés",
+      "ville": "Saint-Maur-des-Fossés",
+      "dept": "94",
+      "lat": 48.799,
+      "lon": 2.4942,
+      "depts": [
+        "94",
+        "93",
+        "75",
+        "91",
+        "92",
+        "78",
+        "77",
+        "95"
+      ],
+      "depts_distances_km": {
+        "94": 3,
+        "93": 13,
+        "75": 14,
+        "91": 19,
+        "92": 24,
+        "78": 28,
+        "77": 34,
+        "95": 42
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "VBG",
+      "nom": "VB Gaz — Créteil",
+      "ville": "Créteil",
+      "dept": "94",
+      "lat": 48.7837,
+      "lon": 2.455,
+      "depts": [
+        "94",
+        "75",
+        "93",
+        "91",
+        "92",
+        "78",
+        "77",
+        "95"
+      ],
+      "depts_distances_km": {
+        "94": 0,
+        "75": 12,
+        "93": 14,
+        "91": 17,
+        "92": 22,
+        "78": 25,
+        "77": 33,
+        "95": 41
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "CDN",
+      "nom": "Chauffage du Nord — Villeneuve-d'Ascq",
+      "ville": "Villeneuve-d'Ascq",
+      "dept": "59",
+      "lat": 50.6323,
+      "lon": 3.1529,
+      "depts": [
+        "59",
+        "62"
+      ],
+      "depts_distances_km": {
+        "59": 7,
+        "62": 49
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "LEP",
+      "nom": "Leprêtre Energies — Arras",
+      "ville": "Dainville",
+      "dept": "62",
+      "lat": 50.2836,
+      "lon": 2.7408,
+      "depts": [
+        "62",
+        "59",
+        "80"
+      ],
+      "depts_distances_km": {
+        "62": 0,
+        "59": 44,
+        "80": 53
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "PAS",
+      "nom": "Prigent Abiven / Scotti — Brest",
+      "ville": "Saint-Divy",
+      "dept": "29",
+      "lat": 48.4526,
+      "lon": -4.2228,
+      "depts": [
+        "29"
+      ],
+      "depts_distances_km": {
+        "29": 52
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "GEO",
+      "nom": "Geo-Dis Energies — Le Mans",
+      "ville": "Trangé",
+      "dept": "72",
+      "lat": 48.0692,
+      "lon": 0.1365,
+      "depts": [
+        "72",
+        "61"
+      ],
+      "depts_distances_km": {
+        "72": 10,
+        "61": 40
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "VIK",
+      "nom": "VIK Energies — Valognes",
+      "ville": "Valognes",
+      "dept": "50",
+      "lat": 49.5258,
+      "lon": -1.4865,
+      "depts": [
+        "50"
+      ],
+      "depts_distances_km": {
+        "50": 54
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "CER",
+      "nom": "Cerise Energies — Ménesplet",
+      "ville": "Ménesplet",
+      "dept": "24",
+      "lat": 45.0218,
+      "lon": 0.1614,
+      "depts": [
+        "24"
+      ],
+      "depts_distances_km": {
+        "24": 47
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "DEC",
+      "nom": "DEC Energies — Saint-Geours-de-Maremne",
+      "ville": "Saint-Geours-de-Maremne",
+      "dept": "40",
+      "lat": 43.6513,
+      "lon": -1.2931,
+      "depts": [
+        "40"
+      ],
+      "depts_distances_km": {},
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "GDE",
+      "nom": "GD Energies — Nîmes",
+      "ville": "Nîmes",
+      "dept": "30",
+      "lat": 43.8447,
+      "lon": 4.3476,
+      "depts": [
+        "30",
+        "84",
+        "34"
+      ],
+      "depts_distances_km": {
+        "30": 0,
+        "84": 41,
+        "34": 46
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "EGS",
+      "nom": "EGS Energies — Saint-Laurent-du-Var",
+      "ville": "Saint-Laurent-du-Var",
+      "dept": "06",
+      "lat": 43.6866,
+      "lon": 7.1823,
+      "depts": [
+        "06"
+      ],
+      "depts_distances_km": {
+        "06": 5
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "ROU",
+      "nom": "Roussin Energies — Grenoble",
+      "ville": "Fontaine",
+      "dept": "38",
+      "lat": 45.193,
+      "lon": 5.6774,
+      "depts": [
+        "38",
+        "73"
+      ],
+      "depts_distances_km": {
+        "38": 4,
+        "73": 46
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "SBF",
+      "nom": "SBF Energies — Chambéry",
+      "ville": "La Motte-Servolex",
+      "dept": "73",
+      "lat": 45.6013,
+      "lon": 5.8546,
+      "depts": [
+        "73",
+        "74",
+        "38"
+      ],
+      "depts_distances_km": {
+        "73": 6,
+        "74": 38,
+        "38": 48
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "SMT",
+      "nom": "SMT Energies — Saint-Étienne",
+      "ville": "Veauche",
+      "dept": "42",
+      "lat": 45.5673,
+      "lon": 4.2691,
+      "depts": [
+        "42",
+        "69"
+      ],
+      "depts_distances_km": {
+        "42": 17,
+        "69": 49
+      },
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "hypothèse : toutes les agences couvrent solaire et PAC, à confirmer avec HomeServe",
+      "self_booking_actif": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "telephone_note": "numéro national observé sur le simulateur homeserve.fr ; à remplacer par le numéro de l'agence"
+    },
+    {
+      "id": "TEST",
+      "nom": "Agence de test surbookée",
+      "ville": "Ville-Test",
+      "dept": "99",
+      "lat": null,
+      "lon": null,
+      "depts": [
+        "99"
+      ],
+      "competences": [
+        "solaire",
+        "pac"
+      ],
+      "competences_note": "agence fictive",
+      "self_booking_actif": true,
+      "surbookee_test": true,
+      "seuil_surbooking": 4,
+      "fenetre_surbooking_jours": 10,
+      "horizon_jours": 14,
+      "delai_min_jours_ouvres": 1,
+      "duree_visite_min": 60,
+      "jours_travailles": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "creneaux_debut": [
+        "08:30",
+        "09:30",
+        "10:30",
+        "14:00",
+        "15:00",
+        "16:00"
+      ],
+      "telephone": "09 72 03 62 09",
+      "note": "déclenchée par le code postal 99999 pour démontrer la règle D30"
+    }
+  ]
+}
