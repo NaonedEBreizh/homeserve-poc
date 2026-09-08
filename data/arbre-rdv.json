@@ -531,8 +531,8 @@
     },
     "B19": {
       "type": "info",
-      "titre": "Votre étude gratuite",
-      "texte": "Étude gratuite à domicile, environ 1 heure, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.",
+      "titre": "Votre étude gratuite à domicile",
+      "texte": "Environ 1 h, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.",
       "next": "B19b"
     },
     "B19b": {
@@ -563,7 +563,7 @@
     "B21": {
       "type": "info",
       "modale": true,
-      "titre": "Ce rendez-vous mobilise un technicien",
+      "titre": "Ce rendez-vous mobilise un technicien-conseil",
       "texte": "Environ 1 heure sur place. Vous pourrez le modifier ou l'annuler par email ou SMS.",
       "bouton": "Je confirme",
       "next": "B22"
@@ -644,13 +644,16 @@
     },
     "@S5": {
       "code": "S5",
-      "titre": "Votre toit ne permet pas le solaire, votre facture peut baisser autrement",
+      "titre": "Votre toiture demande un regard d'expert",
       "offre": {
         "libelle": "Pompe à chaleur",
         "url": "https://www.homeserve.fr/chauffage-climatisation/pompes-a-chaleur",
         "en_ligne": false
       },
-      "cta_secondaire": "relancer_simulateur_pac"
+      "cta_secondaire": "relancer_simulateur_pac",
+      "texte": "Amiante ou matériau particulier : un conseiller étudie avec vous une alternative (toit-terrasse, installation au sol) ou une autre solution pour réduire votre facture.",
+      "cta_principal": "etre_rappele",
+      "offre_secondaire": true
     },
     "@S6": {
       "code": "S6",

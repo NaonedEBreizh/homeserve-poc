@@ -200,6 +200,14 @@ export function setDemo(demo: boolean) {
   appliquer({ ...etat, demo });
 }
 
+/** Mémorise l'issue du parcours RDV (sortie, agence, créneau, règles). */
+export function setRdv(rdv: Partial<EtatRdv>) {
+  appliquer({
+    ...etat,
+    rdv: { nonEligible: [], ...etat.rdv, ...rdv },
+  });
+}
+
 export function reset() {
   hydrate = true;
   try {

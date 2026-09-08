@@ -192,7 +192,12 @@
           "en_construction": "En construction"
         }
       }
-    }
+    },
+    "compteur_selection": {
+      "singulier": "{n} sélectionné",
+      "pluriel": "{n} sélectionnés"
+    },
+    "choix_auto": "Votre choix enregistre et passe à la suite"
   },
   "resultat": {
     "titre": "Votre estimation",
@@ -344,6 +349,47 @@
           "texte": "Pilotée par le gestionnaire d'énergie, la pompe à chaleur consomme quand vos panneaux produisent. Elle cesse d'être une charge en soirée pour devenir un usage de votre propre électricité."
         }
       }
+    },
+    "et_apres": {
+      "titre": "Et après ?",
+      "etapes": [
+        {
+          "titre": "Votre estimation",
+          "detail": "vous y êtes",
+          "faite": true
+        },
+        {
+          "titre": "Étude gratuite à domicile",
+          "detail": "vous choisissez le créneau",
+          "faite": false
+        },
+        {
+          "titre": "Financement",
+          "detail": "aides déduites du devis",
+          "faite": false
+        },
+        {
+          "titre": "Installation et suivi",
+          "detail": "",
+          "faite": false
+        }
+      ],
+      "carte": {
+        "titre": "Ce que vous obtenez avec l'étude gratuite",
+        "items": [
+          "Un technicien-conseil vient chez vous, environ 1 h",
+          "Il mesure votre toit ou votre installation de chauffage",
+          "Il vérifie la faisabilité de votre projet",
+          "Il vous remet une étude personnalisée, avec devis et détail des aides"
+        ],
+        "mention": "Gratuit, sans engagement."
+      },
+      "preuves": [
+        "RGE",
+        "+ de 10 000 projets",
+        "+ de 850 pros",
+        "Avis Vérifiés 4,7/5"
+      ]
     }
   },
   "mur": {
@@ -371,7 +417,8 @@
     "panneau_reponses": {
       "titre": "Vos réponses",
       "badge_herite": "repris de votre estimation",
-      "modifier": "Modifier"
+      "modifier": "Modifier",
+      "vide": "Vos réponses apparaîtront ici au fil du parcours."
     },
     "coordonnees": {
       "cta_code": "Recevoir mon code",
@@ -380,7 +427,8 @@
     "otp": {
       "titre": "Saisissez le code reçu par SMS",
       "demo": "Mode démo — votre code : {code}",
-      "renvoyer": "Renvoyer le code"
+      "renvoyer": "Renvoyer le code",
+      "aide": "Quatre chiffres, reçus par SMS."
     },
     "calendrier": {
       "titre": "Choisissez votre créneau",
@@ -391,7 +439,11 @@
         "apres_midi": "Après-midi"
       },
       "aucun": "Aucun créneau ne me convient → être rappelé",
-      "cta": "Je confirme ce créneau"
+      "cta": "Je confirme ce créneau",
+      "badge": "agenda simulé",
+      "sous_titre": "14 jours à partir de demain, créneaux d'une heure",
+      "jour_sans": "aucun créneau",
+      "recap": "{jour} · {debut} – {fin}"
     },
     "confirmation": {
       "titre": "Votre étude gratuite est confirmée",
@@ -413,13 +465,22 @@
           "Vous recevez une étude chiffrée sous quelques jours"
         ]
       },
-      "gerer": "Gérer mon rendez-vous"
+      "gerer": "Gérer mon rendez-vous",
+      "recap_titre": "Votre rendez-vous",
+      "champs": {
+        "date": "Date",
+        "creneau": "Créneau",
+        "agence": "Agence",
+        "type": "Type de rendez-vous"
+      },
+      "type_rdv": "Étude gratuite à domicile"
     },
     "gerer": {
       "titre": "Gérer mon rendez-vous",
       "modifier": "Modifier",
       "annuler": "Annuler",
-      "badge": "non fonctionnel dans le prototype"
+      "badge": "non fonctionnel dans le prototype",
+      "texte": "Cet écran est une maquette : la modification et l'annulation ne sont pas branchées dans le prototype."
     },
     "rappel": {
       "titre": "Un conseiller vous rappelle",
@@ -432,11 +493,23 @@
         }
       },
       "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande.",
-      "cta": "Demander un rappel"
+      "cta": "Demander un rappel",
+      "consentement_horodate": "Consentement enregistré le {date}",
+      "ne_pas_appeler": "Je ne souhaite pas être appelé"
     },
     "transmettre": "Transmettre à un proche propriétaire",
     "etre_informe": "Être informé de l'ouverture",
-    "deroule_titre": "Comment se déroule l'étude"
+    "deroule_titre": "Comment se déroule l'étude",
+    "titre": "Réserver mon étude gratuite",
+    "porte_chaude": "Vous n'avez pas encore fait d'estimation : nous vous posons toutes les questions.",
+    "sorties": {
+      "titre_regles": "D'après vos réponses",
+      "offre": "L'offre HomeServe adaptée",
+      "en_ligne": "commandable en ligne",
+      "par_telephone": "souscription par téléphone",
+      "decouvrir": "Découvrir",
+      "badge_simule": "règle simulée"
+    }
   },
   "debug": {
     "titre": "Événements",

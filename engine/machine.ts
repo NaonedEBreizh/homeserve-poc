@@ -48,11 +48,32 @@ export type RegleEligibilite = {
   condition?: { projet: string[] };
 };
 
+export type ChampNoeud = {
+  id: string;
+  libelle?: string;
+  type?: string;
+  requis?: boolean;
+  aide?: string;
+  prefill?: string;
+};
+
 export type Noeud = {
   type: string;
   question?: string;
   options?: OptionNoeud[];
-  champs?: Array<{ id: string; prefill?: string }>;
+  champs?: ChampNoeud[];
+  // Champs de présentation portés par data/arbre-rdv.json : l'interpréteur ne
+  // les lit pas, les écrans du module B les rendent tels quels.
+  titre?: string;
+  texte?: string;
+  aide?: string;
+  badge?: string;
+  bouton?: string;
+  mention?: string;
+  ecran?: string;
+  modale?: boolean;
+  mock?: boolean;
+  code_demo?: string;
   next?: string | null;
   next_sinon?: string;
   prefill?: string;

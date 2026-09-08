@@ -189,7 +189,7 @@ export function Simulateur() {
         </button>
         {question.type === "choix" ? (
           <span className="text-xs text-neutre-400">
-            Votre choix enregistre et passe à la suite
+            {contenu.simulateur.choix_auto}
           </span>
         ) : null}
       </nav>
@@ -394,7 +394,14 @@ function Multi({
   return (
     <div className="flex flex-col gap-3">
       <p className="self-start rounded-full bg-corail-100 px-3 py-1 text-xs font-extrabold text-corail-600">
-        {choisis.filter((c) => c !== "aucun").length} sélectionné(s)
+        {(() => {
+          const n = choisis.filter((c) => c !== "aucun").length;
+          const modele =
+            n > 1
+              ? contenu.simulateur.compteur_selection.pluriel
+              : contenu.simulateur.compteur_selection.singulier;
+          return modele.replace("{n}", String(n));
+        })()}
       </p>
 
       <ul className="grid grid-cols-2 gap-2.5">
