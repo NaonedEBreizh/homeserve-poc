@@ -22,7 +22,10 @@ export type EntreesPac = {
   surfaceTranche: TrancheSurface;
   dept: string;
   profil: ProfilRevenus;
+  /** Conditionne MaPrimeRénov'. */
   logementPlus15Ans: boolean;
+  /** Conditionne le CEE Coup de pouce : logement achevé depuis plus de 2 ans. */
+  logementPlus2Ans: boolean;
 };
 
 export type OptionsPac = {
@@ -188,24 +191,23 @@ export function simulerPac(
     throw new Error(`Tranche de surface inconnue : ${entrees.surfaceTranche}`);
   }
 
-  /**
-   * MPR **et** CEE coup de pouce supposent le remplacement d'un chauffage
-   * existant dans un logement de plus de 15 ans. Le pseudo-code de
-   * `architecture-moteurs-v2.md` §2 ne conditionne que MPR, mais
-   * `pac_baremes.exemples_test` attend « rose + neuf → aides 0 » : la donnée
-   * tranche, les deux aides sont conditionnées.
-   */
+  // MaPrimeRénov' : logement de plus de 15 ans (barème 2026).
   const mpr = entrees.logementPlus15Ans
     ? baremes.maprimerenov_2026_pac_air_eau.par_profil[entrees.profil]
     : 0;
 
-  const cee = !entrees.logementPlus15Ans
-    ? 0
-    : entrees.energie === "elec"
-      ? baremes.cee_coup_de_pouce_pac.depuis_electrique.valeur
-      : (baremes.cee_coup_de_pouce_pac.remplacement_fossile_par_zone[
-          zone.zcSimple as keyof typeof baremes.cee_coup_de_pouce_pac.remplacement_fossile_par_zone
-        ] ?? 0);
+  /**
+   * CEE Coup de pouce chauffage (D43) : deux conditions distinctes de celles
+   * de MaPrimeRénov' — logement achevé depuis plus de 2 ans, et remplacement
+   * d'une chaudière fossile. Un chauffage électrique n'y ouvre donc pas droit.
+   */
+  const remplaceFossile = entrees.energie === "gaz" || entrees.energie === "fioul";
+  const zonesCee = baremes.cee_coup_de_pouce_pac.remplacement_fossile_par_zone;
+
+  const cee =
+    entrees.logementPlus2Ans && remplaceFossile
+      ? (zonesCee[zone.zcSimple as keyof typeof zonesCee] ?? 0)
+      : 0;
 
   const total = mpr + cee;
   const resteACharge = Math.max(prix - total, 0);

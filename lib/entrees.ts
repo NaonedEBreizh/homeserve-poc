@@ -66,9 +66,14 @@ export function entreesSolaire(etat: ProjetState): EntreesSolaire | null {
   };
 }
 
-/** Un logement de plus de 15 ans conditionne MaPrimeRénov' et le CEE. */
+/** MaPrimeRénov' : logement de plus de 15 ans. */
 function logementPlus15Ans(annee: string | undefined): boolean {
   return annee === "<1997" || annee === "1997-2010";
+}
+
+/** CEE Coup de pouce (D43) : tout sauf un logement encore en construction. */
+function logementPlus2Ans(annee: string | undefined): boolean {
+  return annee !== "en_construction";
 }
 
 /** L'énergie de chauffage vient de A5b si posée, sinon se déduit de A5. */
@@ -102,5 +107,6 @@ export function entreesPac(etat: ProjetState): EntreesPac | null {
     dept: deptDepuisCp(cp),
     profil: revenus as ProfilRevenus,
     logementPlus15Ans: logementPlus15Ans(texte(etat, "annee_construction")),
+    logementPlus2Ans: logementPlus2Ans(texte(etat, "annee_construction")),
   };
 }

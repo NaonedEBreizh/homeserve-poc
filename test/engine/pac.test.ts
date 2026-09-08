@@ -26,6 +26,7 @@ type ExempleEntrees = {
   dept: string;
   profil: string;
   logement_plus_15_ans: boolean;
+  logement_plus_2_ans?: boolean;
 };
 
 function entreesDe(e: ExempleEntrees): EntreesPac {
@@ -36,6 +37,7 @@ function entreesDe(e: ExempleEntrees): EntreesPac {
     dept: e.dept,
     profil: e.profil as ProfilRevenus,
     logementPlus15Ans: e.logement_plus_15_ans,
+    logementPlus2Ans: e.logement_plus_2_ans ?? true,
   };
 }
 
@@ -49,16 +51,19 @@ describe("exemples_test de data/pac-baremes.json", () => {
   for (const exemple of baremes.exemples_test) {
     describe(exemple.nom, () => {
       const r = simulerPac(entreesDe(exemple.entrees as ExempleEntrees));
-      const attendu = exemple.attendu as Record<string, number | undefined>;
-      const tolerance = attendu.tolerance_pct ?? 2;
+      // `attendu` porte aussi des `note` en clair : on ne lit que les nombres.
+      const brut = exemple.attendu as Record<string, unknown>;
+      const nombre = (cle: string): number | undefined =>
+        typeof brut[cle] === "number" ? (brut[cle] as number) : undefined;
+      const tolerance = nombre("tolerance_pct") ?? 2;
 
       const champs: Array<[string, number | undefined, number]> = [
-        ["kwh_utile", attendu.kwh_utile, r.kwhUtile],
-        ["conso_pac_kwh", attendu.conso_pac_kwh, r.consoPacKwh],
-        ["cout_pac_an", attendu.cout_pac_an, r.coutPacAn],
-        ["economie_an", attendu.economie_an, r.economieAn],
-        ["aides", attendu.aides, r.aides.total],
-        ["reste_a_charge", attendu.reste_a_charge, r.resteACharge],
+        ["kwh_utile", nombre("kwh_utile"), r.kwhUtile],
+        ["conso_pac_kwh", nombre("conso_pac_kwh"), r.consoPacKwh],
+        ["cout_pac_an", nombre("cout_pac_an"), r.coutPacAn],
+        ["economie_an", nombre("economie_an"), r.economieAn],
+        ["aides", nombre("aides"), r.aides.total],
+        ["reste_a_charge", nombre("reste_a_charge"), r.resteACharge],
       ];
 
       for (const [nom, valeurAttendue, obtenu] of champs) {
@@ -71,10 +76,12 @@ describe("exemples_test de data/pac-baremes.json", () => {
         });
       }
 
-      if (attendu.economie_an_min !== undefined) {
-        it(`économie annuelle dans la fourchette ${attendu.economie_an_min}–${attendu.economie_an_max}`, () => {
-          expect(r.economieAn).toBeGreaterThanOrEqual(attendu.economie_an_min!);
-          expect(r.economieAn).toBeLessThanOrEqual(attendu.economie_an_max!);
+      const min = nombre("economie_an_min");
+      const max = nombre("economie_an_max");
+      if (min !== undefined && max !== undefined) {
+        it(`économie annuelle dans la fourchette ${min}–${max}`, () => {
+          expect(r.economieAn).toBeGreaterThanOrEqual(min);
+          expect(r.economieAn).toBeLessThanOrEqual(max);
         });
       }
     });
@@ -88,6 +95,7 @@ const GAZ_ANCIEN: EntreesPac = {
   dept: "69",
   profil: "jaune",
   logementPlus15Ans: true,
+  logementPlus2Ans: true,
 };
 
 describe("aides", () => {
@@ -101,18 +109,35 @@ describe("aides", () => {
     );
   });
 
-  it("annule les deux aides sur un logement de moins de 15 ans", () => {
+  it("garde le CEE sur un logement de moins de 15 ans mais perd MaPrimeRénov' (D43)", () => {
     const r = simulerPac({ ...GAZ_ANCIEN, logementPlus15Ans: false });
 
-    expect(r.aides).toMatchObject({ mpr: 0, cee: 0, total: 0 });
-    expect(r.resteACharge).toBe(r.prix);
+    expect(r.aides.mpr).toBe(0);
+    expect(r.aides.cee).toBe(
+      baremes.cee_coup_de_pouce_pac.remplacement_fossile_par_zone.H1,
+    );
   });
 
-  it("applique le CEE « depuis électrique » quand le chauffage est électrique", () => {
+  it("refuse le CEE à un logement encore en construction (D43)", () => {
+    const r = simulerPac({ ...GAZ_ANCIEN, logementPlus2Ans: false });
+
+    expect(r.aides.cee).toBe(0);
+    // MaPrimeRénov' garde sa propre condition, indépendante des 2 ans.
+    expect(r.aides.mpr).toBeGreaterThan(0);
+  });
+
+  it("refuse le CEE quand le chauffage remplacé est électrique (D43)", () => {
     const r = simulerPac({ ...GAZ_ANCIEN, energie: "elec", profil: "bleu" });
 
-    expect(r.aides.cee).toBe(
-      baremes.cee_coup_de_pouce_pac.depuis_electrique.valeur,
+    expect(r.aides.cee).toBe(0);
+    expect(r.aides.mpr).toBe(
+      baremes.maprimerenov_2026_pac_air_eau.par_profil.bleu,
+    );
+  });
+
+  it("accorde le CEE au fioul comme au gaz (D43)", () => {
+    expect(simulerPac({ ...GAZ_ANCIEN, energie: "fioul" }).aides.cee).toBe(
+      baremes.cee_coup_de_pouce_pac.remplacement_fossile_par_zone.H1,
     );
   });
 

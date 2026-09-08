@@ -4,46 +4,167 @@
     "date": "2026-09-08",
     "avertissement": "Moteur PAC simplifié pour un prototype (docs/architecture.md §2). Ordres de grandeur ; ne constitue ni un devis ni une étude thermique. Constantes datées et sourcées ; extrapole: true = estimation à valider."
   },
-  "scop_air_eau": { "valeur": 2.9, "source": "Campagne terrain ADEME 2023-24 (via Que Choisir) : SCOP réel moyen des PAC air/eau", "extrapole": false },
-  "prix_energie": {
-    "elec_kwh_ttc": { "valeur": 0.2001, "source": "TRVE base 01/08/2026" },
-    "gaz_kwh_ttc": { "valeur": 0.1347, "source": "Prix repère CRE septembre 2026 (+5,6 % au 01/09)" },
-    "fioul_litre_ttc": { "valeur": 1.732, "source": "prixfioul.fr, moyenne nationale 07/09/2026" },
-    "fioul_kwh_pci_par_litre": { "valeur": 9.96, "source": "Pouvoir calorifique inférieur du fioul domestique" },
-    "bois_kwh_ttc": { "valeur": 0.085, "source": "Estimation granulés/bûches 2026", "extrapole": true }
+  "scop_air_eau": {
+    "valeur": 2.9,
+    "source": "Campagne terrain ADEME 2023-24 (via Que Choisir) : SCOP réel moyen des PAC air/eau",
+    "extrapole": false
   },
-  "hausse_annuelle_defaut": { "elec": 0.04, "gaz": 0.04, "fioul": 0.04, "bois": 0.03, "note": "le curseur de l'écran résultat modifie ensemble les taux ; valeurs distinctes possibles en v2" },
-  "rendement_chaudiere": { "gaz": 0.88, "fioul": 0.85, "bois": 0.75, "elec": 1.0, "extrapole": true },
+  "prix_energie": {
+    "elec_kwh_ttc": {
+      "valeur": 0.2001,
+      "source": "TRVE base 01/08/2026"
+    },
+    "gaz_kwh_ttc": {
+      "valeur": 0.1347,
+      "source": "Prix repère CRE septembre 2026 (+5,6 % au 01/09)"
+    },
+    "fioul_litre_ttc": {
+      "valeur": 1.732,
+      "source": "prixfioul.fr, moyenne nationale 07/09/2026"
+    },
+    "fioul_kwh_pci_par_litre": {
+      "valeur": 9.96,
+      "source": "Pouvoir calorifique inférieur du fioul domestique"
+    },
+    "bois_kwh_ttc": {
+      "valeur": 0.085,
+      "source": "Estimation granulés/bûches 2026",
+      "extrapole": true
+    }
+  },
+  "hausse_annuelle_defaut": {
+    "elec": 0.04,
+    "gaz": 0.04,
+    "fioul": 0.04,
+    "bois": 0.03,
+    "note": "le curseur de l'écran résultat modifie ensemble les taux ; valeurs distinctes possibles en v2"
+  },
+  "rendement_chaudiere": {
+    "gaz": 0.88,
+    "fioul": 0.85,
+    "bois": 0.75,
+    "elec": 1.0,
+    "extrapole": true
+  },
   "depense_chauffage_annuelle_par_tranche_facture": {
     "note": "Pour la branche PAC, la question A8 porte sur la facture d'énergie mensuelle ; la part chauffage est estimée à 65 % pour gaz/fioul/bois et 55 % pour l'électrique (extrapolé).",
-    "part_chauffage": { "gaz_fioul_bois": 0.65, "radiateurs_electriques": 0.55, "extrapole": true },
-    "facture_annuelle_par_tranche": [720, 1080, 1416, 1860, 2280]
+    "part_chauffage": {
+      "gaz_fioul_bois": 0.65,
+      "radiateurs_electriques": 0.55,
+      "extrapole": true
+    },
+    "facture_annuelle_par_tranche": [
+      720,
+      1080,
+      1416,
+      1860,
+      2280
+    ]
   },
   "prix_homeserve_pac_air_eau": {
     "source": "homeserve.fr, page PAC air/eau : « 7 000 – 16 000 € » (maison 100 m²), fourchette indicative",
     "min": 7000,
     "max": 16000,
-    "par_tranche_surface": { "<70": 8000, "70-99": 9000, "100-135": 11500, "136-175": 13500, ">175": 15000, "extrapole": true }
+    "par_tranche_surface": {
+      "<70": 8000,
+      "70-99": 9000,
+      "100-135": 11500,
+      "136-175": 13500,
+      ">175": 15000,
+      "extrapole": true
+    }
   },
   "maprimerenov_2026_pac_air_eau": {
     "source": "homeserve.fr, article « Aides PAC 2026 » (maj 26/08/2026) ; recentrage MaPrimeRénov' au 01/09/2026",
     "date": "2026-08-26",
-    "par_profil": { "bleu": 5000, "jaune": 4000, "violet": 2000, "rose": 0 },
-    "conditions": ["logement de plus de 15 ans", "résidence principale", "installateur RGE", "remplacement d'un chauffage fossile ou électrique"],
-    "plafonds_revenus_2_personnes_hors_idf": { "bleu": 25393, "jaune": 32553, "violet": 45842, "source": "Barème 2026 (Effy)", "note": "les tranches A9 sont libellées « environ » ; le POC ne calcule pas le profil, l'utilisateur le choisit" }
+    "par_profil": {
+      "bleu": 5000,
+      "jaune": 4000,
+      "violet": 2000,
+      "rose": 0
+    },
+    "conditions": [
+      "logement de plus de 15 ans",
+      "résidence principale",
+      "installateur RGE",
+      "remplacement d'un chauffage fossile ou électrique"
+    ],
+    "plafonds_revenus_2_personnes_hors_idf": {
+      "bleu": 25393,
+      "jaune": 32553,
+      "violet": 45842,
+      "source": "Barème 2026 (Effy)",
+      "note": "les tranches A9 sont libellées « environ » ; le POC ne calcule pas le profil, l'utilisateur le choisit"
+    }
   },
   "cee_coup_de_pouce_pac": {
-    "source": "Même article HomeServe (26/08/2026) ; montants indicatifs par zone climatique pour le remplacement d'une chaudière fossile",
-    "remplacement_fossile_par_zone": { "H1": 5110, "H2": 4259, "H3": 2981 },
-    "depuis_electrique": { "valeur": 900, "extrapole": true }
+    "source": "CEE Coup de pouce chauffage : logement achevé depuis plus de 2 ans, remplacement d'une chaudière fossile — barème indicatif par zone climatique (article HomeServe du 26/08/2026)",
+    "remplacement_fossile_par_zone": {
+      "H1": 5110,
+      "H2": 4259,
+      "H3": 2981
+    },
+    "depuis_electrique": {
+      "valeur": 900,
+      "extrapole": true,
+      "note": "non appliqué depuis D43 : le Coup de pouce exige le remplacement d'une chaudière fossile ; valeur conservée pour mémoire"
+    },
+    "conditions": [
+      "logement achevé depuis plus de 2 ans",
+      "remplacement d'une chaudière fossile (gaz ou fioul)"
+    ]
   },
   "couplage_solaire_pac": {
-    "part_conso_pac_couverte": { "valeur": 0.25, "extrapole": true },
-    "bonus_tap_pac_pilotee_points": { "valeur": 3.0, "extrapole": true }
+    "part_conso_pac_couverte": {
+      "valeur": 0.25,
+      "extrapole": true
+    },
+    "bonus_tap_pac_pilotee_points": {
+      "valeur": 3.0,
+      "extrapole": true
+    }
   },
   "horizon_projection_ans": 15,
   "exemples_test": [
-    { "nom": "gaz_jaune_ancien", "entrees": { "energie": "gaz", "depense_chauffage_an": 1800, "surface_tranche": "100-135", "dept": "69", "profil": "jaune", "logement_plus_15_ans": true }, "attendu": { "kwh_utile": 11760, "conso_pac_kwh": 4055, "cout_pac_an": 811, "economie_an": 989, "aides": 9110, "reste_a_charge": 2390, "tolerance_pct": 2 } },
-    { "nom": "elec_rose_recent", "entrees": { "energie": "elec", "depense_chauffage_an": 1800, "surface_tranche": "100-135", "dept": "69", "profil": "rose", "logement_plus_15_ans": false }, "attendu": { "aides": 0, "economie_an_min": 1100, "economie_an_max": 1250 } }
+    {
+      "nom": "gaz_jaune_ancien",
+      "entrees": {
+        "energie": "gaz",
+        "depense_chauffage_an": 1800,
+        "surface_tranche": "100-135",
+        "dept": "69",
+        "profil": "jaune",
+        "logement_plus_15_ans": true,
+        "logement_plus_2_ans": true
+      },
+      "attendu": {
+        "kwh_utile": 11760,
+        "conso_pac_kwh": 4055,
+        "cout_pac_an": 811,
+        "economie_an": 989,
+        "aides": 9110,
+        "reste_a_charge": 2390,
+        "tolerance_pct": 2,
+        "note": "MPR jaune 4 000 € + CEE zone H1 5 110 € (chaudière gaz, logement > 2 ans)"
+      }
+    },
+    {
+      "nom": "elec_rose_recent",
+      "entrees": {
+        "energie": "elec",
+        "depense_chauffage_an": 1800,
+        "surface_tranche": "100-135",
+        "dept": "69",
+        "profil": "rose",
+        "logement_plus_15_ans": false,
+        "logement_plus_2_ans": true
+      },
+      "attendu": {
+        "aides": 0,
+        "economie_an_min": 1100,
+        "economie_an_max": 1250,
+        "note": "MPR 0 (profil rose et logement de moins de 15 ans) ; CEE 0 car l'énergie remplacée est électrique, pas une chaudière fossile (D43)"
+      }
+    }
   ]
 }
