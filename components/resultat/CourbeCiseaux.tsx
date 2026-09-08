@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { contenu } from "@/lib/content";
 import { euros, remplacer } from "@/lib/format";
@@ -36,8 +36,21 @@ export function CourbeCiseaux({
   const idAire = useId();
   const svgRef = useRef<SVGSVGElement>(null);
   const dernier = serie.annees.length - 1;
-  const [index, setIndex] = useState(dernier);
+  const [indexBrut, setIndex] = useState(dernier);
   const [actif, setActif] = useState(false);
+
+  /**
+   * Changer d'horizon change la longueur de la série : sans recadrage,
+   * le curseur resterait sur un index hors bornes et l'infobulle afficherait
+   * 0 € — un résultat figé sur l'horizon précédent.
+   */
+  useEffect(() => {
+    setIndex(dernier);
+  }, [dernier]);
+
+  // Filet de sécurité : aucun rendu ne doit lire hors de la série, même
+  // pendant le rendu qui précède l'effet ci-dessus.
+  const index = Math.min(indexBrut, dernier);
 
   const largeur = apercu ? 300 : 326;
   const hauteur = apercu ? 96 : 170;

@@ -74,6 +74,43 @@ describe("variante par défaut", () => {
     ).toBeDefined();
   });
 
+  /** Cumul affiché par la tuile héros, en euros. */
+  function cumulAffiche(): number {
+    const hero = screen.getByRole("heading", {
+      level: 2,
+      name: /Vos économies cumulées/,
+    }).parentElement!;
+    const texte = hero.textContent ?? "";
+    const montant = /([\d\u00a0\u202f ]+)\s*€/.exec(texte)?.[1] ?? "0";
+    return Number(montant.replace(/[^\d]/g, ""));
+  }
+
+  it("recalcule en direct quand on choisit le stockage virtuel", () => {
+    render(<Resultat />);
+    const avant = cumulAffiche();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.stockage.options.virtuel,
+      }),
+    );
+
+    expect(cumulAffiche()).toBeGreaterThan(avant);
+  });
+
+  it("recalcule en direct quand on active le couplage pompe à chaleur", () => {
+    render(<Resultat />);
+    const avant = cumulAffiche();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.couplage.options.oui,
+      }),
+    );
+
+    expect(cumulAffiche()).toBeGreaterThan(avant);
+  });
+
   it("recalcule le cumul quand on change l'horizon", () => {
     render(<Resultat />);
 
@@ -85,6 +122,21 @@ describe("variante par défaut", () => {
 
     expect(avant).toBe("25");
     expect(apres).toBe("10");
+  });
+
+  it("ramène le curseur de la courbe dans l'horizon quand il change", () => {
+    render(<Resultat />);
+
+    const courbe = () => screen.getByRole("slider");
+    expect(courbe().getAttribute("aria-valuenow")).toBe("25");
+
+    fireEvent.click(
+      screen.getByRole("button", { name: `10 ${contenu.resultat.horizons.unite}` }),
+    );
+
+    // Sans recadrage, l'index resterait à 25 et l'infobulle afficherait 0 €.
+    expect(courbe().getAttribute("aria-valuenow")).toBe("10");
+    expect(courbe().getAttribute("aria-valuetext")).not.toMatch(/sans 0 €/);
   });
 
   it("déplace le curseur de lecture au clavier", () => {
