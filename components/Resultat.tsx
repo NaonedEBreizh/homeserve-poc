@@ -178,12 +178,16 @@ export function Resultat() {
       ...t.comprendre_panneau.blocs.pack,
       vignette: <CartePack resultat={resultat} apercu />,
     },
-    {
-      cle: "kwc",
-      ...t.comprendre_panneau.blocs.kwc,
-      vignette: <Configurateur reglages={reglages} bloc="kwc" apercu />,
-      impacts: impactsOption("kwc"),
-    },
+    ...(etat.demo
+      ? [
+          {
+            cle: "kwc",
+            ...t.comprendre_panneau.blocs.kwc,
+            vignette: <Configurateur reglages={reglages} bloc="kwc" apercu />,
+            impacts: impactsOption("kwc"),
+          },
+        ]
+      : []),
     {
       cle: "stockage",
       ...t.comprendre_panneau.blocs.stockage,
@@ -298,6 +302,7 @@ export function Resultat() {
 
       <Configurateur
         reglages={reglages}
+        avecPuissance={etat.demo}
         onChanger={(r) => {
           setReglages(r);
           track("sim_option_toggled", { ...r });

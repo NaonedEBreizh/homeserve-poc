@@ -208,6 +208,43 @@ describe("section « Et après ? » (D44)", () => {
   });
 });
 
+describe("puissance de la centrale (D45)", () => {
+  beforeEach(() => {
+    repondreSimulateur();
+  });
+
+  it("n'expose pas le choix de kWc dans la vue par défaut", () => {
+    render(<Resultat />);
+
+    const options = contenu.resultat.configurateur.solaire.options;
+    expect(screen.queryByText(contenu.resultat.configurateur.solaire.libelle)).toBeNull();
+    for (const libelle of Object.values(options)) {
+      expect(screen.queryByRole("button", { name: libelle })).toBeNull();
+    }
+  });
+
+  it("annonce la puissance conseillée en texte dans la carte pack", () => {
+    render(<Resultat />);
+
+    // Le moteur conseille 6 kWc pour ce logement.
+    expect(screen.getByText(/Puissance conseillée : 6 kWc/)).toBeDefined();
+  });
+
+  it("rétablit le choix de kWc avec ?demo=1, à côté de la rentabilité", () => {
+    setDemo(true);
+    render(<Resultat />);
+
+    expect(
+      screen.getByText(contenu.resultat.configurateur.solaire.libelle),
+    ).toBeDefined();
+    expect(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.solaire.options["9"],
+      }),
+    ).toBeDefined();
+  });
+});
+
 describe("rentabilité (D41)", () => {
   beforeEach(() => {
     repondreSimulateur();
@@ -271,7 +308,12 @@ describe("panneau « Comprendre mes résultats » (D37)", () => {
     );
 
     const blocs = contenu.resultat.comprendre_panneau.blocs;
-    for (const bloc of Object.values(blocs)) {
+    // L'onglet kWc suit la ligne du configurateur : absent hors ?demo=1 (D45).
+    for (const [cle, bloc] of Object.entries(blocs)) {
+      if (cle === "kwc") {
+        expect(screen.queryByRole("button", { name: bloc.titre })).toBeNull();
+        continue;
+      }
       expect(screen.getByRole("button", { name: bloc.titre })).toBeDefined();
     }
 

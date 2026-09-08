@@ -278,7 +278,8 @@
       "pac_aides": "MaPrimeRénov' + CEE",
       "aucune_avance": "aucune avance de frais",
       "intro": "Pack le plus souvent proposé pour un logement comme le vôtre",
-      "prix_note": "prix public homeserve.fr"
+      "prix_note": "prix public homeserve.fr",
+      "puissance": "Puissance conseillée : {kwc} kWc"
     },
     "hypotheses": {
       "titre": "Nos hypothèses",

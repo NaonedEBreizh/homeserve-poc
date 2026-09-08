@@ -152,11 +152,18 @@ export function Configurateur({
   onChanger,
   apercu = false,
   bloc,
+  avecPuissance = false,
 }: PropsApercu & {
   reglages: ReglagesInstallation;
   onChanger?: (r: ReglagesInstallation) => void;
   /** Restreint l'aperçu à une seule ligne du configurateur (panneau D37). */
   bloc?: "kwc" | "stockage" | "couplage";
+  /**
+   * D45 : le choix de puissance ne figure pas dans la vue par défaut — le
+   * dimensionnement relève de l'étude, pas d'un curseur. Il réapparaît sous
+   * `?demo=1`, à côté de la rentabilité.
+   */
+  avecPuissance?: boolean;
 }) {
   const { configurateur } = contenu.resultat;
   const inerte = apercu ? "pointer-events-none scale-95" : "";
@@ -197,7 +204,9 @@ export function Configurateur({
       actif: reglages.couplage ? "oui" : "non",
       choisir: (v: string) => onChanger?.({ ...reglages, couplage: v === "oui" }),
     },
-  ].filter((ligne) => !bloc || ligne.cle === bloc);
+  ]
+    .filter((ligne) => ligne.cle !== "kwc" || avecPuissance || bloc === "kwc")
+    .filter((ligne) => !bloc || ligne.cle === bloc);
 
   return (
     <section
@@ -262,6 +271,9 @@ export function CartePack({
           {resultat.nomPack} — {remplacer(recommandation.prix, { prix: euros(resultat.prixPack) })}
         </h2>
         <p className="text-xs text-neutre-400">{recommandation.prix_note}</p>
+        <p className="text-sm font-bold text-canard-700">
+          {remplacer(recommandation.puissance, { kwc: resultat.kwcConseille })}
+        </p>
 
         <dl className="mt-2 flex flex-col divide-y divide-neutre-100 text-[17px]">
           <div className="flex justify-between py-2">
