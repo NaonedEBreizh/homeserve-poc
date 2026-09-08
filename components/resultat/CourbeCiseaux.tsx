@@ -247,7 +247,7 @@ export function CourbeCiseaux({
               x={geo.x(serie.annees.indexOf(annee))}
               y={hauteur - 8}
               fontSize={11}
-              fill="var(--color-neutre-400)"
+              fill="var(--color-neutre-500)"
               textAnchor="middle"
             >
               {annee}

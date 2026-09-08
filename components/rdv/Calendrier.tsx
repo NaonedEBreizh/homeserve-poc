@@ -100,7 +100,7 @@ export function Calendrier({
         <span className="rounded-full bg-vert-100 px-2 py-0.5 text-[11px] font-extrabold text-vert-600">
           {calendrier.rge}
         </span>
-        <span className="rounded-full bg-orange-100 px-2 py-0.5 text-[11px] font-extrabold text-orange-600">
+        <span className="rounded-full bg-orange-100 px-2 py-0.5 text-[11px] font-extrabold text-neutre-700">
           {calendrier.badge}
         </span>
       </div>

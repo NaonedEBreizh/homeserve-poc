@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { track } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
+import { CTA_PRIMAIRE } from "@/lib/styles";
 
 /**
  * Écran M1 de la variante `?variant=mur` : le tunnel actuel, reproduit pour
@@ -61,7 +62,7 @@ export function MurContact() {
 
         <button
           type="submit"
-          className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white"
+          className={CTA_PRIMAIRE}
         >
           {mur.cta}
         </button>
@@ -72,7 +73,7 @@ export function MurContact() {
 
 function Etiquette() {
   return (
-    <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-orange-600">
+    <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-neutre-700">
       {contenu.mur.etiquette}
     </p>
   );

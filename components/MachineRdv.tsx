@@ -12,6 +12,9 @@ import { contenu } from "@/lib/content";
 import { avecDrapeaux } from "@/lib/navigation";
 import { creneauVersRdv, enregistrerRdv, lireRdvExistants } from "@/lib/rdv";
 import { setRdv, useHydrate, useProjet, type ProjetState } from "@/lib/store";
+import { BANDEAU_INFO, CARTE_OPTION, CTA_PRIMAIRE } from "@/lib/styles";
+
+import { PictoOption } from "./ui/pictos";
 
 import { Calendrier } from "./rdv/Calendrier";
 import { PanneauReponses, type LigneReponse } from "./rdv/PanneauReponses";
@@ -129,9 +132,7 @@ export function MachineRdv() {
       </h1>
 
       {lignes.length === 0 ? (
-        <p className="rounded-card bg-canard-100 p-3 text-sm text-canard-700">
-          {contenu.rdv.porte_chaude}
-        </p>
+        <p className={BANDEAU_INFO}>{contenu.rdv.porte_chaude}</p>
       ) : null}
 
       <PanneauReponses lignes={lignes} />
@@ -263,9 +264,7 @@ function NoeudRendu({
       <section className="flex flex-col gap-3">
         {question}
         {noeud.aide ? (
-          <p className="rounded-card bg-canard-100 p-3 text-sm text-canard-700">
-            {noeud.aide}
-          </p>
+          <p className={BANDEAU_INFO}>{noeud.aide}</p>
         ) : null}
         <ul className="flex flex-col gap-2.5">
           {noeud.options?.map((option) => (
@@ -273,8 +272,9 @@ function NoeudRendu({
               <button
                 type="button"
                 onClick={() => onRepondre(option.valeur)}
-                className="flex min-h-16 w-full items-center rounded-card border border-neutre-200 p-4 text-left text-base font-bold text-neutre-700"
+                className={`${CARTE_OPTION} min-h-16 text-base font-bold text-neutre-700`}
               >
+                <PictoOption cle={option.valeur} taille={24} />
                 {option.libelle ?? option.valeur}
               </button>
             </li>
@@ -330,7 +330,7 @@ function NoeudRendu({
         <p className="text-base text-neutre-500">{noeud.texte}</p>
       ) : null}
       {noeud.badge ? (
-        <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-orange-600">
+        <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-neutre-700">
           {noeud.badge}
         </p>
       ) : null}
@@ -345,7 +345,7 @@ function NoeudRendu({
           if (noeud.type === "info" && noeud.modale) track("booking_engaged", {});
           onAvancer();
         }}
-        className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white"
+        className={CTA_PRIMAIRE}
       >
         {noeud.bouton ?? contenu.global.continuer}
       </button>
@@ -382,7 +382,7 @@ function Formulaire({
         <h2 className="text-xl font-extrabold text-neutre-700">
           {noeud.question}
         </h2>
-        <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-orange-600">
+        <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-neutre-700">
           {contenu.rdv.otp.demo.replace("{code}", String(noeud.code_demo))}
         </p>
         <input
@@ -393,7 +393,7 @@ function Formulaire({
           aria-label={contenu.rdv.otp.titre}
           className="h-16 w-40 rounded-xl border border-neutre-300 text-center text-2xl font-extrabold tracking-[0.5em] text-neutre-700"
         />
-        <p className="text-xs text-neutre-400">{contenu.rdv.otp.aide}</p>
+        <p className="text-xs text-neutre-500">{contenu.rdv.otp.aide}</p>
         <button
           type="button"
           disabled={code.length !== 4}
@@ -401,7 +401,7 @@ function Formulaire({
             track("booking_otp_ok", {});
             onRepondre({ code });
           }}
-          className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white disabled:opacity-40"
+          className={`${CTA_PRIMAIRE} disabled:opacity-40`}
         >
           {contenu.global.continuer}
         </button>
@@ -454,21 +454,19 @@ function Formulaire({
             />
           )}
           {champ.aide ? (
-            <span className="text-xs text-neutre-400">{champ.aide}</span>
+            <span className="text-xs text-neutre-500">{champ.aide}</span>
           ) : null}
         </label>
       ))}
 
       {noeud.mention ? (
-        <p className="rounded-card bg-canard-100 p-3 text-sm text-canard-700">
-          {noeud.mention}
-        </p>
+        <p className={BANDEAU_INFO}>{noeud.mention}</p>
       ) : null}
 
       <button
         type="submit"
         disabled={!complet}
-        className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white disabled:opacity-40"
+        className={`${CTA_PRIMAIRE} disabled:opacity-40`}
       >
         {id === "B16" ? contenu.rdv.coordonnees.cta_code : contenu.global.continuer}
       </button>

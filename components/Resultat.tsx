@@ -11,8 +11,10 @@ import { contenu } from "@/lib/content";
 import { entreesSolaire } from "@/lib/entrees";
 import { euros, remplacer } from "@/lib/format";
 import { avecDrapeaux } from "@/lib/navigation";
+import { CTA_PRIMAIRE, CTA_SECONDAIRE, SECTION_ALTERNEE } from "@/lib/styles";
 import { useHydrate, useProjet } from "@/lib/store";
 
+import { IllustrationBatterie, IllustrationPac, IllustrationToit } from "./ui/pictos";
 import { MurContact } from "./MurContact";
 import { CourbeCiseaux, type Rentabilite } from "./resultat/CourbeCiseaux";
 import { EtApres } from "./resultat/EtApres";
@@ -176,7 +178,12 @@ export function Resultat() {
     {
       cle: "pack",
       ...t.comprendre_panneau.blocs.pack,
-      vignette: <CartePack resultat={resultat} apercu />,
+      vignette: (
+        <>
+          <IllustrationToit className="h-16 w-full" />
+          <CartePack resultat={resultat} apercu />
+        </>
+      ),
     },
     ...(etat.demo
       ? [
@@ -191,13 +198,23 @@ export function Resultat() {
     {
       cle: "stockage",
       ...t.comprendre_panneau.blocs.stockage,
-      vignette: <Configurateur reglages={reglages} bloc="stockage" apercu />,
+      vignette: (
+        <>
+          <IllustrationBatterie className="h-16 w-full" />
+          <Configurateur reglages={reglages} bloc="stockage" apercu />
+        </>
+      ),
       impacts: impactsOption("stockage"),
     },
     {
       cle: "couplage",
       ...t.comprendre_panneau.blocs.couplage,
-      vignette: <Configurateur reglages={reglages} bloc="couplage" apercu />,
+      vignette: (
+        <>
+          <IllustrationPac className="h-16 w-full" />
+          <Configurateur reglages={reglages} bloc="couplage" apercu />
+        </>
+      ),
       impacts: impactsOption("couplage"),
     },
   ];
@@ -257,7 +274,7 @@ export function Resultat() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-md flex-col gap-5 p-5 text-[17px]">
+    <main className="mx-auto flex w-full max-w-md flex-col gap-6 p-5 pb-24 text-[17px]">
       {resultat.horsZone ? (
         <p className="rounded-card bg-orange-100 p-3 text-sm font-bold text-orange-600">
           {t.hors_zone.bandeau}
@@ -300,6 +317,7 @@ export function Resultat() {
         })}
       </p>
 
+      <div className={SECTION_ALTERNEE}>
       <Configurateur
         reglages={reglages}
         avecPuissance={etat.demo}
@@ -308,11 +326,12 @@ export function Resultat() {
           track("sim_option_toggled", { ...r });
         }}
       />
+      </div>
 
       <CartePack resultat={resultat} rentabiliteAns={rentabilite} />
 
       {etat.demo ? (
-        <p className="text-xs text-neutre-400">{t.rentabilite.mention}</p>
+        <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
       ) : null}
 
       {/* D44 : entre la carte pack et le CTA. */}
@@ -324,14 +343,14 @@ export function Resultat() {
         <Link
           href={avecDrapeaux("/rendez-vous", parametres, { source: "resultat" })}
           onClick={() => track("sim_to_booking", { horizon })}
-          className="flex min-h-14 items-center justify-center rounded-full bg-corail-600 text-lg font-extrabold text-white"
+          className={CTA_PRIMAIRE}
         >
           {t.cta_principal}
         </Link>
         <Link
           href={avecDrapeaux("/rendez-vous", parametres, { rappel: "1" })}
           onClick={() => track("callback_requested", { source: "resultat" })}
-          className="flex min-h-14 items-center justify-center rounded-full border-2 border-neutre-700 bg-white text-lg font-extrabold text-neutre-700"
+          className={CTA_SECONDAIRE}
         >
           {t.cta_rappel}
         </Link>
@@ -339,8 +358,9 @@ export function Resultat() {
             confirmation. */}
       </div>
 
-      {/* Widget collant : le CTA reste atteignable pendant tout le défilement. */}
-      <div className="sticky bottom-0 -mx-5 mt-2 flex items-center gap-3 border-t border-neutre-100 bg-white px-5 py-3">
+      {/* Barre d'actions collante : sur mobile, le CTA principal ne quitte
+          jamais l'écran. */}
+      <div className="fixed inset-x-0 bottom-0 z-40 mx-auto flex max-w-md items-center gap-3 border-t border-neutre-200 bg-white px-5 py-3 shadow-[0_-2px_8px_rgba(30,30,30,0.08)]">
         <span className="flex flex-col">
           <span className="text-xs text-neutre-500">
             {remplacer(t.hero.libelle, { n: horizon })}
@@ -352,7 +372,7 @@ export function Resultat() {
         <Link
           href={avecDrapeaux("/rendez-vous", parametres, { source: "sticky" })}
           onClick={() => track("sim_to_booking", { source: "sticky", horizon })}
-          className="ml-auto flex min-h-11 items-center rounded-full bg-corail-600 px-4 text-sm font-extrabold text-white"
+          className="ml-auto flex min-h-11 items-center rounded-full bg-corail-600 px-4 text-sm font-extrabold text-white shadow-[0_2px_6px_rgba(226,44,34,0.24)]"
         >
           {t.widget_sticky}
         </Link>

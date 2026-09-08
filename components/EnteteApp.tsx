@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { contenu } from "@/lib/content";
 import { setDebug, setDemo, setVariant, useProjet } from "@/lib/store";
 
+import { PictoMaison } from "./ui/pictos";
+
 import { BoutonAppel } from "./BoutonAppel";
 import { DebugPanel } from "./DebugPanel";
 
@@ -38,9 +40,13 @@ export function EnteteApp() {
   return (
     <>
       <header className="flex min-h-14 items-center justify-between gap-4 border-b border-neutre-200 px-5 py-3">
-        {/* Mot-symbole, pas de logo : Nunito ExtraBold, corail-600. */}
-        <span className="font-sans text-[19px] font-extrabold tracking-tight text-corail-600">
-          {contenu.global.marque}
+        {/* Mot-symbole précédé d'un pictogramme original (toit + panneau) :
+            aucune reprise du logo officiel. */}
+        <span className="flex items-center gap-2">
+          <PictoMaison taille={28} />
+          <span className="font-sans text-[19px] font-extrabold tracking-tight text-corail-600">
+            {contenu.global.marque}
+          </span>
         </span>
 
         {appelAutorise(chemin) ? (

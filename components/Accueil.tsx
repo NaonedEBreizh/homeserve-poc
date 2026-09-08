@@ -59,7 +59,7 @@ export function Accueil() {
       <nav className="flex flex-col gap-3">
         <Link
           href={avecDrapeaux("/simulateur", parametres, { source })}
-          className="flex min-h-11 flex-col gap-1 rounded-tuile bg-corail-600 p-5 text-white"
+          className="flex min-h-11 flex-col gap-1 rounded-tuile bg-corail-600 p-5 text-white shadow-[0_2px_6px_rgba(226,44,34,0.24)]"
         >
           <span className="text-lg font-extrabold">
             {accueil.porte_simulateur.titre}

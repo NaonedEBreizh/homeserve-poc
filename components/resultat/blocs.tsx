@@ -4,6 +4,7 @@ import hypotheses from "@/data/hypotheses.json";
 import type { SolaireResult } from "@/engine/solaire";
 import { contenu } from "@/lib/content";
 import { euros, remplacer } from "@/lib/format";
+import { IllustrationToit } from "@/components/ui/pictos";
 
 /** Tous les blocs acceptent `apercu` : réduit et inerte, pour le panneau D37. */
 export type PropsApercu = { apercu?: boolean };
@@ -52,7 +53,7 @@ export function EncartTaux({
         </button>
       </div>
 
-      <p className="text-xs text-neutre-400">{resultat.taux.source}</p>
+      <p className="text-xs text-neutre-500">{resultat.taux.source}</p>
     </section>
   );
 }
@@ -65,7 +66,7 @@ export function TuileHero({
   return (
     <section
       aria-hidden={apercu || undefined}
-      className={`flex flex-col items-center gap-1 rounded-tuile border-2 border-corail-600 p-6 text-center ${apercu ? "scale-95 p-3" : ""}`}
+      className={`flex flex-col items-center gap-1 rounded-tuile border-2 border-corail-600 bg-gradient-to-b from-corail-100 to-white p-6 text-center ${apercu ? "scale-95 p-3" : ""}`}
     >
       <h2 className="text-sm font-bold text-neutre-500">
         {remplacer(contenu.resultat.hero.libelle, { n: horizon })}
@@ -260,17 +261,20 @@ export function CartePack({
       aria-hidden={apercu || undefined}
       className={`overflow-hidden rounded-tuile border border-neutre-200 ${apercu ? "scale-95" : ""}`}
     >
-      <p className="bg-corail-100 px-4 py-2 text-sm font-extrabold text-corail-600">
+      <p className="bg-orange-100 px-4 py-2 text-sm font-extrabold text-neutre-700">
         {recommandation.titre}
       </p>
 
       <div className="flex flex-col gap-2 p-4">
+        {apercu ? null : (
+          <IllustrationToit className="h-16 w-full self-center" />
+        )}
         {/* Jamais « votre installation » : le dimensionnement vient de l'étude. */}
         <p className="text-sm text-neutre-500">{recommandation.intro}</p>
         <h2 className="text-xl font-extrabold text-neutre-700">
           {resultat.nomPack} — {remplacer(recommandation.prix, { prix: euros(resultat.prixPack) })}
         </h2>
-        <p className="text-xs text-neutre-400">{recommandation.prix_note}</p>
+        <p className="text-xs text-neutre-500">{recommandation.prix_note}</p>
         <p className="text-sm font-bold text-canard-700">
           {remplacer(recommandation.puissance, { kwc: resultat.kwcConseille })}
         </p>
@@ -324,7 +328,7 @@ export function BlocHypotheses() {
         {lignes.map(([libelle, source]) => (
           <li key={libelle}>
             <span className="font-bold text-neutre-700">{libelle}</span>
-            <span className="block text-xs text-neutre-400">{source}</span>
+            <span className="block text-xs text-neutre-500">{source}</span>
           </li>
         ))}
       </ul>

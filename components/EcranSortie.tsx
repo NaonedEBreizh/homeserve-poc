@@ -10,6 +10,8 @@ import { contenu } from "@/lib/content";
 import { avecDrapeaux } from "@/lib/navigation";
 import { useProjet } from "@/lib/store";
 
+import { CTA_PRIMAIRE } from "@/lib/styles";
+
 import { BoutonAppel } from "./BoutonAppel";
 
 type Offre = {
@@ -64,7 +66,7 @@ export function EcranSortie({ code }: { code: string }) {
   return (
     <main className="mx-auto flex w-full max-w-md flex-col gap-5 p-5">
       {sortie.badge ? (
-        <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-orange-600">
+        <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-neutre-700">
           {sortie.badge}
         </p>
       ) : null}
@@ -97,7 +99,7 @@ export function EcranSortie({ code }: { code: string }) {
         <Link
           href={avecDrapeaux("/sortie/R1", parametres)}
           onClick={() => track("callback_requested", { source: `sortie_${code}` })}
-          className="flex min-h-14 items-center justify-center rounded-full bg-corail-600 text-lg font-extrabold text-white"
+          className={CTA_PRIMAIRE}
         >
           {contenu.rdv.rappel.cta}
         </Link>
@@ -108,14 +110,14 @@ export function EcranSortie({ code }: { code: string }) {
           key={offre!.libelle}
           className="overflow-hidden rounded-tuile border border-neutre-200"
         >
-          <p className="bg-neutre-100 px-4 py-2 text-sm font-extrabold text-corail-600">
+          <p className="bg-neutre-100 px-4 py-2 text-sm font-extrabold text-neutre-700">
             {t.offre}
           </p>
           <div className="flex flex-col gap-2 p-4">
             <h2 className="text-lg font-extrabold text-neutre-700">
               {offre!.libelle}
             </h2>
-            <p className="text-xs text-neutre-400">
+            <p className="text-xs text-neutre-500">
               {offre!.en_ligne ? t.en_ligne : t.par_telephone}
             </p>
             {offre!.url ? (
@@ -233,7 +235,7 @@ function EcranRappel({ sortie }: { sortie: Sortie }) {
           });
           setEnvoye(new Date().toLocaleString("fr-FR"));
         }}
-        className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white disabled:opacity-40"
+        className={`${CTA_PRIMAIRE} disabled:opacity-40`}
       >
         {rappel.cta}
       </button>

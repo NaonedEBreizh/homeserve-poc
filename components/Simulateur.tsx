@@ -8,7 +8,10 @@ import { track } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
 import { TRANCHES_SURFACE } from "@/lib/entrees";
 import { avecDrapeaux } from "@/lib/navigation";
+import { CARTE_OPTION, CARTE_OPTION_ACTIVE, CTA_PRIMAIRE } from "@/lib/styles";
 import { setReponse, useProjet, type CleReponse, type Projet } from "@/lib/store";
+
+import { PictoOption } from "./ui/pictos";
 
 type TypeQuestion = "choix" | "cp" | "curseur" | "multi";
 
@@ -188,7 +191,7 @@ export function Simulateur() {
           ←
         </button>
         {question.type === "choix" ? (
-          <span className="text-xs text-neutre-400">
+          <span className="text-xs text-neutre-500">
             {contenu.simulateur.choix_auto}
           </span>
         ) : null}
@@ -217,20 +220,20 @@ function Stepper({
                   ? "bg-corail-600 text-white"
                   : i < etape
                     ? "bg-neutre-700 text-white"
-                    : "bg-neutre-300 text-white"
+                      : "border border-neutre-300 bg-white text-neutre-500"
               }`}
             >
               {i + 1}
             </span>
             <span
-              className={`text-[13px] ${i === etape ? "font-extrabold text-neutre-700" : "font-bold text-neutre-400"}`}
+              className={`text-[13px] ${i === etape ? "font-extrabold text-neutre-700" : "font-bold text-neutre-500"}`}
             >
               {libelle}
             </span>
           </li>
         ))}
       </ol>
-      <span className="text-[13px] font-bold text-neutre-400">
+      <span className="text-[13px] font-bold text-neutre-500">
         {`${numero} / ${total}`}
       </span>
     </div>
@@ -256,12 +259,11 @@ function Choix({
               type="button"
               onClick={() => onChoisir(cle)}
               aria-pressed={actif}
-              className={`flex min-h-28 w-full items-center rounded-card border p-4 text-left text-base font-bold ${
-                actif
-                  ? "border-2 border-corail-600 bg-corail-100 text-corail-600"
-                  : "border-neutre-200 bg-white text-neutre-700"
-              }`}
+              className={`min-h-28 flex-col items-start gap-2 text-base font-bold ${
+                actif ? CARTE_OPTION_ACTIVE : CARTE_OPTION
+              } ${actif ? "text-orange-600" : "text-neutre-700"}`}
             >
+              <PictoOption cle={cle} taille={24} className="text-neutre-700" />
               {libelle}
             </button>
           </li>
@@ -304,7 +306,7 @@ function CodePostal({
       <button
         type="submit"
         disabled={!valide}
-        className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white disabled:opacity-40"
+        className={`${CTA_PRIMAIRE} disabled:opacity-40`}
       >
         {contenu.global.continuer}
       </button>
@@ -349,7 +351,7 @@ function Curseur({
           <li
             key={cran}
             className={
-              i === index ? "font-extrabold text-corail-600" : "text-neutre-400"
+              i === index ? "font-extrabold text-corail-600" : "text-neutre-500"
             }
           >
             {cran}
@@ -360,7 +362,7 @@ function Curseur({
       <button
         type="button"
         onClick={() => onValider(valeurs[index]!)}
-        className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white"
+        className={CTA_PRIMAIRE}
       >
         {contenu.global.continuer}
       </button>
@@ -413,12 +415,11 @@ function Multi({
                 type="button"
                 onClick={() => basculer(cle)}
                 aria-pressed={actif}
-                className={`flex min-h-24 w-full items-center rounded-card border p-4 text-left text-sm font-bold ${
-                  actif
-                    ? "border-2 border-corail-600 bg-corail-100 text-corail-600"
-                    : "border-neutre-200 bg-white text-neutre-700"
-                }`}
+                className={`min-h-24 flex-col items-start gap-2 text-sm font-bold ${
+                  actif ? CARTE_OPTION_ACTIVE : CARTE_OPTION
+                } ${actif ? "text-orange-600" : "text-neutre-700"}`}
               >
+                <PictoOption cle={cle} taille={24} className="text-neutre-700" />
                 {libelle}
               </button>
             </li>
@@ -429,7 +430,7 @@ function Multi({
       <button
         type="button"
         onClick={() => onValider(choisis)}
-        className="min-h-14 rounded-full bg-corail-600 text-lg font-extrabold text-white"
+        className={CTA_PRIMAIRE}
       >
         {contenu.global.continuer}
       </button>

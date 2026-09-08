@@ -61,7 +61,7 @@ export function EtApres() {
               className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-extrabold ${
                 etape.faite
                   ? "bg-vert-100 text-vert-600"
-                  : "border border-neutre-300 text-neutre-400"
+                  : "border border-neutre-300 text-neutre-500"
               }`}
             >
               {etape.faite ? "✓" : i + 1}
