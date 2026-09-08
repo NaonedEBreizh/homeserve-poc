@@ -1,0 +1,285 @@
+{
+  "_meta": {
+    "version": "2026-09-08.1",
+    "date": "2026-09-08",
+    "avertissement": "Ordres de grandeur pour un prototype ; ne constitue ni un devis ni une étude. Chaque constante est datée et sourcée ; celles marquées « extrapole »: true sont des estimations de l'équipe, à remplacer par des valeurs vérifiées.",
+    "modele": "Réappropriation du modèle EDF Solutions Solaires (taux d'autoproduction + bonus/malus + projection avec taux de hausse), voir docs/retro-ingenierie-edf.md et docs/releve-simulateur-edf.md."
+  },
+  "energie": {
+    "prix_elec_kwh_ttc": {
+      "valeur": 0.2001,
+      "unite": "€/kWh",
+      "source": "Tarif réglementé de vente (TRVE) base 6 kVA, 01/08/2026",
+      "date": "2026-08-01"
+    },
+    "prix_surplus_kwh": {
+      "valeur": 0.011,
+      "unite": "€/kWh",
+      "source": "Tarif de rachat du surplus (arrêté tarifaire), installations ≤ 9 kWc, T3 2026",
+      "date": "2026-07-01"
+    },
+    "hausse_annuelle_defaut": {
+      "valeur": 0.04,
+      "unite": "ratio",
+      "source": "Augmentation moyenne annuelle du TRVE résidentiel 2016-2025 (valeur affichée par EDF Solutions Solaires, relevé du 08/09/2026)",
+      "date": "2026-09-08"
+    },
+    "hausse_annuelle_min": {
+      "valeur": 0.0,
+      "unite": "ratio"
+    },
+    "hausse_annuelle_max": {
+      "valeur": 0.15,
+      "unite": "ratio",
+      "source": "Bornes du curseur EDF Solutions Solaires (0–15 %)"
+    }
+  },
+  "aides_solaire": {
+    "prime_autoconsommation_eur_par_kwc": {
+      "valeur": 0,
+      "unite": "€/kWc",
+      "source": "Prime à l'autoconsommation supprimée pour les nouvelles demandes depuis le 05/06/2026 (arrêté tarifaire)",
+      "date": "2026-06-05",
+      "note": "Certaines sources indiquent 80 €/kWc ≤ 9 kWc pour T1 2026 ; la valeur 0 est retenue par prudence, le bloc « nos hypothèses » l'affiche."
+    },
+    "tva_reduite": {
+      "valeur": 0.055,
+      "unite": "ratio",
+      "source": "TVA 5,5 % pour les installations ≤ 9 kWc avec modules < 530 kgCO2/kWc et gestionnaire d'énergie (HEMS), depuis le 01/10/2025",
+      "date": "2025-10-01"
+    },
+    "tva_normale": {
+      "valeur": 0.2,
+      "unite": "ratio"
+    }
+  },
+  "packs_homeserve": {
+    "source": "homeserve.fr/solaire/panneaux-solaires-photovoltaiques, relevé du 08/09/2026, prix « à partir de » TTC",
+    "date": "2026-09-08",
+    "liste": [
+      {
+        "kwc": 3,
+        "nom": "Sol&Go 3 kWc",
+        "prix_ttc": 6490,
+        "autoconsommation_indicative": "25–40 %"
+      },
+      {
+        "kwc": 6,
+        "nom": "Sol&Go 6 kWc",
+        "prix_ttc": 10190,
+        "autoconsommation_indicative": "25–40 %"
+      },
+      {
+        "kwc": 9,
+        "nom": "Sol&Go 9 kWc",
+        "prix_ttc": 12990,
+        "autoconsommation_indicative": "25–40 %"
+      }
+    ],
+    "ultra_bas_carbone": {
+      "prix_a_partir_de": 6690,
+      "note": "Pack HEMS Smart Grid (pilotage ballon / PAC), TVA 5,5 %, 3–9 kWc, autoconsommation 40–70 %"
+    }
+  },
+  "stockage": {
+    "virtuel_mensuel_ttc": {
+      "valeur": 15,
+      "unite": "€/mois",
+      "source": "Stockage virtuel mylight150 MySmartBattery « à partir de 15 €/mois » (pv-magazine 23/02/2024, partenariat étendu 25/02/2025)",
+      "date": "2025-02-25"
+    },
+    "batterie_physique": {
+      "valeur": null,
+      "note": "Kit batterie Zendure en option, prix et capacité non publiés : « sur devis »"
+    },
+    "tap_bonus_batterie_points": {
+      "valeur": 21,
+      "unite": "points",
+      "source": "Rétro-ingénierie EDF : TAP batterie ≈ TAP + 21 pts, plafonné à 84 %",
+      "extrapole": false
+    },
+    "tap_max_batterie": {
+      "valeur": 84,
+      "unite": "%"
+    }
+  },
+  "tap": {
+    "min": 12,
+    "max": 63,
+    "facture_annuelle_par_tranche": {
+      "source": "Rétro-ingénierie EDF (code SimulatorB2CResults) ; tranches HomeServe : < 60 · 60–100 · 101–135 · 136–175 · > 175 €/mois",
+      "valeurs": [
+        720,
+        1080,
+        1416,
+        1860,
+        2280
+      ]
+    },
+    "bonus_malus_points": {
+      "source": "Rétro-ingénierie EDF ; valeurs marquées extrapole: true = estimations HomeServe POC à valider",
+      "chauffage": {
+        "radiateurs_electriques": {
+          "valeur": 0.0,
+          "extrapole": false
+        },
+        "pompe_a_chaleur": {
+          "valeur": -9.2,
+          "extrapole": false
+        },
+        "gaz_fioul_bois": {
+          "valeur": 7.0,
+          "extrapole": false
+        },
+        "autre": {
+          "valeur": 7.0,
+          "extrapole": false
+        }
+      },
+      "occupation": {
+        "5_jours_et_plus": {
+          "valeur": 0.0,
+          "extrapole": false
+        },
+        "3_a_4_jours": {
+          "valeur": -4.4,
+          "extrapole": true,
+          "note": "moitié du malus « moins de 5 jours » (−8,7) ; l'écran EDF distingue 3 tranches, le code n'en documentait que 2"
+        },
+        "moins_de_3_jours": {
+          "valeur": -8.7,
+          "extrapole": false
+        }
+      },
+      "equipements": {
+        "chauffage_principal_electrique": {
+          "valeur": -7.1,
+          "extrapole": false,
+          "note": "coefficient EDF d'un équipement « chauffage principal électrique » absent de la liste A6 du POC : jamais appliqué automatiquement (l'exemple de référence, radiateurs électriques + VE + thermo = 29,94, ne l'inclut pas). Conservé pour documentation."
+        },
+        "chauffage_secondaire": {
+          "valeur": 2.1,
+          "extrapole": false
+        },
+        "climatisation": {
+          "valeur": 3.7,
+          "extrapole": false
+        },
+        "vehicule_electrique": {
+          "valeur": 8.9,
+          "extrapole": false
+        },
+        "borne_de_recharge": {
+          "valeur": 0.0,
+          "extrapole": true,
+          "note": "la borne seule n'ajoute rien si le véhicule est coché ; +8,9 si borne cochée sans véhicule (véhicule implicite)"
+        },
+        "piscine_ou_jacuzzi": {
+          "valeur": 4.5,
+          "extrapole": true,
+          "note": "pompe de filtration en journée : proche de la climatisation"
+        },
+        "pompe_a_chaleur_equipement": {
+          "valeur": 2.0,
+          "extrapole": true,
+          "note": "PAC déclarée en équipement (ex. PAC piscine ou air/air) ; ne pas cumuler avec chauffage = PAC"
+        },
+        "lave_vaisselle": {
+          "valeur": 1.5,
+          "extrapole": true,
+          "note": "usage programmable en journée"
+        },
+        "seche_linge": {
+          "valeur": 1.5,
+          "extrapole": true,
+          "note": "usage programmable en journée"
+        },
+        "chauffe_eau_equipement": {
+          "valeur": 0.0,
+          "extrapole": true,
+          "note": "porté par la question chauffe-eau ci-dessous, pas cumulé"
+        }
+      },
+      "chauffe_eau": {
+        "thermodynamique": {
+          "valeur": 16.3,
+          "extrapole": false
+        },
+        "electrique_moins_10_ans": {
+          "valeur": 19.6,
+          "extrapole": false
+        },
+        "electrique_plus_10_ans": {
+          "valeur": 19.6,
+          "extrapole": true,
+          "note": "même valeur que < 10 ans ; l'effet de l'âge dans le code EDF n'est pas documenté"
+        },
+        "gaz_plus_10_ans": {
+          "valeur": 0.0,
+          "extrapole": true
+        },
+        "je_ne_sais_pas": {
+          "valeur": 0.0,
+          "extrapole": true
+        }
+      }
+    },
+    "kwc_conseille": {
+      "source": "Règle HomeServe POC (extrapolée) : dimensionnement par surface et facture",
+      "extrapole": true,
+      "regle": "indice = tranche_surface (0-4) + tranche_facture (0-4) ; ≤ 3 → 3 kWc ; 4–6 → 6 kWc ; ≥ 7 → 9 kWc"
+    },
+    "production_kwh_par_kwc": "voir data/zones.json (productible par département)"
+  },
+  "projection": {
+    "horizons_ans": [
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "horizon_defaut": 25,
+    "convention_edf": "Pour la non-régression sur les écrans EDF : la facture affichée à l'horizon N est la facture après N+1 incréments annuels avec Math.ceil ; le cumul sur N ans somme N+1 termes. À l'affichage HomeServe, libeller « facture annuelle estimée dans N ans » et cumuler sur N années.",
+    "arrondi": "Math.ceil à chaque itération (EDF)"
+  },
+  "couplage_solaire_pac": {
+    "bonus_tap_pac_pilotee_points": {
+      "valeur": 3.0,
+      "extrapole": true,
+      "note": "remplace le malus PAC −9,2 quand la PAC est pilotée par le HEMS (consommation déplacée en journée)"
+    },
+    "part_conso_pac_couverte_par_solaire": {
+      "valeur": 0.25,
+      "extrapole": true,
+      "note": "part de la consommation électrique de la PAC couverte par l'autoconsommation"
+    },
+    "source_catalogue": "Pack Ultra Bas Carbone HomeServe : « le HEMS redirige automatiquement votre surplus vers votre ballon ou votre pompe à chaleur »"
+  },
+  "seuils_eligibilite": {
+    "source": "Décisions D5, D20 (PO) ; EDF : 80 €/mois et 80 m²",
+    "facture_min_eur_mois": 60,
+    "surface_min_m2": 70
+  },
+  "exemple_reference_edf": {
+    "source": "docs/retro-ingenierie-edf.md §1.2, vérifié",
+    "entrees": {
+      "departement": "69",
+      "surface_tranche": "100-135",
+      "facture_tranche": "101-135",
+      "chauffage": "radiateurs_electriques",
+      "equipements": [
+        "vehicule_electrique"
+      ],
+      "chauffe_eau": "thermodynamique",
+      "occupation": "5_jours_et_plus"
+    },
+    "attendu": {
+      "facture_annuelle": 1416,
+      "tap_pct": 29.94,
+      "economies_an": 423.95,
+      "tap_batterie_pct": 50.94,
+      "tolerance_tap_pts": 0.1
+    }
+  }
+}

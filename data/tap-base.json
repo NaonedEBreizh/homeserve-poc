@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "version": "2026-09-08.1",
+    "date": "2026-09-08",
+    "description": "Taux d'autoproduction (TAP) de base en points de pourcentage, avant bonus/malus, par zone d'ensoleillement (zs, voir data/zones.json) et par tranche de surface au sol. Le TAP final = clamp(base + Σ bonus/malus, 12, 63).",
+    "calibration": "La table EDF est un score relatif, non un taux physique : l'exemple de référence (dept 69 = Z3, tranche 100–135, bonus +25,2 pts → TAP final 29,94) impose base(Z3, 100-135) = 4,74. Les autres cellules sont extrapolées : +1,5 pt par zone d'ensoleillement au-dessus de Z3, −1,5 en dessous ; +1,0 pt par tranche de surface au-dessus de 100–135 (plus de toit → plus de kWc → meilleure couverture), −1,0 en dessous.",
+    "extrapole": true,
+    "avertissement": "Ordres de grandeur pour un prototype ; à recalibrer sur des devis réels HomeServe (hypothèse H4 du PRD)."
+  },
+  "tranches_surface": ["<70", "70-99", "100-135", "136-175", ">175"],
+  "zones": {
+    "Z1": [0.74, 1.74, 2.74, 3.74, 4.74],
+    "Z2": [2.24, 3.24, 4.24, 5.24, 6.24],
+    "Z3": [2.74, 3.74, 4.74, 5.74, 6.74],
+    "Z4": [4.24, 5.24, 6.24, 7.24, 8.24],
+    "Z5": [5.74, 6.74, 7.74, 8.74, 9.74]
+  },
+  "planchers": {
+    "note": "Le TAP final est borné à [12, 63] par le moteur quelle que soit la base ; ces valeurs basses de base traduisent le poids dominant des bonus d'usage (chauffe-eau, véhicule) dans le modèle EDF."
+  }
+}
