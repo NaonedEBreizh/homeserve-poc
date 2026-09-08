@@ -196,7 +196,7 @@
   },
   "resultat": {
     "titre": "Votre estimation",
-    "comprendre": "Comprendre mon résultat",
+    "comprendre": "Comprendre mes résultats",
     "taux": {
       "libelle": "Hausse annuelle du prix de l'électricité",
       "source": "moyenne 2016-2025, tarifs réglementés",
@@ -224,7 +224,11 @@
       "serie_sans": "Facture sans solaire",
       "serie_avec": "Facture avec solaire",
       "aire": "vos économies",
-      "phrase": "Chaque point de hausse supplémentaire, c'est +{delta} € d'économies sur {n} ans."
+      "phrase": "Chaque point de hausse supplémentaire, c'est +{delta} € d'économies sur {n} ans.",
+      "annotation": "{valeur} €/an",
+      "infobulle": "{annee} · sans {sans} € · avec {avec} €",
+      "aide_curseur": "Faites glisser le curseur, ou utilisez les flèches, pour lire une année",
+      "axe_annees": "années"
     },
     "configurateur": {
       "titre": "Mon installation",
@@ -296,7 +300,51 @@
         "titre": "Vos économies cumulées",
         "texte": "Le chiffre principal additionne vos économies sur l'horizon choisi, à partir de la hausse que vous avez réglée."
       }
-    ]
+    ],
+    "rentabilite": {
+      "trait": "Installation rentabilisée · {annee} · {n} ans",
+      "pack": "Rentabilisée en {n} ans",
+      "mention": "Estimation indicative fondée sur vos déclarations, sans valeur contractuelle ; le dimensionnement définitif est réalisé lors de votre étude gratuite."
+    },
+    "comprendre_panneau": {
+      "titre": "Comprendre mes résultats",
+      "fermer": "Fermer",
+      "impact": "{option} : {impact} sur {n} ans",
+      "blocs": {
+        "taux": {
+          "titre": "La hausse du prix de l'électricité",
+          "texte": "Ce réglage dit de combien votre facture augmente chaque année. Il ne change pas votre installation : il change le monde autour d'elle. Plus l'électricité monte, plus produire la vôtre devient intéressant."
+        },
+        "hero": {
+          "titre": "Vos économies cumulées",
+          "texte": "C'est la somme de ce que vous ne payez pas à votre fournisseur, année après année, sur l'horizon choisi. Ce n'est pas un gain versé, c'est une dépense évitée."
+        },
+        "courbe": {
+          "titre": "L'effet ciseaux",
+          "texte": "La courbe du haut est votre facture si rien ne change. Celle du bas, votre facture avec l'installation. L'écart entre les deux se creuse chaque année : c'est la surface colorée, et c'est exactement le chiffre annoncé plus haut."
+        },
+        "factures": {
+          "titre": "Vos deux factures à l'horizon",
+          "texte": "La même année, vue des deux côtés : ce que vous paieriez sans installation, ce que vous paieriez avec. La différence est votre économie de cette année-là, pas le cumul."
+        },
+        "pack": {
+          "titre": "Le pack proposé",
+          "texte": "Le pack le plus souvent installé pour un logement comme le vôtre, à son prix public. Les aides et le reste à charge en découlent. Votre installation définitive sera dimensionnée lors de l'étude gratuite."
+        },
+        "kwc": {
+          "titre": "La puissance de la centrale",
+          "texte": "Plus de kilowatts-crête, c'est plus de production — donc plus d'économies, mais aussi un prix plus élevé. Le bon dimensionnement dépend de votre toiture, que le technicien relèvera."
+        },
+        "stockage": {
+          "titre": "Le stockage",
+          "texte": "Sans stockage, ce que vous ne consommez pas part au réseau au prix du surplus. Avec un stockage, vous en consommez une part bien plus grande : votre taux d'autoproduction grimpe."
+        },
+        "couplage": {
+          "titre": "Le couplage avec une pompe à chaleur",
+          "texte": "Pilotée par le gestionnaire d'énergie, la pompe à chaleur consomme quand vos panneaux produisent. Elle cesse d'être une charge en soirée pour devenir un usage de votre propre électricité."
+        }
+      }
+    }
   },
   "mur": {
     "titre": "Vous n'êtes plus qu'à un clic de votre étude solaire !",
