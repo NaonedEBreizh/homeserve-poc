@@ -8,6 +8,8 @@ import { contenu } from "@/lib/content";
 import { avecDrapeaux } from "@/lib/navigation";
 import { setReponse, type Projet } from "@/lib/store";
 
+import { IllustrationAccueil } from "./ui/pictos";
+
 const PROJETS: Projet[] = ["solaire", "pac", "les_deux"];
 
 function estProjet(valeur: string | null): valeur is Projet {
@@ -55,6 +57,9 @@ export function Accueil() {
           ))}
         </ul>
       </header>
+
+      {/* Maison, panneaux et unité extérieure : le produit avant les portes. */}
+      <IllustrationAccueil className="h-28 w-full sm:h-40" />
 
       <nav className="flex flex-col gap-3">
         <Link

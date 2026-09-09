@@ -256,7 +256,47 @@ sans affinité de session.
 
 ---
 
-## 10. Journal de temps
+## 10. Angles morts du POC
+
+Ce que le prototype ne sait **pas** faire, et qu'il faut savoir avant de le
+montrer à un client.
+
+**Le calcul PAC ne regarde que deux choses** : l'énergie de chauffage actuelle
+et la tranche de facture. Il en déduit une dépense de chauffage, un besoin en
+kWh utile via le rendement de la chaudière remplacée, puis une consommation
+via un SCOP unique. Il ignore donc l'isolation, la surface réellement
+chauffée, le DPE, l'émetteur (radiateurs haute température ou plancher
+chauffant) et la zone d'altitude. Deux maisons de même surface et de même
+facture, l'une rénovée et l'autre non, obtiennent le même chiffre : c'est un
+ordre de grandeur d'entrée de parcours, pas un dimensionnement.
+
+**Le dimensionnement et la rentabilité restent l'affaire de l'étude.** Le kWc
+et la puissance PAC affichés sont des repères ; l'écran ne dit jamais « votre
+installation ». L'année de bascule vient d'une projection à taux constant, sans
+dégradation des modules, sans coût de maintenance ni de remplacement
+d'onduleur, et sans revalorisation du tarif de rachat du surplus.
+
+**Ce qui a été volontairement abandonné du modèle EDF** : la question sur la
+box internet (aucun effet mesurable sur le taux d'autoproduction), la question
+d'horizon posée en début de parcours (elle est devenue un réglage du
+résultat), le bouton « Valider » après chaque réponse (le choix fait avancer),
+et l'entretien en visioconférence (le POC va au créneau de visite technique).
+
+**Ce qui a été ajouté** : la branche pompe à chaleur et ses aides 2026, le
+couplage solaire/PAC, la courbe d'effet ciseaux interactive avec curseur, la
+prise de rendez-vous jusqu'au créneau réservé, et des sorties orientées vers
+une offre HomeServe réelle plutôt que des impasses.
+
+**Modalités juridiques de contact à valider avec le DPO.** Le parcours ne
+présente plus de case à cocher : sous le bouton de validation des coordonnées,
+une mention indique que valider vaut demande d'être contacté, avec un lien vers
+la page « Données personnelles ». L'horodatage est conservé dans `hs.rdv`. La
+forme du recueil — mention simple, case, ou double opt-in — et la durée de
+conservation restent à arbitrer avec le DPO avant toute mise en production.
+
+---
+
+## 11. Journal de temps
 
 Le détail bloc par bloc est dans [`docs/journal-temps.md`](docs/journal-temps.md).
 
@@ -271,7 +311,7 @@ owner ont été tenus, et deux lots de correction ont suivi la recette.
 
 ---
 
-## 11. Ce qui n'est pas dans la v1
+## 12. Ce qui n'est pas dans la v1
 
 C'est un choix, pas un oubli : Route Handler `/api/rdv`, Turnstile, Sentry,
 API Base Adresse Nationale (le POC s'en tient au code postal), visio,
