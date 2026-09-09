@@ -505,26 +505,16 @@
           "type": "tel",
           "requis": true,
           "aide": "Pour le SMS de confirmation et l'appel du technicien-conseil"
-        },
-        {
-          "id": "consentement_contact",
-          "libelle": "J'accepte d'être contacté par HomeServe par téléphone, SMS ou e-mail au sujet de ma demande d'étude, et j'ai lu la politique de données personnelles",
-          "type": "checkbox",
-          "requis": true,
-          "lien": {
-            "libelle": "politique de données personnelles",
-            "url": "https://www.homeserve.fr/donnees-personnelles"
-          }
-        },
-        {
-          "id": "consentement_marketing",
-          "libelle": "Je souhaite recevoir les conseils et offres HomeServe",
-          "type": "checkbox",
-          "requis": false
         }
       ],
-      "mention": "Prototype : aucune donnée n'est transmise ni conservée au-delà de cette session.",
-      "next": "B17"
+      "next": "B17",
+      "mention_cta": {
+        "texte": "En validant, vous demandez à être contacté par HomeServe au sujet de votre étude.",
+        "lien": {
+          "libelle": "Données personnelles",
+          "url": "https://www.homeserve.fr/donnees-personnelles"
+        }
+      }
     },
     "B17": {
       "type": "otp",
@@ -592,8 +582,7 @@
         ]
       },
       "aucun_creneau": "@R1",
-      "next": "B21",
-      "confirmation_decideurs": "Je confirme que les décideurs seront présents"
+      "next": "B21"
     },
     "B21": {
       "type": "info",

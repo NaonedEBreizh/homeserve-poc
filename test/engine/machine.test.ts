@@ -135,31 +135,26 @@ describe("tranches d'année selon le projet (D49)", () => {
   });
 });
 
-describe("consentements et décideurs (D51, D52)", () => {
-  it("B16 exige le consentement de contact et n'a plus de case « ne pas m'appeler »", () => {
-    const champs = arbre.noeuds.B16.champs as Array<{ id: string; requis?: boolean }>;
-    const ids = champs.map((c) => c.id);
+describe("contact et décideurs (D51, D52)", () => {
+  it("B16 ne demande que l'email et le téléphone, sans aucune case", () => {
+    const champs = arbre.noeuds.B16.champs as Array<{ id: string; type?: string }>;
 
-    expect(ids).not.toContain("ne_pas_appeler");
-    expect(ids).toContain("consentement_contact");
-    expect(ids).toContain("consentement_marketing");
-    expect(champs.find((c) => c.id === "consentement_contact")?.requis).toBe(true);
-    expect(champs.find((c) => c.id === "consentement_marketing")?.requis).toBe(false);
+    expect(champs.map((c) => c.id)).toEqual(["email", "telephone"]);
+    expect(champs.some((c) => c.type === "checkbox")).toBe(false);
   });
 
-  it("le consentement porte le lien vers la politique de données", () => {
-    const champs = arbre.noeuds.B16.champs as Array<{ id: string; lien?: { url: string } }>;
-    const lien = champs.find((c) => c.id === "consentement_contact")?.lien;
+  it("la mention sous le CTA porte le lien vers les données personnelles", () => {
+    const mention = arbre.noeuds.B16.mention_cta;
 
-    expect(lien?.url).toContain("homeserve.fr");
+    expect(mention.texte).toContain("vous demandez à être contacté par HomeServe");
+    expect(mention.lien.libelle).toBe("Données personnelles");
+    expect(mention.lien.url).toContain("homeserve.fr");
   });
 
-  it("B19 et B21 exigent la présence des décideurs, B20 porte la case", () => {
+  it("B19 et B21 exigent la présence des décideurs, sans case à cocher", () => {
     expect(arbre.noeuds.B19.texte).toContain("décideurs du foyer");
     expect(arbre.noeuds.B21.texte).toContain("décideurs du foyer");
-    expect(arbre.noeuds.B20.confirmation_decideurs).toBe(
-      "Je confirme que les décideurs seront présents",
-    );
+    expect(arbre.noeuds.B20).not.toHaveProperty("confirmation_decideurs");
   });
 });
 
@@ -198,7 +193,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("un RDV existant avec le même téléphone → DOUBLON", () => {
     const m = jusquaOtp("69002", [{ telephone: "0600000009", email: "autre@example.org" }]);
-    m.repondre({ email: "test@example.org", telephone: "06 00 00 00 09", consentement_contact: "true" });
+    m.repondre({ email: "test@example.org", telephone: "06 00 00 00 09" });
     m.repondre("4821");
     m.avancer();
     expect(m.courant()).toMatchObject({ type: "sortie", code: "DOUBLON" });
@@ -206,7 +201,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("le téléphone de test 0600000001 → écran B17c puis poursuite vers l'éligibilité", () => {
     const m = jusquaOtp();
-    m.repondre({ email: "test@example.org", telephone: "0600000001", consentement_contact: "true" });
+    m.repondre({ email: "test@example.org", telephone: "0600000001" });
     m.repondre("4821");
     m.avancer();
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B17c" });
@@ -217,7 +212,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("le code postal de test 99999 → agence surbookée → SURBOOKEE", () => {
     const m = jusquaOtp("99999");
-    m.repondre({ email: "test@example.org", telephone: "0600000002", consentement_contact: "true" });
+    m.repondre({ email: "test@example.org", telephone: "0600000002" });
     m.repondre("4821");
     m.avancer(); // B17b → B18
     m.avancer(); // B18 → B19
@@ -231,7 +226,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
     repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
     m.repondre({ adresse: "1 place Bellecour", cp: "69002", ville: "Lyon" });
     m.repondre({ prenom: "Test", nom: "Demo" });
-    m.repondre({ email: "test@example.org", telephone: "0600000003", consentement_contact: "true" });
+    m.repondre({ email: "test@example.org", telephone: "0600000003" });
     m.repondre("4821");
     m.avancer(); // B17b
     m.avancer(); // B18 → O1

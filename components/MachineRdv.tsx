@@ -9,7 +9,6 @@ import { trouverAgence, type Agence, type Creneau } from "@/engine/agenda";
 import {
   creerMachine,
   type Machine,
-  type ChampNoeud,
   type Noeud,
   type OptionNoeud,
 } from "@/engine/machine";
@@ -258,32 +257,6 @@ function coordonneesDe(reponses: Record<string, unknown>): {
   return { telephone, email };
 }
 
-/**
- * Libellé d'une case à cocher, avec le lien réel quand le champ en porte un
- * (D51 : la politique de données personnelles doit être atteignable).
- */
-function LibelleAvecLien({ champ }: { champ: ChampNoeud }) {
-  const libelle = champ.libelle ?? champ.id;
-  if (!champ.lien) return <>{libelle}</>;
-
-  const [avant, apres] = libelle.split(champ.lien.libelle);
-  return (
-    <>
-      {avant}
-      <a
-        href={champ.lien.url}
-        target="_blank"
-        rel="noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="font-bold text-canard-700 underline"
-      >
-        {champ.lien.libelle}
-      </a>
-      {apres}
-    </>
-  );
-}
-
 /** Rend le nœud courant selon son `type`, sans rien décider du parcours. */
 function NoeudRendu({
   id,
@@ -365,7 +338,6 @@ function NoeudRendu({
       <Calendrier
         agence={routage.agence}
         distanceKm={routage.distanceKm}
-        confirmationDecideurs={noeud.confirmation_decideurs}
         cp={cp}
         aujourdhui={new Date()}
         onConfirmer={(creneau) =>
@@ -522,14 +494,7 @@ function Formulaire({
             />
           )}
           {champ.type === "checkbox" ? (
-            <span>
-              <LibelleAvecLien champ={champ} />
-              {champ.requis ? (
-                <span aria-hidden="true" className="text-corail-600">
-                  {" *"}
-                </span>
-              ) : null}
-            </span>
+            <span>{champ.libelle ?? champ.id}</span>
           ) : null}
 
           {champ.aide ? (
@@ -538,10 +503,6 @@ function Formulaire({
         </label>
       ))}
 
-      {noeud.mention ? (
-        <p className={BANDEAU_INFO}>{noeud.mention}</p>
-      ) : null}
-
       <button
         type="submit"
         disabled={!complet}
@@ -549,6 +510,22 @@ function Formulaire({
       >
         {id === "B16" ? contenu.rdv.coordonnees.cta_code : contenu.global.continuer}
       </button>
+
+      {/* D51 : pas de case à cocher — une mention sous le bouton, et le lien
+          vers la page réelle des données personnelles. */}
+      {noeud.mention_cta ? (
+        <p className="text-xs text-neutre-500">
+          {noeud.mention_cta.texte}{" "}
+          <a
+            href={noeud.mention_cta.lien.url}
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-canard-700 underline"
+          >
+            {noeud.mention_cta.lien.libelle}
+          </a>
+        </p>
+      ) : null}
     </form>
   );
 }

@@ -55,8 +55,6 @@ export type ChampNoeud = {
   requis?: boolean;
   aide?: string;
   prefill?: string;
-  /** Lien inséré dans le libellé d'une case à cocher (D51). */
-  lien?: { libelle: string; url: string };
 };
 
 export type Noeud = {
@@ -98,8 +96,8 @@ export type Noeud = {
   si_surbookee?: string;
   parametres?: Record<string, unknown>;
   aucun_creneau?: string;
-  /** Case obligatoire avant la confirmation du créneau (D52). */
-  confirmation_decideurs?: string;
+  /** Mention légale affichée sous le bouton d'envoi (D51). */
+  mention_cta?: { texte: string; lien: { libelle: string; url: string } };
 };
 
 export type Sortie = { code: string } & Record<string, unknown>;
