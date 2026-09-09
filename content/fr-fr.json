@@ -484,7 +484,7 @@
     },
     "calendrier": {
       "titre": "Choisissez votre créneau",
-      "agence": "Agence {nom} — à {km} km",
+      "agence": "{nom} — à {km} km",
       "rge": "RGE",
       "periodes": {
         "matin": "Matin",

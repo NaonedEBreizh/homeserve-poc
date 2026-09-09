@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import agencesJson from "@/data/agences.json";
 import zonesJson from "@/data/zones.json";
+import { contenu } from "@/lib/content";
 
 type Meta = { date: string; sources: string[] };
 
@@ -116,5 +117,20 @@ describe("data/agences.json", () => {
 
     expect(test).toBeDefined();
     expect(test?.seuil_surbooking).toBe(4);
+  });
+});
+
+describe("libellés de données (lot 5)", () => {
+  it("le gabarit d'agence ne préfixe pas un nom qui dit déjà « Agence »", () => {
+    const gabarit = contenu.rdv.calendrier.agence;
+    expect(gabarit.startsWith("{nom}")).toBe(true);
+
+    const test = (agencesJson.agences as Agence[]).find((a) => a.id === "TEST");
+    expect(test).toBeDefined();
+    const rendu = gabarit
+      .replace("{nom}", test!.nom)
+      .replace("{km}", "0");
+    expect(rendu).toBe("Agence de test surbookée — à 0 km");
+    expect(/Agence\s+Agence/.test(rendu)).toBe(false);
   });
 });
