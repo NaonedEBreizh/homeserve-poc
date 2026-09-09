@@ -26,11 +26,14 @@ export function CourbeCiseaux({
   serie,
   anneeCourante,
   rentabilite,
+  libelles,
   apercu = false,
 }: {
   serie: SerieCourbe;
   anneeCourante: number;
   rentabilite?: Rentabilite;
+  /** Volet pompe à chaleur : la légende parle de chauffage, pas de solaire. */
+  libelles?: { serie_sans: string; serie_avec: string };
   apercu?: boolean;
 }) {
   const idAire = useId();
@@ -96,7 +99,7 @@ export function CourbeCiseaux({
     setIndex(Math.min(Math.max(proche, 0), dernier));
   }
 
-  const { courbe } = contenu.resultat;
+  const courbe = { ...contenu.resultat.courbe, ...libelles };
 
   if (apercu) {
     return (

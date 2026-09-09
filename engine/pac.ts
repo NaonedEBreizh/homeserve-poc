@@ -44,6 +44,10 @@ export type ProjectionPac = {
 };
 
 export type PacResult = {
+  /** Énergie remplacée : elle conditionne la prime CEE (D43). */
+  energie: EnergieChauffage;
+  /** Profil de revenus retenu : il conditionne le barème MaPrimeRénov'. */
+  profil: ProfilRevenus;
   kwhUtile: number;
   consoPacKwh: number;
   coutPacAn: number;
@@ -214,6 +218,8 @@ export function simulerPac(
   const retourAns = economieAn > 0 ? arrondi2(resteACharge / economieAn) : Infinity;
 
   return {
+    energie: entrees.energie,
+    profil: entrees.profil,
     kwhUtile: Math.round(kwhUtile),
     consoPacKwh: Math.round(consoPacKwh),
     coutPacAn: Math.round(coutPacAn),

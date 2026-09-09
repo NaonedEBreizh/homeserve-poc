@@ -5,10 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import hypotheses from "@/data/hypotheses.json";
+import { simulerPac } from "@/engine/pac";
 import { projeter, simulerSolaire } from "@/engine/solaire";
 import { track } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
-import { entreesSolaire } from "@/lib/entrees";
+import { entreesPac, entreesSolaire, pacDejaInstallee } from "@/lib/entrees";
 import { euros, remplacer } from "@/lib/format";
 import { avecDrapeaux } from "@/lib/navigation";
 import { CTA_PRIMAIRE, CTA_SECONDAIRE, SECTION_ALTERNEE } from "@/lib/styles";
@@ -21,6 +22,7 @@ import { EtApres } from "./resultat/EtApres";
 import { PanneauComprendre, type OngletComprendre } from "./resultat/PanneauComprendre";
 import {
   BlocHypotheses,
+  CartePac,
   CartePack,
   ChipsHorizon,
   Configurateur,
@@ -43,6 +45,13 @@ export function Resultat() {
   const [reglages, setReglages] = useState<ReglagesInstallation | null>(null);
 
   const entrees = hydrate ? entreesSolaire(etat) : null;
+  const entreesChauffage = hydrate ? entreesPac(etat) : null;
+
+  /** Le couplage n'est pas une option quand la PAC est déjà là (point 9). */
+  const pacDeja = hydrate ? pacDejaInstallee(etat) : false;
+  const avecPac = etat.projet === "pac" || etat.projet === "les_deux";
+  /** Projet « pompe à chaleur » seul : l'écran raconte le chauffage, pas le solaire. */
+  const voletPac = etat.projet === "pac";
 
   // Le kWc conseillé sert de point de départ au configurateur.
   const conseil = useMemo(
@@ -55,10 +64,10 @@ export function Resultat() {
       setReglages({
         kwc: conseil.kwcConseille,
         stockage: "aucun",
-        couplage: etat.projet === "les_deux",
+        couplage: etat.projet === "les_deux" || pacDeja,
       });
     }
-  }, [conseil, reglages, etat.projet]);
+  }, [conseil, reglages, etat.projet, pacDeja]);
 
   const resultat = useMemo(() => {
     if (!entrees || !reglages) return null;
@@ -68,6 +77,19 @@ export function Resultat() {
       couplagePac: reglages.couplage,
     });
   }, [entrees, reglages]);
+
+  /**
+   * Volet pompe à chaleur : mêmes taux et horizon que le solaire, pour que
+   * les deux moitiés de l'écran racontent la même histoire.
+   */
+  const resultatPac = useMemo(() => {
+    if (!avecPac || !entreesChauffage) return null;
+    return simulerPac(entreesChauffage, {
+      tauxHausse: taux,
+      horizon,
+      couplageSolaire: etat.projet === "les_deux",
+    });
+  }, [avecPac, entreesChauffage, taux, horizon, etat.projet]);
 
   const projection = useMemo(
     () =>
@@ -118,7 +140,7 @@ export function Resultat() {
   // Variante mur : le résultat n'est pas affiché du tout.
   if (etat.variant === "mur") return <MurContact />;
 
-  if (!hydrate || !resultat || !projection || !reglages) {
+  if (!hydrate || !resultat || !projection || !reglages || (voletPac && !resultatPac)) {
     return (
       <main className="mx-auto flex w-full max-w-md flex-col gap-4 p-5">
         <div className="h-8 w-2/3 animate-pulse rounded bg-neutre-100" />
@@ -133,6 +155,18 @@ export function Resultat() {
     sans: projection.factureSans,
     avec: projection.factureAvec,
   };
+
+  // Volet PAC : mêmes blocs, alimentés par la projection de chauffage.
+  const serieAffichee =
+    voletPac && resultatPac
+      ? {
+          annees: resultatPac.projection.annees,
+          sans: resultatPac.projection.depenseSans,
+          avec: resultatPac.projection.coutAvec,
+        }
+      : serie;
+  const cumulAffiche =
+    voletPac && resultatPac ? resultatPac.projection.cumul : projection.cumul;
 
   const deltaUnPoint = (() => {
     const plus = projeter({
@@ -206,18 +240,28 @@ export function Resultat() {
       ),
       impacts: impactsOption("stockage"),
     },
-    {
-      cle: "couplage",
-      ...t.comprendre_panneau.blocs.couplage,
-      vignette: (
-        <>
-          <IllustrationPac className="h-16 w-full" />
-          <Configurateur reglages={reglages} bloc="couplage" apercu />
-        </>
-      ),
-      impacts: impactsOption("couplage"),
-    },
-  ];
+    ...(pacDeja
+      ? []
+      : [
+          {
+            cle: "couplage",
+            ...t.comprendre_panneau.blocs.couplage,
+            vignette: (
+              <>
+                <IllustrationPac className="h-16 w-full" />
+                <Configurateur reglages={reglages} bloc="couplage" apercu />
+              </>
+            ),
+            impacts: impactsOption("couplage"),
+          },
+        ]),
+  ].filter((onglet) =>
+    // Le volet PAC n'a ni pack solaire ni configurateur : ces onglets n'ont
+    // rien à expliquer.
+    voletPac
+      ? ["taux", "hero", "courbe", "factures"].includes(onglet.cle)
+      : true,
+  );
 
   /** Impact chiffré d'une option sur le cumul, à réglages égaux par ailleurs. */
   function impactsOption(bloc: "kwc" | "stockage" | "couplage"): string[] {
@@ -296,49 +340,66 @@ export function Resultat() {
         }}
       />
 
-      <TuileHero cumul={projection.cumul} horizon={horizon} />
+      <TuileHero cumul={cumulAffiche} horizon={horizon} />
 
       <ChipsHorizon horizon={horizon} onChanger={setHorizon} />
 
       <CourbeCiseaux
-        serie={serie}
+        serie={serieAffichee}
         anneeCourante={ANNEE_COURANTE}
-        rentabilite={traitRentabilite}
+        rentabilite={voletPac ? null : traitRentabilite}
+        libelles={voletPac ? t.courbe_pac : undefined}
       />
 
       <TuilesFacture
-        sans={projection.factureSans.at(-1)!}
-        avec={projection.factureAvec.at(-1)!}
+        sans={serieAffichee.sans.at(-1)!}
+        avec={serieAffichee.avec.at(-1)!}
         horizon={horizon}
+        libelles={voletPac ? t.tuiles_pac : undefined}
       />
 
-      <p className="text-[17px] text-neutre-700">
-        {remplacer(t.courbe.phrase, {
-          delta: euros(deltaUnPoint),
-          n: horizon,
-        })}
-      </p>
+      {voletPac ? null : (
+        <p className="text-[17px] text-neutre-700">
+          {remplacer(t.courbe.phrase, {
+            delta: euros(deltaUnPoint),
+            n: horizon,
+          })}
+        </p>
+      )}
 
-      <div className={SECTION_ALTERNEE}>
-      <Configurateur
-        reglages={reglages}
-        avecPuissance={etat.demo}
-        onChanger={(r) => {
-          setReglages(r);
-          track("sim_option_toggled", { ...r });
-        }}
-      />
-      </div>
+      {voletPac ? null : (
+        <>
+          <div className={SECTION_ALTERNEE}>
+            <Configurateur
+              reglages={reglages}
+              avecPuissance={etat.demo}
+              avecCouplage={!pacDeja}
+              onChanger={(r) => {
+                setReglages(r);
+                track("sim_option_toggled", { ...r });
+              }}
+            />
+            {/* Point 9 : le couplage n'est plus un choix, il est acquis. */}
+            {pacDeja ? (
+              <p className="mt-3 rounded-card bg-canard-100 p-3 text-sm font-bold text-canard-700">
+                {t.pac_deja_installee}
+              </p>
+            ) : null}
+          </div>
 
-      <CartePack
-        resultat={resultat}
-        rentabiliteAns={rentabilite}
-        afficherAides={etat.projet !== "solaire"}
-      />
+          <CartePack
+            resultat={resultat}
+            rentabiliteAns={rentabilite}
+            afficherAides={etat.projet !== "solaire"}
+          />
 
-      {etat.demo ? (
-        <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
-      ) : null}
+          {etat.demo ? (
+            <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
+          ) : null}
+        </>
+      )}
+
+      {resultatPac ? <CartePac resultat={resultatPac} /> : null}
 
       {/* D44 : entre la carte pack et le CTA. */}
       <EtApres />
@@ -375,7 +436,7 @@ export function Resultat() {
             {remplacer(t.hero.libelle, { n: horizon })}
           </span>
           <span className="text-base font-extrabold text-corail-600">
-            {euros(projection.cumul)} €
+            {euros(cumulAffiche)} €
           </span>
         </span>
         <Link

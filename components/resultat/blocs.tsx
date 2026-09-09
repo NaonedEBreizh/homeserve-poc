@@ -1,10 +1,12 @@
 "use client";
 
 import hypotheses from "@/data/hypotheses.json";
+import baremes from "@/data/pac-baremes.json";
+import type { PacResult } from "@/engine/pac";
 import type { SolaireResult } from "@/engine/solaire";
 import { contenu } from "@/lib/content";
 import { euros, remplacer } from "@/lib/format";
-import { IllustrationToit } from "@/components/ui/pictos";
+import { IllustrationPac, IllustrationToit } from "@/components/ui/pictos";
 
 /** Tous les blocs acceptent `apercu` : réduit et inerte, pour le panneau D37. */
 export type PropsApercu = { apercu?: boolean };
@@ -116,9 +118,16 @@ export function TuilesFacture({
   sans,
   avec,
   horizon,
+  libelles,
   apercu = false,
-}: PropsApercu & { sans: number; avec: number; horizon: number }) {
-  const { tuiles } = contenu.resultat;
+}: PropsApercu & {
+  sans: number;
+  avec: number;
+  horizon: number;
+  /** Volet pompe à chaleur : on compare des dépenses de chauffage, pas des factures. */
+  libelles?: { sans: string; avec: string; libelle: string };
+}) {
+  const tuiles = libelles ?? contenu.resultat.tuiles;
 
   return (
     <section aria-hidden={apercu || undefined} className="flex flex-col gap-2">
@@ -155,6 +164,7 @@ export function Configurateur({
   apercu = false,
   bloc,
   avecPuissance = false,
+  avecCouplage = true,
 }: PropsApercu & {
   reglages: ReglagesInstallation;
   onChanger?: (r: ReglagesInstallation) => void;
@@ -166,6 +176,11 @@ export function Configurateur({
    * `?demo=1`, à côté de la rentabilité.
    */
   avecPuissance?: boolean;
+  /**
+   * Masque la ligne « Couplage pompe à chaleur » quand l'utilisateur en a
+   * déjà déclaré une : le couplage est acquis, pas une option à choisir.
+   */
+  avecCouplage?: boolean;
 }) {
   const { configurateur } = contenu.resultat;
   const inerte = apercu ? "pointer-events-none scale-95" : "";
@@ -212,6 +227,7 @@ export function Configurateur({
     },
   ]
     .filter((ligne) => ligne.cle !== "kwc" || avecPuissance || bloc === "kwc")
+    .filter((ligne) => ligne.cle !== "couplage" || avecCouplage || bloc === "couplage")
     .filter((ligne) => !bloc || ligne.cle === bloc);
 
   return (
@@ -323,6 +339,83 @@ export function CartePack({
             </div>
           ) : null}
         </dl>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Carte de recommandation d'un projet pompe à chaleur : fourchette de prix
+ * publique, MaPrimeRénov' selon le profil de revenus, prime CEE selon
+ * l'énergie remplacée, reste à charge et retour.
+ */
+export function CartePac({
+  resultat,
+  apercu = false,
+}: PropsApercu & { resultat: PacResult }) {
+  const { recommandation } = contenu.resultat;
+  const profils = recommandation.profils as Record<string, string>;
+  const energies = recommandation.energies as Record<string, string>;
+
+  return (
+    <section
+      aria-hidden={apercu || undefined}
+      className={`overflow-hidden rounded-tuile border border-neutre-200 ${apercu ? "scale-95" : ""}`}
+    >
+      <p className="bg-orange-100 px-4 py-2 text-sm font-extrabold text-neutre-700">
+        {recommandation.titre}
+      </p>
+
+      <div className="flex flex-col gap-2 p-4">
+        {apercu ? null : <IllustrationPac className="h-16 w-full self-center" />}
+
+        <h2 className="text-xl font-extrabold text-neutre-700">
+          {recommandation.pac_titre}
+        </h2>
+        <p className="text-sm text-neutre-500">
+          {remplacer(recommandation.pac_fourchette, {
+            min: euros(baremes.prix_homeserve_pac_air_eau.min),
+            max: euros(baremes.prix_homeserve_pac_air_eau.max),
+          })}
+        </p>
+        <p className="text-base font-bold text-neutre-700">
+          {remplacer(recommandation.pac_estimation, {
+            prix: euros(resultat.prix),
+          })}
+        </p>
+
+        <dl className="mt-2 flex flex-col divide-y divide-neutre-100 text-[17px]">
+          <div className="flex justify-between gap-3 py-2">
+            <dt className="text-neutre-500">
+              {remplacer(recommandation.mpr, {
+                profil: profils[resultat.profil] ?? "",
+              })}
+            </dt>
+            <dd className="font-extrabold text-vert-600">
+              {euros(resultat.aides.mpr)} €
+            </dd>
+          </div>
+          <div className="flex justify-between gap-3 py-2">
+            <dt className="text-neutre-500">
+              {remplacer(recommandation.cee, {
+                energie: energies[resultat.energie] ?? "",
+              })}
+            </dt>
+            <dd className="font-extrabold text-vert-600">
+              {euros(resultat.aides.cee)} €
+            </dd>
+          </div>
+          <div className="flex justify-between py-2">
+            <dt className="text-neutre-500">{recommandation.reste}</dt>
+            <dd className="font-extrabold text-neutre-700">
+              {euros(resultat.resteACharge)} €
+            </dd>
+          </div>
+        </dl>
+
+        <p className="rounded-card bg-vert-100 p-3 text-sm font-bold text-vert-600">
+          {recommandation.aucune_avance}
+        </p>
       </div>
     </section>
   );

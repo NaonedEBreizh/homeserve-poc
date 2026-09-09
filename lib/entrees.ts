@@ -64,6 +64,18 @@ export function entreesSolaire(etat: ProjetState): EntreesSolaire | null {
   };
 }
 
+/**
+ * L'utilisateur a déjà une pompe à chaleur : chauffage principal PAC (A5) ou
+ * case « Pompe à chaleur » cochée dans les équipements (A6). Le résultat
+ * solaire n'a alors plus à proposer le couplage — il est acquis.
+ */
+export function pacDejaInstallee(etat: ProjetState): boolean {
+  return (
+    texte(etat, "chauffage") === "pompe_a_chaleur" ||
+    liste(etat, "equipements").includes("pompe_a_chaleur_equipement")
+  );
+}
+
 /** MaPrimeRénov' : logement de plus de 15 ans. */
 function logementPlus15Ans(annee: string | undefined): boolean {
   return annee === "<1997" || annee === "1997-2010";

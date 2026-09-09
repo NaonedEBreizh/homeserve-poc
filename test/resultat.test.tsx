@@ -2,6 +2,10 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Resultat } from "@/components/Resultat";
+import baremes from "@/data/pac-baremes.json";
+import hypotheses from "@/data/hypotheses.json";
+import { projeter, simulerSolaire } from "@/engine/solaire";
+import { euros, remplacer } from "@/lib/format";
 import { evenements, viderBus } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
 import {
@@ -12,6 +16,14 @@ import {
 } from "@/lib/store";
 
 const parametres = { valeur: new URLSearchParams() };
+
+/**
+ * `euros()` produit des espaces fines insécables ; Testing Library normalise
+ * le texte du DOM mais pas la chaîne attendue. On aligne donc les deux.
+ */
+function norm(texte: string): string {
+  return texte.replace(/[\u00a0\u202f]/g, " ");
+}
 
 vi.mock("next/navigation", () => ({
   useSearchParams: () => parametres.valeur,
@@ -428,5 +440,130 @@ describe("panneau « Comprendre mes résultats » (D37)", () => {
         name: contenu.resultat.comprendre_panneau.fermer,
       }),
     ).toBeDefined();
+  });
+});
+
+describe("cohérence pompe à chaleur (point 9)", () => {
+  /** Même foyer que la référence, mais chauffé par une pompe à chaleur. */
+  function repondreAvecPac() {
+    repondreSimulateur();
+    setReponse("chauffage", "pompe_a_chaleur");
+  }
+
+  it("masque le couplage et l'annonce acquis", () => {
+    repondreAvecPac();
+    render(<Resultat />);
+
+    expect(
+      screen.queryByText(contenu.resultat.configurateur.couplage.libelle),
+    ).toBeNull();
+    expect(screen.getByText(contenu.resultat.pac_deja_installee)).toBeDefined();
+  });
+
+  it("retire l'onglet couplage du panneau « comprendre »", () => {
+    repondreAvecPac();
+    render(<Resultat />);
+
+    fireEvent.click(
+      screen.getByRole("button", { name: contenu.resultat.comprendre }),
+    );
+
+    expect(
+      screen.queryByRole("button", {
+        name: contenu.resultat.comprendre_panneau.blocs.couplage.titre,
+      }),
+    ).toBeNull();
+  });
+
+  it("applique le coefficient de couplage d'office", () => {
+    repondreAvecPac();
+
+    const entrees = {
+      dept: "69",
+      occupation: "5_jours_et_plus",
+      personnes: "3-4",
+      surface_sol: "100-135",
+      chauffage: "pompe_a_chaleur",
+      equipements: ["vehicule_electrique", "chauffe_eau_thermodynamique"],
+      facture_mensuelle: "101-135",
+    } as const;
+
+    const attendu = (couplagePac: boolean) => {
+      const s = simulerSolaire(entrees, {
+        kwc: simulerSolaire(entrees).kwcConseille,
+        stockage: "aucun",
+        couplagePac,
+      });
+      return projeter({
+        factureAnnuelle: s.factureAnnuelle,
+        tapPct: s.tapEffectifPct,
+        tauxHausse: hypotheses.energie.hausse_annuelle_defaut.valeur,
+        horizon: hypotheses.projection.horizon_defaut,
+        convention: "homeserve",
+      }).cumul;
+    };
+
+    // Le couplage change bien le résultat : sans cela le test ne prouverait rien.
+    expect(attendu(true)).not.toBe(attendu(false));
+
+    render(<Resultat />);
+    expect(
+      screen.getAllByText(norm(`${euros(attendu(true))} €`)).length,
+    ).toBeGreaterThan(0);
+  });
+});
+
+describe("projet pompe à chaleur", () => {
+  beforeEach(() => {
+    setReponse("projet", "pac");
+    setReponse("cp", "69002");
+    setReponse("occupation", "5_jours_et_plus");
+    setReponse("personnes", "3-4");
+    setReponse("surface_sol", "100-135");
+    setReponse("chauffage", "gaz_fioul_bois");
+    setReponse("energie_chauffage", "gaz");
+    setReponse("equipements", []);
+    setReponse("facture_mensuelle", "101-135");
+    setReponse("revenus", "jaune");
+    setReponse("annee_construction", "<1997");
+  });
+
+  it("affiche la fourchette de prix, MaPrimeRénov' et le CEE", () => {
+    render(<Resultat />);
+
+    const { recommandation } = contenu.resultat;
+    const profils = recommandation.profils as Record<string, string>;
+    const energies = recommandation.energies as Record<string, string>;
+
+    expect(
+      screen.getByText(
+        norm(
+          remplacer(recommandation.pac_fourchette, {
+            min: euros(baremes.prix_homeserve_pac_air_eau.min),
+            max: euros(baremes.prix_homeserve_pac_air_eau.max),
+          }),
+        ),
+      ),
+    ).toBeDefined();
+
+    // MaPrimeRénov' nommée selon le profil de revenus déclaré en A9.
+    expect(
+      screen.getByText(remplacer(recommandation.mpr, { profil: profils.jaune })),
+    ).toBeDefined();
+    // CEE nommé selon l'énergie remplacée (D43).
+    expect(
+      screen.getByText(remplacer(recommandation.cee, { energie: energies.gaz })),
+    ).toBeDefined();
+  });
+
+  it("n'affiche ni pack solaire ni configurateur", () => {
+    render(<Resultat />);
+
+    expect(screen.queryByText(contenu.resultat.configurateur.titre)).toBeNull();
+    expect(screen.queryByText(contenu.resultat.recommandation.intro)).toBeNull();
+    // La légende de la courbe et la tuile portent le même libellé.
+    expect(
+      screen.getAllByText(contenu.resultat.tuiles_pac.avec).length,
+    ).toBeGreaterThan(0);
   });
 });

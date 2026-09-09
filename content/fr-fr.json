@@ -211,7 +211,7 @@
       "libelle": "Facture annuelle estimée dans {n} ans"
     },
     "tuiles_pac": {
-      "sans": "Chauffage actuel",
+      "sans": "Sans pompe à chaleur",
       "avec": "Avec pompe à chaleur",
       "libelle": "Dépense de chauffage estimée dans {n} ans"
     },
@@ -275,7 +275,24 @@
       "aucune_avance": "aucune avance de frais",
       "intro": "Pack le plus souvent proposé pour un logement comme le vôtre",
       "prix_note": "prix public homeserve.fr",
-      "puissance": "Puissance conseillée : {kwc} kWc"
+      "puissance": "Puissance conseillée : {kwc} kWc",
+      "pac_titre": "Pompe à chaleur air/eau",
+      "pac_fourchette": "Fourchette indicative : {min} à {max} €",
+      "pac_estimation": "Estimation pour votre surface : {prix} €",
+      "mpr": "MaPrimeRénov' ({profil})",
+      "cee": "Prime CEE ({energie})",
+      "energies": {
+        "gaz": "remplacement d'une chaudière gaz",
+        "fioul": "remplacement d'une chaudière fioul",
+        "bois": "remplacement d'un chauffage bois",
+        "elec": "chauffage électrique — pas de CEE"
+      },
+      "profils": {
+        "bleu": "revenus très modestes",
+        "jaune": "revenus modestes",
+        "violet": "revenus intermédiaires",
+        "rose": "revenus supérieurs"
+      }
     },
     "hypotheses": {
       "titre": "Nos hypothèses",
@@ -392,7 +409,12 @@
         "Avis Vérifiés 4,7/5"
       ]
     },
-    "cta_principal_sous_titre": "étude gratuite à domicile"
+    "cta_principal_sous_titre": "étude gratuite à domicile",
+    "pac_deja_installee": "Vous avez déjà une pompe à chaleur : vos panneaux alimenteront directement votre chauffage",
+    "courbe_pac": {
+      "serie_sans": "Chauffage actuel",
+      "serie_avec": "Avec pompe à chaleur"
+    }
   },
   "mur": {
     "titre": "Vous n'êtes plus qu'à un clic de votre étude solaire !",
