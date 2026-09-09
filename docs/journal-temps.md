@@ -18,3 +18,5 @@ Heures en **UTC** (horloge de l'environnement d'exécution). Un bloc = un prompt
 | Lot 1 de recette (5 points) | 18:02 | 18:22 | 20 min | `fix(resultat)` recalcul · `feat(resultat)` D45 · `fix(resultat)` panneau 390 px · `feat(ui)` D46-A · `chore(captures)` |
 | 7 — Panneau debug, README, vérifications | 00:01 | 00:05 | 4 min | `docs: README complet, panneau debug` |
 | Lot 2 de recette (16 points + pictogrammes) | 00:20 | 01:08 | 48 min | `fix(resultat)` lisibilité · `feat(simulateur)` D53/D49 · `feat(rdv)` D50/D51/D52 · `fix(rdv)` révision sans case · `feat(resultat)` volet PAC · `docs` angles morts · `feat(ui)` pictogrammes 44 px |
+| Lot 3 de recette (D41 révisée, D54) | 01:20 | 01:32 | 12 min | `feat(resultat)` D41 révisée · `feat(accueil)` D54 |
+| Lot 4 de recette (D57, D55, README) | 01:33 | 01:54 | 21 min | `feat(rdv)` D57 orientations · `feat(solaire)` D55 abonnement virtuel · `docs` rejouer la démo |
