@@ -301,6 +301,14 @@ chauffant) et la zone d'altitude. Deux maisons de même surface et de même
 facture, l'une rénovée et l'autre non, obtiennent le même chiffre : c'est un
 ordre de grandeur d'entrée de parcours, pas un dimensionnement.
 
+**Le taux d'autoconsommation ne dépend pas de la puissance installée.** Le
+modèle EDF le calcule à partir du profil du foyer — occupation, équipements,
+chauffage, surface, zone — et pas des kWc posés. En réalité, plus la
+production est élevée, plus une batterie absorbe le surplus et fait monter
+autoconsommation et autoproduction : le couplage puissance × stockage est à
+ajouter au moteur. Aujourd'hui, changer de puissance ne joue que sur la
+production, le surplus, le prix et la rentabilité.
+
 **Le dimensionnement et la rentabilité restent l'affaire de l'étude.** Le kWc
 et la puissance PAC affichés sont des repères ; l'écran ne dit jamais « votre
 installation ». L'année de bascule vient d'une projection à taux constant, sans
