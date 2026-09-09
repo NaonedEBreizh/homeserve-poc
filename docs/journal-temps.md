@@ -20,3 +20,4 @@ Heures en **UTC** (horloge de l'environnement d'exécution). Un bloc = un prompt
 | Lot 2 de recette (16 points + pictogrammes) | 00:20 | 01:08 | 48 min | `fix(resultat)` lisibilité · `feat(simulateur)` D53/D49 · `feat(rdv)` D50/D51/D52 · `fix(rdv)` révision sans case · `feat(resultat)` volet PAC · `docs` angles morts · `feat(ui)` pictogrammes 44 px |
 | Lot 3 de recette (D41 révisée, D54) | 01:20 | 01:32 | 12 min | `feat(resultat)` D41 révisée · `feat(accueil)` D54 |
 | Lot 4 de recette (D57, D55, README) | 01:33 | 01:54 | 21 min | `feat(rdv)` D57 orientations · `feat(solaire)` D55 abonnement virtuel · `docs` rejouer la démo |
+| Lot 5 de recette (3 points) | 09:00 | 09:08 | 8 min | `feat(accueil)` accroche barème · `fix(calendrier)` doublon « Agence » · `fix(rdv)` code postal du projet |
