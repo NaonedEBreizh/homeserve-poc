@@ -137,6 +137,12 @@ export function Confirmation() {
       </Link>
 
       <BoutonAppel source="confirmation" step="/confirmation" avecMention />
+
+      {/* Le dédoublonnage (D32) surprend quiconque rejoue la démonstration :
+          on le dit ici, là où le parcours vient de s'achever. */}
+      <p className="rounded-card bg-neutre-100 p-3 text-xs text-neutre-500">
+        {confirmation.mention_doublon}
+      </p>
     </main>
   );
 }

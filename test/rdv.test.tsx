@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { Confirmation } from "@/components/Confirmation";
 import { EcranSortie } from "@/components/EcranSortie";
 import { MachineRdv } from "@/components/MachineRdv";
 import arbre from "@/data/arbre-rdv.json";
 import { contenu } from "@/lib/content";
+import { enregistrerRdv } from "@/lib/rdv";
 import { __reinitialiserPourTests, setReponse, setRdv } from "@/lib/store";
 
 const pousse = vi.fn();
@@ -171,5 +173,26 @@ describe("wording D42", () => {
     expect(contenu.rdv.confirmation.titre).toBe(
       "Votre étude gratuite est confirmée",
     );
+  });
+});
+
+describe("confirmation", () => {
+  it("prévient que le dédoublonnage bloque un second parcours", () => {
+    enregistrerRdv({
+      debutIso: "2026-09-15T08:30:00.000Z",
+      finIso: "2026-09-15T09:30:00.000Z",
+      agenceId: "LYON",
+      agenceNom: "Agence de Lyon",
+      distanceKm: 3.6,
+      telephone: "0600000009",
+      email: "camille@example.org",
+      typeRdv: contenu.rdv.confirmation.type_rdv,
+    });
+
+    render(<Confirmation />);
+
+    expect(
+      screen.getByText(contenu.rdv.confirmation.mention_doublon),
+    ).toBeDefined();
   });
 });

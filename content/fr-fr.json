@@ -526,7 +526,8 @@
         "agence": "Agence",
         "type": "Type de rendez-vous"
       },
-      "type_rdv": "Étude gratuite à domicile"
+      "type_rdv": "Étude gratuite à domicile",
+      "mention_doublon": "Le prototype détecte les doublons : pour rejouer le parcours, utilisez un autre numéro de téléphone."
     },
     "gerer": {
       "titre": "Gérer mon rendez-vous",

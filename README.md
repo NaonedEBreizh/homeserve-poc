@@ -55,18 +55,28 @@ pnpm start          # sert le build standalone
 pnpm screenshots    # régénère docs/captures/ (nécessite un build)
 ```
 
-**Drapeaux d'URL, utiles en démonstration :**
+### Rejouer la démo
 
-| Drapeau | Effet |
-|---|---|
-| `?projet=solaire\|pac\|les_deux` | pré-répond A0 sur l'accueil et affiche la ligne de contexte |
-| `?variant=mur` | insère le mur de contact **avant** le résultat, qui n'est jamais affiché — le « avant » reproduit |
-| `?debug=1` | panneau d'événements |
+Tout ce qui déclenche une règle, au même endroit.
 
-**Codes postaux de démonstration :** `69002` (Lyon, agence à 3,6 km) ·
-`99999` (agence de test surbookée, règle D30) · `75001` (hors zone).
-**Téléphone de test :** `0600000001` (prospect déjà contacté, règle D29).
-**Code SMS de démonstration :** `4821`.
+| Entrée | Valeur | Ce qu'elle déclenche |
+|---|---|---|
+| Drapeau d'URL | `?projet=solaire\|pac\|les_deux` | change le gabarit de l'accueil (D54) et pré-répond A0 |
+| Drapeau d'URL | `?variant=mur` | insère le mur de contact **avant** le résultat, jamais affiché — le tunnel actuel |
+| Drapeau d'URL | `?debug=1` | panneau d'événements |
+| Code postal | `69002` | Lyon, agence à 3,6 km — parcours nominal |
+| Code postal | `99999` | agence de test surbookée → écran « forte demande » (D30/D57) |
+| Code postal | `75001` | hors zone → écran d'orientation, réservation toujours possible (D57) |
+| Facture | `< 60 €/mois` | règle `facture_faible` → écran « un point d'honnêteté » (D57) |
+| Surface | `< 70 m²` | règle `surface_faible`, en projet solaire |
+| Logement | résidence secondaire | règle `residence_secondaire` |
+| Téléphone | `0600000001` | prospect déjà contacté par le plateau (D29) |
+| Code SMS | `4821` | seul code accepté par l'OTP simulé |
+
+⚠️ **Le prototype détecte les doublons** (D32) : un téléphone ou un email déjà
+utilisé renvoie sur l'écran « Vous avez déjà un rendez-vous ». Pour rejouer le
+parcours de bout en bout, changez de numéro de téléphone — ou videz le
+`localStorage` du navigateur.
 
 ⚠️ Le routage part de la **préfecture du département** dans un rayon de 60 km :
 Nantes, Bordeaux, Rennes, Marseille et Strasbourg tombent hors zone. Pour un
