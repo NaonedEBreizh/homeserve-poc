@@ -6,6 +6,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import agencesJson from "@/data/agences.json";
 import arbre from "@/data/arbre-rdv.json";
 import { trouverAgence, type Agence, type Creneau } from "@/engine/agenda";
+import { TRANCHES_FACTURE } from "@/engine/solaire";
+import { TRANCHES_SURFACE } from "@/lib/entrees";
 import {
   creerMachine,
   type Machine,
@@ -126,7 +128,7 @@ export function MachineRdv() {
   ).map((cle) => ({
     cle,
     libelle: LIBELLES_PREFILL[cle],
-    valeur: String(etat.reponses[cle]),
+    valeur: libelleReponse(cle, String(etat.reponses[cle])),
     herite: true,
   }));
 
@@ -204,6 +206,47 @@ const LIBELLES_PREFILL: Record<(typeof CLES_PREFILL)[number], string> = {
   annee_construction: "Construction",
   chauffage: "Chauffage",
 };
+
+/**
+ * Le récapitulatif affiche ce que l'utilisateur a lu dans le simulateur, pas
+ * la clé technique : « Radiateurs électriques », pas `radiateurs_electriques`.
+ * Les tranches passent par les crans du curseur, les choix par leurs options.
+ */
+const QUESTION_PREFILL: Partial<Record<(typeof CLES_PREFILL)[number], string>> = {
+  projet: "A0",
+  chauffage: "A5",
+  annee_construction: "A10",
+  surface_sol: "A4",
+  facture_mensuelle: "A8",
+};
+
+function libelleReponse(
+  cle: (typeof CLES_PREFILL)[number],
+  valeur: string,
+): string {
+  const id = QUESTION_PREFILL[cle];
+  if (!id) return valeur;
+
+  const questions = contenu.simulateur.questions as Record<
+    string,
+    { options?: Record<string, string>; crans?: string[] }
+  >;
+  const question = questions[id];
+  if (!question) return valeur;
+
+  const option = question.options?.[valeur];
+  if (option) return option;
+
+  // Curseurs : le cran est aligné sur la tranche, dans le même ordre.
+  const tranches =
+    cle === "surface_sol"
+      ? (TRANCHES_SURFACE as readonly string[])
+      : cle === "facture_mensuelle"
+        ? (TRANCHES_FACTURE as readonly string[])
+        : [];
+  const index = tranches.indexOf(valeur);
+  return question.crans?.[index] ?? valeur;
+}
 
 /**
  * Code postal courant : saisi en B14 dans la machine (porte chaude) ou hérité
@@ -302,7 +345,7 @@ function NoeudRendu({
                 onClick={() => onRepondre(option.valeur)}
                 className={`${CARTE_OPTION} min-h-16 text-base font-bold text-neutre-700`}
               >
-                <PictoOption cle={option.valeur} taille={24} />
+                <PictoOption cle={option.valeur} />
                 {option.libelle ?? option.valeur}
               </button>
             </li>

@@ -38,8 +38,7 @@ const ETAT_SOLAIRE = {
     personnes: "3-4",
     surface_sol: "100-135",
     chauffage: "radiateurs_electriques",
-    equipements: ["vehicule_electrique"],
-    chauffe_eau: "thermodynamique",
+    equipements: ["vehicule_electrique", "chauffe_eau_thermodynamique"],
     facture_mensuelle: "101-135",
   },
 };
@@ -147,8 +146,9 @@ async function main() {
     await clic("Propriétaire");
     await clic("Non");
     await clic("Votre résidence principale");
-    // L'année de construction n'est pas héritée du simulateur solaire.
-    await clic("Après 2010");
+    // L'année de construction n'est pas héritée du simulateur solaire, et
+    // le parcours solaire n'en propose que trois tranches (D49).
+    await clic("Après 1997");
     await clic("Rénovée");
     await clic("Tuiles");
     await page.locator("input").nth(0).fill("1 place Bellecour");

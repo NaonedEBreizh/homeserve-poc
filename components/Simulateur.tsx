@@ -267,9 +267,9 @@ function Choix({
               aria-pressed={actif}
               className={`min-h-28 flex-col items-start gap-2 text-base font-bold ${
                 actif ? CARTE_OPTION_ACTIVE : CARTE_OPTION
-              } ${actif ? "text-orange-600" : "text-neutre-700"}`}
+              } ${actif ? "text-orange-600 [--picto-fond:white]" : "text-neutre-700"}`}
             >
-              <PictoOption cle={cle} taille={24} className="text-neutre-700" />
+              <PictoOption cle={cle} />
               {libelle}
             </button>
           </li>
@@ -431,9 +431,9 @@ function Multi({
                 aria-pressed={actif}
                 className={`min-h-24 flex-col items-start gap-2 text-sm font-bold ${
                   actif ? CARTE_OPTION_ACTIVE : CARTE_OPTION
-                } ${actif ? "text-orange-600" : "text-neutre-700"}`}
+                } ${actif ? "text-orange-600 [--picto-fond:white]" : "text-neutre-700"}`}
               >
-                <PictoOption cle={cle} taille={24} className="text-neutre-700" />
+                <PictoOption cle={cle} />
                 {libelle}
               </button>
             </li>
