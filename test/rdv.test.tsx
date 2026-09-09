@@ -112,7 +112,7 @@ describe("sorties", () => {
     expect(lien.getAttribute("href")).toContain("assistance.homeserve.fr");
   });
 
-  it("rend S5 avec « Être rappelé » en primaire et la PAC en secondaire (D38a)", () => {
+  it("rend S5 avec l'offre PAC en CTA principal (D38a révisé par D58)", () => {
     render(<EcranSortie code="S5" />);
 
     const sortie = arbre.sorties["@S5"];
@@ -121,15 +121,11 @@ describe("sorties", () => {
     ).toBeDefined();
     expect(sortie.titre).toBe("Votre toiture demande un regard d'expert");
 
-    // Le rappel est le CTA principal : fond corail, pas de bordure.
-    const rappel = screen.getByRole("link", { name: contenu.rdv.rappel.cta });
-    expect(rappel.className).toContain("bg-corail-600");
-
-    // L'offre PAC devient secondaire : bordure, fond blanc.
+    // Faute de rappel, l'offre reprend la première place : fond corail.
     const offre = screen.getByRole("link", {
       name: contenu.rdv.sorties.decouvrir,
     });
-    expect(offre.className).toContain("border-2");
+    expect(offre.className).toContain("bg-corail-600");
     expect(offre.getAttribute("href")).toContain("pompes-a-chaleur");
   });
 
@@ -141,21 +137,23 @@ describe("sorties", () => {
     expect(screen.getAllByRole("link").length).toBeGreaterThan(0);
   });
 
-  it("R1 exige le consentement avant d'enregistrer le rappel", () => {
+  it("D58 : plus aucune sortie de rappel dans l'arbre", () => {
+    expect(arbre.sorties).not.toHaveProperty("@R1");
+
+    // Aucune option, nulle part, ne vise un rappel.
+    const noeuds = Object.values(
+      arbre.noeuds as Record<string, { options?: Array<{ cible?: string }> }>,
+    );
+    for (const noeud of noeuds) {
+      for (const option of noeud.options ?? []) {
+        expect(option.cible).not.toBe("@R1");
+      }
+    }
+  });
+
+  it("R1 n'est plus une sortie connue", () => {
     render(<EcranSortie code="R1" />);
-
-    const envoyer = screen.getByRole("button", {
-      name: contenu.rdv.rappel.cta,
-    });
-    expect(envoyer).toHaveProperty("disabled", true);
-
-    fireEvent.click(screen.getByRole("checkbox", { name: /J'accepte/ }));
-    expect(envoyer).toHaveProperty("disabled", false);
-
-    fireEvent.click(envoyer);
-    expect(
-      screen.getByText(/Consentement enregistré le/),
-    ).toBeDefined();
+    expect(screen.getByText(/Sortie inconnue/)).toBeDefined();
   });
 });
 

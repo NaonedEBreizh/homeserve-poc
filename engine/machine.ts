@@ -16,7 +16,8 @@
  *
  * Une règle de rentabilité, une zone non couverte ou une agence saturée ne
  * ferment plus le parcours (D57) : elles mènent à un nœud `orientation`, où le
- * prospect choisit de réserver quand même ou d'être rappelé.
+ * prospect choisit de réserver quand même ou de suivre une offre alternative.
+ * Le prototype ne propose aucune demande de rappel (D58).
  *
  * Les nœuds `regle`, `info` et `calendrier` ne s'exécutent pas d'eux-mêmes :
  * l'appelant enchaîne avec `avancer()`, un nœud à la fois.

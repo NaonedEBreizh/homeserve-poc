@@ -6,7 +6,8 @@ import { useProjet } from "@/lib/store";
 
 /**
  * Appel instrumenté (D34). Hors horaires, l'appel n'aboutirait pas : le
- * bouton bascule sur « Être rappelé » et les horaires sont affichés.
+ * bouton bascule sur « Prendre rendez-vous » et les horaires sont affichés —
+ * le prototype ne propose jamais de rappel (D58).
  */
 export function BoutonAppel({
   source,
@@ -35,8 +36,8 @@ export function BoutonAppel({
         </a>
       ) : (
         <a
-          href="/rendez-vous?rappel=1"
-          onClick={() => track("callback_requested", { source, step })}
+          href="/rendez-vous"
+          onClick={() => track("booking_out_of_hours", { source, step })}
           className={classes}
         >
           {contact.libelle}

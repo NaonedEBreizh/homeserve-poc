@@ -44,32 +44,38 @@ export function Calendrier({
   cp,
   aujourdhui,
   onConfirmer,
-  onAucunCreneau,
 }: {
   agence: Agence;
   distanceKm: number;
   cp: string;
   aujourdhui: Date;
   onConfirmer: (creneau: Creneau) => void;
-  onAucunCreneau: () => void;
 }) {
   const { calendrier } = contenu.rdv;
+
+  /**
+   * D58 : plus de porte de sortie vers un rappel. Quand aucun créneau ne
+   * convient, on étend l'horizon (14 → 28 jours, `agences.json`) au lieu de
+   * renvoyer le prospect vers un conseiller.
+   */
+  const [etendu, setEtendu] = useState(false);
+  const horizon = etendu ? agence.horizon_etendu_jours : agence.horizon_jours;
 
   const creneaux = useMemo(
     () =>
       genererCreneaux(agence, {
         seed: cp,
         aujourdhui,
-        horizonJours: agence.horizon_jours,
+        horizonJours: horizon,
         delaiMinJoursOuvres: agence.delai_min_jours_ouvres,
         dureeMin: agence.duree_visite_min,
       }),
-    [agence, cp, aujourdhui],
+    [agence, cp, aujourdhui, horizon],
   );
 
   const jours = useMemo(() => {
     const parJour = new Map<string, { date: Date; creneaux: Creneau[] }>();
-    for (let i = 1; i <= agence.horizon_jours; i++) {
+    for (let i = 1; i <= horizon; i++) {
       const date = new Date(aujourdhui.getTime() + i * 86_400_000);
       parJour.set(cleJour(date), { date, creneaux: [] });
     }
@@ -77,7 +83,7 @@ export function Calendrier({
       parJour.get(cleJour(creneau.debut))?.creneaux.push(creneau);
     }
     return [...parJour.values()];
-  }, [creneaux, aujourdhui, agence.horizon_jours]);
+  }, [creneaux, aujourdhui, horizon]);
 
   const premierPlein = jours.find((j) => j.creneaux.length > 0);
   const [jourActif, setJourActif] = useState(
@@ -107,7 +113,11 @@ export function Calendrier({
 
       <header className="flex flex-col gap-1">
         <h2 className="text-xl font-extrabold text-neutre-700">{calendrier.titre}</h2>
-        <p className="text-sm text-neutre-500">{calendrier.sous_titre}</p>
+        <p className="text-sm text-neutre-500">
+          {etendu
+            ? remplacer(calendrier.sous_titre_etendu, { n: horizon })
+            : calendrier.sous_titre}
+        </p>
       </header>
 
       <ul className="grid grid-cols-7 gap-1.5">
@@ -192,13 +202,15 @@ export function Calendrier({
         </ul>
       )}
 
-      <button
-        type="button"
-        onClick={onAucunCreneau}
-        className="min-h-11 self-start text-sm font-bold text-canard-500 underline"
-      >
-        {calendrier.aucun}
-      </button>
+      {etendu ? null : (
+        <button
+          type="button"
+          onClick={() => setEtendu(true)}
+          className="min-h-11 self-start text-sm font-bold text-canard-500 underline"
+        >
+          {remplacer(calendrier.etendre, { n: agence.horizon_jours })}
+        </button>
+      )}
 
       {choisi ? (
         <div className="sticky bottom-0 -mx-5 flex flex-col gap-2 border-t border-neutre-200 bg-white px-5 py-3">

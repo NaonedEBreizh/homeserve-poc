@@ -12,7 +12,7 @@ import { contenu } from "@/lib/content";
 import { entreesPac, entreesSolaire, pacDejaInstallee } from "@/lib/entrees";
 import { euros, remplacer } from "@/lib/format";
 import { avecDrapeaux } from "@/lib/navigation";
-import { CTA_PRIMAIRE, CTA_SECONDAIRE, SECTION_ALTERNEE } from "@/lib/styles";
+import { CTA_PRIMAIRE, SECTION_ALTERNEE } from "@/lib/styles";
 import { useHydrate, useProjet } from "@/lib/store";
 
 import { IllustrationBatterie, IllustrationPac, IllustrationToit } from "./ui/pictos";
@@ -415,13 +415,6 @@ export function Resultat() {
           <span className="text-xs font-bold opacity-90">
             {t.cta_principal_sous_titre}
           </span>
-        </Link>
-        <Link
-          href={avecDrapeaux("/rendez-vous", parametres, { rappel: "1" })}
-          onClick={() => track("callback_requested", { source: "resultat" })}
-          className={CTA_SECONDAIRE}
-        >
-          {t.cta_rappel}
         </Link>
         {/* Aucun bouton d'appel ici : D34 le réserve à /, aux sorties et à la
             confirmation. */}

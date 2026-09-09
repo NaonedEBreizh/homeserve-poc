@@ -175,11 +175,15 @@ describe("garde géographique (B14)", () => {
     expect(m.etat().notesTechnicien).toContain("déplacement à confirmer");
   });
 
-  it("hors zone, « être rappelé » mène toujours à R1", () => {
+  it("hors zone, l'écran ne propose plus que la réservation (D58)", () => {
     const m = jusquaAdresse();
     m.repondre({ adresse: "1 rue de Test", cp: "75001", ville: "Paris" });
-    m.repondre("rappel");
-    expect(m.courant()).toMatchObject({ type: "sortie", code: "R1" });
+
+    const position = m.courant();
+    if (position.type !== "noeud") throw new Error("attendu : un nœud");
+    expect(m.optionsDe(position.noeud).map((o) => o.valeur)).toEqual([
+      "reserver",
+    ]);
   });
   it("Lyon (69001) → coordonnées", () => {
     const m = jusquaAdresse();
@@ -235,7 +239,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B20" });
   });
 
-  it("agence saturée, « être rappelé » mène à R1", () => {
+  it("agence saturée : les créneaux lointains sont la seule issue (D58)", () => {
     const m = jusquaOtp("99999");
     m.repondre({ email: "test@example.org", telephone: "0600000002" });
     m.repondre("4821");
@@ -243,8 +247,13 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
     m.avancer();
     m.avancer();
     m.avancer();
-    m.repondre("rappel");
-    expect(m.courant()).toMatchObject({ type: "sortie", code: "R1" });
+
+    const position = m.courant();
+    if (position.type !== "noeud") throw new Error("attendu : un nœud");
+    expect(position.id).toBe("B19c");
+    expect(m.optionsDe(position.noeud).map((o) => o.valeur)).toEqual([
+      "creneaux",
+    ]);
   });
 });
 
@@ -313,10 +322,14 @@ describe("orientations avec choix (D57)", () => {
     });
   }
 
-  it("« être rappelé » depuis l'orientation mène à R1", () => {
+  it("D58 : l'orientation ne propose plus de rappel", () => {
     const m = jusquaEligibilite({ B5: "<60" });
-    m.repondre("rappel");
-    expect(m.courant()).toMatchObject({ type: "sortie", code: "R1" });
+    const position = m.courant();
+    if (position.type !== "noeud") throw new Error("attendu : un nœud");
+
+    const valeurs = m.optionsDe(position.noeud).map((o) => o.valeur);
+    expect(valeurs).not.toContain("rappel");
+    expect(valeurs).toEqual(["reserver", "pac"]);
   });
 
   it("l'orientation PAC n'est proposée qu'au projet solaire seul", () => {

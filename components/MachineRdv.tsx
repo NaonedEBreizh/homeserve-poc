@@ -202,10 +202,6 @@ export function MachineRdv() {
           track("booking_slot_selected", { agence: agence.id });
           repondre(creneau.debut.toISOString());
         }}
-        onAucunCreneau={() => {
-          track("callback_requested", { source: "calendrier" });
-          router.push(avecDrapeaux("/sortie/R1", parametres));
-        }}
         onConfirmation={() => {
           track("booking_slot_confirmed", {});
           router.push(avecDrapeaux("/confirmation", parametres));
@@ -342,7 +338,6 @@ function NoeudRendu({
   onRepondre,
   onAvancer,
   onCreneau,
-  onAucunCreneau,
   onConfirmation,
 }: {
   id: string;
@@ -354,7 +349,6 @@ function NoeudRendu({
   onRepondre: (valeur: Parameters<Machine["repondre"]>[0]) => void;
   onAvancer: () => void;
   onCreneau: (creneau: Creneau, agence: Agence, distanceKm: number) => void;
-  onAucunCreneau: () => void;
   onConfirmation: () => void;
 }) {
   const question = (
@@ -489,7 +483,6 @@ function NoeudRendu({
         onConfirmer={(creneau) =>
           onCreneau(creneau, routage.agence, routage.distanceKm)
         }
-        onAucunCreneau={onAucunCreneau}
       />
     );
   }

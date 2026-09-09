@@ -22,6 +22,8 @@ export type Agence = {
   creneaux_debut: string[];
   duree_visite_min: number;
   horizon_jours: number;
+  /** D58 : horizon élargi quand le prospect demande des créneaux plus lointains. */
+  horizon_etendu_jours: number;
   delai_min_jours_ouvres: number;
   seuil_surbooking: number;
   fenetre_surbooking_jours: number;
@@ -329,7 +331,7 @@ export type ParametresSurbooking = {
 
 /**
  * Règle D30 : moins de `seuil` créneaux libres sur la fenêtre glissante
- * ⇒ self-booking masqué, écran « forte demande » et rappel.
+ * ⇒ écran « forte demande » : seuls les créneaux lointains restent (D57/D58).
  */
 export function estSurbookee(
   creneaux: Creneau[],

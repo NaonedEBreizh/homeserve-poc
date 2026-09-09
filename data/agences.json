@@ -149,6 +149,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -197,6 +198,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -247,6 +249,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -295,6 +298,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -345,6 +349,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -393,6 +398,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -449,6 +455,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -511,6 +518,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -573,6 +581,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -623,6 +632,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -675,6 +685,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -723,6 +734,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -773,6 +785,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -821,6 +834,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -869,6 +883,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -915,6 +930,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -967,6 +983,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -1015,6 +1032,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -1065,6 +1083,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -1117,6 +1136,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -1167,6 +1187,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [
@@ -1213,6 +1234,7 @@
       "seuil_surbooking": 4,
       "fenetre_surbooking_jours": 10,
       "horizon_jours": 14,
+      "horizon_etendu_jours": 28,
       "delai_min_jours_ouvres": 1,
       "duree_visite_min": 60,
       "jours_travailles": [

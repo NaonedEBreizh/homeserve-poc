@@ -10,9 +10,9 @@
     "bandeau_prototype": "Prototype non officiel — aucune donnée transmise",
     "appel": {
       "libelle": "Appeler HomeServe",
-      "libelle_ferme": "Être rappelé",
+      "libelle_ferme": "Prendre rendez-vous",
       "horaires_mention": "Nos conseillers sont disponibles {horaires}.",
-      "ferme_mention": "C'est fermé pour le moment ({horaires}). Laissez-nous votre numéro, on vous rappelle.",
+      "ferme_mention": "C'est fermé pour le moment ({horaires}). Vous pouvez réserver votre étude en ligne, à toute heure.",
       "note": "numéros et horaires dans data/hypotheses.json → contact"
     },
     "badge_demo": "mode démo",
@@ -326,7 +326,6 @@
       "disclaimer": "Ordre de grandeur, ne constitue pas un devis."
     },
     "cta_principal": "Je prends rendez-vous",
-    "cta_rappel": "Je préfère être rappelé",
     "cta_appel": "Appeler mon agence",
     "widget_sticky": "Prendre rendez-vous",
     "hors_zone": {
@@ -490,13 +489,14 @@
         "matin": "Matin",
         "apres_midi": "Après-midi"
       },
-      "aucun": "Aucun créneau ne me convient → être rappelé",
       "cta": "Je confirme ce créneau",
       "badge": "agenda simulé",
       "sous_titre": "14 jours à partir de demain, créneaux d'une heure",
       "jour_sans": "aucun créneau",
       "recap": "{jour} · {debut} – {fin}",
-      "decideurs": "Je confirme que les décideurs seront présents"
+      "decideurs": "Je confirme que les décideurs seront présents",
+      "etendre": "Voir les créneaux au-delà de {n} jours",
+      "sous_titre_etendu": "{n} jours à partir de demain, créneaux d'une heure"
     },
     "confirmation": {
       "titre": "Votre étude gratuite est confirmée",
@@ -535,21 +535,6 @@
       "annuler": "Annuler",
       "badge": "non fonctionnel dans le prototype",
       "texte": "Cet écran est une maquette : la modification et l'annulation ne sont pas branchées dans le prototype."
-    },
-    "rappel": {
-      "titre": "Un conseiller vous rappelle",
-      "texte": "À votre demande, sous 5 jours ouvrés. Aucun démarchage : vous gardez la main.",
-      "creneau": {
-        "libelle": "Créneau préféré",
-        "options": {
-          "matin": "Matin",
-          "apres_midi": "Après-midi"
-        }
-      },
-      "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande.",
-      "cta": "Demander un rappel",
-      "consentement_horodate": "Consentement enregistré le {date}",
-      "ne_pas_appeler": "Je ne souhaite pas être appelé"
     },
     "transmettre": "Transmettre à un proche propriétaire",
     "etre_informe": "Être informé de l'ouverture",

@@ -8,7 +8,7 @@
       "prefill": "si l'état contient déjà la clé, le nœud est sauté et sa règle pe est évaluée sur la valeur héritée (règle de non-répétition)",
       "pe": "règle de non-rentabilité : ajoute `regle` à nonEligible sans arrêter le parcours ; B18 mène à l'écran d'orientation B18o, jamais à une exclusion",
       "condition": "le nœud n'est posé que si le projet courant est dans la liste",
-      "orientation": "écran intermédiaire (D57) : la règle est dite en clair, puis le prospect choisit — réserver quand même (note technicien), être rappelé, ou une orientation externe (url)",
+      "orientation": "écran intermédiaire (D57) : la règle est dite en clair, puis le prospect choisit — réserver quand même (note technicien) ou une orientation externe (url). D58 : plus aucune demande de rappel dans le prototype",
       "note_si_different": "sur un champ porteur d'un `prefill` : note technicien ajoutée quand la valeur saisie diffère de celle héritée du simulateur ; {avant} et {apres} sont substitués"
     },
     "seuils_affiches": [
@@ -584,7 +584,6 @@
           "apres_midi"
         ]
       },
-      "aucun_creneau": "@R1",
       "next": "B21"
     },
     "B21": {
@@ -607,7 +606,7 @@
         "facture_faible": "Avec une facture inférieure à 60 €/mois, une installation reste possible mais les économies seront limitées.",
         "surface_faible": "Avec moins de 70 m² au sol, la toiture exploitable est réduite : l'installation reste possible, mais plus petite.",
         "residence_secondaire": "Dans une résidence secondaire, occupée par intermittence, une part de la production est revendue plutôt qu'autoconsommée : les économies sont plus faibles.",
-        "en_construction": "Nous intervenons une fois le logement livré. Réservez dès maintenant si la livraison est proche, ou demandez à être rappelé le moment venu."
+        "en_construction": "Nous intervenons une fois le logement livré. Réservez dès maintenant si la livraison est proche."
       },
       "evenement": "booking_disqualified_{regle}",
       "options": [
@@ -617,11 +616,6 @@
           "cible": "B19",
           "primaire": true,
           "note_regles": true
-        },
-        {
-          "valeur": "rappel",
-          "libelle": "Être rappelé pour en parler",
-          "cible": "@R1"
         },
         {
           "valeur": "pac",
@@ -638,7 +632,7 @@
     "B14z": {
       "type": "orientation",
       "titre": "Aucune agence à moins de 60 km dans le prototype",
-      "texte": "Nos 21 agences couvrent une partie de la France ; votre secteur est en cours d'ouverture. Vous pouvez réserver auprès de l'agence la plus proche — le déplacement sera confirmé par téléphone — ou demander à être rappelé.",
+      "texte": "Nos 21 agences couvrent une partie de la France ; votre secteur est en cours d'ouverture. Vous pouvez réserver auprès de l'agence la plus proche — le déplacement sera confirmé par téléphone.",
       "evenement": "booking_hors_zone",
       "options": [
         {
@@ -647,31 +641,21 @@
           "cible": "B15",
           "primaire": true,
           "note_technicien": "déplacement à confirmer"
-        },
-        {
-          "valeur": "rappel",
-          "libelle": "Être rappelé",
-          "cible": "@R1"
         }
       ]
     },
     "B19c": {
       "type": "orientation",
       "titre": "Forte demande dans votre secteur",
-      "texte": "Notre agence a peu de créneaux dans les dix prochains jours. Vous pouvez tout de même consulter le calendrier complet, ou demander à être rappelé pour convenir d'une date.",
+      "texte": "Notre agence n'a plus de créneau dans les dix prochains jours. Les créneaux plus lointains restent ouverts : le calendrier ne montre qu'eux.",
       "badge": "règle simulée (D30)",
       "evenement": "booking_agency_overbooked",
       "options": [
         {
           "valeur": "creneaux",
-          "libelle": "Voir les créneaux disponibles",
+          "libelle": "Voir les créneaux les plus proches disponibles",
           "cible": "B20",
           "primaire": true
-        },
-        {
-          "valeur": "rappel",
-          "libelle": "Être rappelé",
-          "cible": "@R1"
         }
       ]
     }
@@ -754,17 +738,7 @@
       },
       "cta_secondaire": "relancer_simulateur_pac",
       "texte": "Amiante ou matériau particulier : un conseiller étudie avec vous une alternative (toit-terrasse, installation au sol) ou une autre solution pour réduire votre facture.",
-      "cta_principal": "etre_rappele",
       "offre_secondaire": true
-    },
-    "@R1": {
-      "code": "R1",
-      "titre": "Un conseiller de votre agence vous rappelle",
-      "texte": "À votre demande, sous 5 jours ouvrés. Aucun démarchage : vous gardez la main.",
-      "champs": [
-        "creneau_prefere"
-      ],
-      "consentement": "J'accepte d'être rappelé par HomeServe au sujet de ma demande (consentement horodaté, révocable)."
     },
     "@DOUBLON": {
       "code": "DOUBLON",

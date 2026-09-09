@@ -129,7 +129,7 @@ bloc « Nos hypothèses » du résultat les affiche à l'écran.
 | `data/zones.json` | 96 départements : zone climatique, zone d'ensoleillement, productible, préfecture | 2A, 2B et 75 non éligibles (règle du prototype) |
 | `data/agences.json` | 21 agences réelles + 1 agence de test | distances calculées par Haversine, `competences` à confirmer |
 | `data/pac-baremes.json` | SCOP, prix des énergies, rendements, prix PAC, MaPrimeRénov', CEE | SCOP réel 2,9 (ADEME) · MPR par profil · CEE par zone climatique |
-| `data/arbre-rdv.json` | arbre de qualification complet, orientations et URLs réelles | 30 nœuds, 9 sorties |
+| `data/arbre-rdv.json` | arbre de qualification complet, orientations et URLs réelles | 30 nœuds, 8 sorties |
 
 **Rentabilité (D41).** L'année de bascule est la première année où le cumul
 des économies inflatées **plus le surplus revendu** atteint le prix public TTC
@@ -203,12 +203,17 @@ l'instrumentation, il ne la branche pas.
 
 `booking_hors_zone` est nouveau (D57) : la zone non couverte n'étant plus une
 sortie, `booking_exit_S6` ne se déclenche plus.
-**Transverses :** `callback_requested`, `call_click{source, step}`.
+**Transverses :** `booking_out_of_hours`, `call_click{source, step}`.
+
+`callback_requested` a disparu (D58) : le prototype ne propose plus aucune
+demande de rappel. Hors horaires, le lien d'en-tête annonce les horaires et
+renvoie à la prise de rendez-vous.
 
 Ce qu'on cherche à mesurer : le taux de passage estimation → RDV, l'écart
 entre la variante par défaut et `?variant=mur` (le tunnel actuel), et — depuis
 D57 — la part des prospects qui réservent **malgré** un écran d'orientation,
-comparée à ceux qui demandent un rappel.
+comparée à ceux qui abandonnent — depuis D58, réserver est la seule issue
+offerte.
 
 ---
 
@@ -229,7 +234,7 @@ Le prototype **dit toujours à l'écran ce qui est simulé** (badges « mode dé
 | Lead ouvert au plateau (D29) | — | téléphone `0600000001` → « un conseiller vous a déjà contacté » | rattachement CRM et notification du plateau | Quel workflow plateau, et comment le notifier ? |
 | OTP | 4 cases, code affiché | code `4821` | OTP SMS réel + anti-abus | Quel fournisseur SMS ? |
 | Verrouillage du créneau | hors périmètre | — | verrou optimiste avec TTL pendant l'OTP | L'agenda cible sait-il verrouiller ? |
-| Écriture du RDV | `localStorage` | — | `POST /rdv` → Salesforce (Lead + Event), SMS, email, ICS, rappel J-1 | Quel contrat d'API, quels consentements à porter ? |
+| Écriture du RDV | `localStorage` | — | `POST /rdv` → Salesforce (Lead + Event), SMS, email, ICS, relance J-1 | Quel contrat d'API, quels consentements à porter ? |
 | Client existant | sortie prévue dans l'arbre | — | orientation SAV / entretien / nouveau projet | Comment distingue-t-on client et prospect ? |
 
 **Points de rebranchement** : `/api/rdv` (non implémenté) → `api.homeserve.fr`

@@ -8,8 +8,8 @@ import type { Projet } from "./store";
  * Contact téléphonique (D34). Numéros et horaires sont des données
  * (`hypotheses.contact`) : les changer ne touche aucun `.ts`.
  *
- * Hors horaires, l'appel n'a pas de sens — le bouton bascule sur « Être
- * rappelé » et l'écran affiche les horaires.
+ * Hors horaires, l'appel n'a pas de sens — le bouton bascule sur « Prendre
+ * rendez-vous » et l'écran affiche les horaires (D58 : aucun rappel).
  */
 const CONTACT = hypotheses.contact;
 

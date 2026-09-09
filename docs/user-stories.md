@@ -50,7 +50,9 @@ Convention : **US-x.y** · persona · priorité · écrans · événements.
 
 **US-3.2 — Lire confortablement et répondre « environ ».** En tant que personne de 67 ans sur PC, je veux des textes en 18 px, des pictogrammes pour l'énergie actuelle, des tranches de revenus libellées « environ » et une question par écran, afin de ne pas me tromper ni renoncer. *Must · tous les écrans.* Acceptation : corps ≥ 18 px, contraste AA, cibles tactiles ≥ 44 px, navigation clavier, libellés sans jargon (« PAC » toujours accompagné de « pompe à chaleur »).
 
-**US-3.3 — Préférer un rappel humain.** En tant que personne peu à l'aise avec les agendas en ligne, je veux demander à être rappelée par l'agence, avec mon créneau préféré, afin d'avoir un interlocuteur. *Must · AR, B20, O1 → R1 · `callback_requested` (avec tranche d'âge déclarée facultative).* Acceptation : bouton « Je préfère être rappelé » à parité visuelle avec « Choisir un créneau » ; texte « à votre demande, sous 5 jours ouvrés » ; consentement horodaté enregistré dans l'état ; disponible à trois endroits (résultat, calendrier, orientation).
+**US-3.3 — Préférer un rappel humain. ❌ Annulée par D58** — le prototype ne propose plus aucune demande de rappel ; quand aucun créneau ne convient, le calendrier étend son horizon à 28 jours. Conservée ici comme trace du cadrage initial.
+
+**US-3.3 (texte d'origine).** En tant que personne peu à l'aise avec les agendas en ligne, je veux demander à être rappelée par l'agence, avec mon créneau préféré, afin d'avoir un interlocuteur. *Must · AR, B20, O1 → R1 · `callback_requested` (avec tranche d'âge déclarée facultative).* Acceptation : bouton « Je préfère être rappelé » à parité visuelle avec « Choisir un créneau » ; texte « à votre demande, sous 5 jours ouvrés » ; consentement horodaté enregistré dans l'état ; disponible à trois endroits (résultat, calendrier, orientation).
 
 **US-3.4 — Venir avec un proche.** En tant que couple senior, je veux voir que le rendez-vous à domicile peut se faire en présence de notre fille, afin d'être rassurés. *Could · B19.* Acceptation : mention « vous pouvez être accompagné(e) d'un proche » sur l'écran d'information du RDV. *Visio retirée (décision 08/09).*
 
@@ -68,9 +70,9 @@ Convention : **US-x.y** · persona · priorité · écrans · événements.
 
 **US-5.1 — Comparer avec et sans mur de contact.** En tant que responsable acquisition, je veux ouvrir la même démo avec `?variant=mur` (coordonnées avant résultat, comme le tunnel produit actuel) et sans, afin de visualiser l'A/B que je lancerais. *Must · M1, AR · `variant` dans chaque événement.* Acceptation : M1 reproduit les quatre champs du tunnel actuel ; tous les événements portent la variante ; README explique le dimensionnement (12 000 visiteurs par variante pour +15 % relatif sur 4 %).
 
-**US-5.2 — Voir les événements en direct.** En tant que responsable acquisition, je veux un panneau `?debug=1` listant les événements dataLayer au fil du parcours, afin de vérifier que le funnel est instrumenté. *Must · DebugPanel.* Acceptation : chaque événement listé (`sim_*`, `booking_*`, `callback_requested`) avec payload ; mapping Piwik PRO / GTM documenté dans le README.
+**US-5.2 — Voir les événements en direct.** En tant que responsable acquisition, je veux un panneau `?debug=1` listant les événements dataLayer au fil du parcours, afin de vérifier que le funnel est instrumenté. *Must · DebugPanel.* Acceptation : chaque événement listé (`sim_*`, `booking_*`) avec payload ; mapping Piwik PRO / GTM documenté dans le README.
 
-**US-5.3 — Suivre le cross-sell et l'exclusion.** En tant que responsable acquisition, je veux distinguer les sorties par type et la part de rappels demandés par tranche d'âge déclarée, afin de piloter les orientations et surveiller l'exclusion des seniors. *Should · S*, O1, R1.* Acceptation : `booking_exit_{type}`, `booking_disqualified_{regle}`, `callback_requested{age_range}` (facultatif, non identifiant).
+**US-5.3 — Suivre le cross-sell et l'exclusion.** En tant que responsable acquisition, je veux distinguer les sorties par type et la part de rappels demandés par tranche d'âge déclarée, afin de piloter les orientations et surveiller l'exclusion des seniors. *Should · S*, O1, R1.* Acceptation : `booking_exit_{type}`, `booking_disqualified_{regle}` ; `callback_requested` a disparu avec D58.
 
 ## Épic 6 — Faire confiance au code (CTO)
 

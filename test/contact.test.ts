@@ -81,11 +81,13 @@ describe("contactPourProjet", () => {
     expect(c.mention).toContain(hypotheses.contact.horaires.libelle);
   });
 
-  it("propose le rappel hors horaires, avec les horaires en clair", () => {
+  it("renvoie à la prise de rendez-vous hors horaires (D58)", () => {
     const c = contactPourProjet("pac", parisSeptembre(SAMEDI, 11));
 
     expect(c.ouvert).toBe(false);
-    expect(c.libelle).toBe("Être rappelé");
+    expect(c.libelle).toBe("Prendre rendez-vous");
     expect(c.mention).toContain(hypotheses.contact.horaires.libelle);
+    // Plus aucune promesse de rappel dans le prototype.
+    expect(c.mention).not.toMatch(/rappel/i);
   });
 });
