@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Resultat } from "@/components/Resultat";
 import baremes from "@/data/pac-baremes.json";
 import hypotheses from "@/data/hypotheses.json";
-import { projeter, simulerSolaire } from "@/engine/solaire";
+import { projeter, simulerSolaire, type EntreesSolaire } from "@/engine/solaire";
 import { euros, remplacer } from "@/lib/format";
 import { evenements, viderBus } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
@@ -486,7 +486,7 @@ describe("cohérence pompe à chaleur (point 9)", () => {
       chauffage: "pompe_a_chaleur",
       equipements: ["vehicule_electrique", "chauffe_eau_thermodynamique"],
       facture_mensuelle: "101-135",
-    } as const;
+    } satisfies EntreesSolaire;
 
     const attendu = (couplagePac: boolean) => {
       const s = simulerSolaire(entrees, {
@@ -532,8 +532,7 @@ describe("projet pompe à chaleur", () => {
     render(<Resultat />);
 
     const { recommandation } = contenu.resultat;
-    const profils = recommandation.profils as Record<string, string>;
-    const energies = recommandation.energies as Record<string, string>;
+    const { profils, energies } = recommandation;
 
     expect(
       screen.getByText(
