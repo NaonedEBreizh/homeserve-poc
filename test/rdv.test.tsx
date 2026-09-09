@@ -131,20 +131,10 @@ describe("sorties", () => {
     expect(offre.getAttribute("href")).toContain("pompes-a-chaleur");
   });
 
-  it("explique chaque règle déclenchée sur O1", () => {
-    setRdv({ nonEligible: ["facture_faible", "residence_secondaire"] });
-    render(<EcranSortie code="O1" />);
+  it("porte le badge « règle simulée » sur DOUBLON et propose l'appel", () => {
+    render(<EcranSortie code="DOUBLON" />);
 
-    const textes = arbre.sorties["@O1"].texte_par_regle;
-    expect(screen.getByText(textes.facture_faible)).toBeDefined();
-    expect(screen.getByText(textes.residence_secondaire)).toBeDefined();
-    expect(screen.queryByText(textes.surface_faible)).toBeNull();
-  });
-
-  it("porte le badge « règle simulée » sur SURBOOKEE et propose l'appel", () => {
-    render(<EcranSortie code="SURBOOKEE" />);
-
-    expect(screen.getByText(arbre.sorties["@SURBOOKEE"].badge)).toBeDefined();
+    expect(screen.getByText(arbre.sorties["@DOUBLON"].badge)).toBeDefined();
     // D34 : l'appel est autorisé sur les écrans de sortie.
     expect(screen.getAllByRole("link").length).toBeGreaterThan(0);
   });

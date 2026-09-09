@@ -8,7 +8,6 @@ import arbre from "@/data/arbre-rdv.json";
 import { track } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
 import { avecDrapeaux } from "@/lib/navigation";
-import { useProjet } from "@/lib/store";
 
 import { CTA_PRIMAIRE } from "@/lib/styles";
 
@@ -45,7 +44,6 @@ const SORTIES = arbre.sorties as unknown as Record<string, Sortie>;
  */
 export function EcranSortie({ code }: { code: string }) {
   const parametres = useSearchParams();
-  const etat = useProjet();
   const sortie = SORTIES[`@${code}`];
 
   if (!sortie) {
@@ -58,7 +56,6 @@ export function EcranSortie({ code }: { code: string }) {
 
   if (code === "R1") return <EcranRappel sortie={sortie} />;
 
-  const reglesDeclenchees = etat.rdv?.nonEligible ?? [];
   const { sorties: t } = contenu.rdv;
   // D38a : sur S5, le rappel passe devant l'offre.
   const rappelEnPrimaire = sortie.cta_principal === "etre_rappele";
@@ -77,22 +74,6 @@ export function EcranSortie({ code }: { code: string }) {
 
       {sortie.texte ? (
         <p className="text-base text-neutre-500">{sortie.texte}</p>
-      ) : null}
-
-      {/* O1 : chaque règle déclenchée est expliquée en clair. */}
-      {sortie.texte_par_regle && reglesDeclenchees.length > 0 ? (
-        <section className="flex flex-col gap-2 rounded-card bg-neutre-100 p-4">
-          <h2 className="text-sm font-extrabold text-neutre-700">
-            {t.titre_regles}
-          </h2>
-          <ul className="flex flex-col gap-2">
-            {reglesDeclenchees.map((regle) => (
-              <li key={regle} className="text-sm text-neutre-500">
-                {sortie.texte_par_regle?.[regle]}
-              </li>
-            ))}
-          </ul>
-        </section>
       ) : null}
 
       {rappelEnPrimaire ? (

@@ -165,10 +165,21 @@ describe("garde géographique (B14)", () => {
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B14" });
     return m;
   }
-  it("Paris (75) → S6 territoire non couvert", () => {
+  it("Paris (75) → écran hors zone, la réservation reste possible (D57)", () => {
     const m = jusquaAdresse();
     m.repondre({ adresse: "1 rue de Test", cp: "75001", ville: "Paris" });
-    expect(m.courant()).toMatchObject({ type: "sortie", code: "S6" });
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B14z" });
+
+    m.repondre("reserver");
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B15" });
+    expect(m.etat().notesTechnicien).toContain("déplacement à confirmer");
+  });
+
+  it("hors zone, « être rappelé » mène toujours à R1", () => {
+    const m = jusquaAdresse();
+    m.repondre({ adresse: "1 rue de Test", cp: "75001", ville: "Paris" });
+    m.repondre("rappel");
+    expect(m.courant()).toMatchObject({ type: "sortie", code: "R1" });
   });
   it("Lyon (69001) → coordonnées", () => {
     const m = jusquaAdresse();
@@ -210,28 +221,124 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B19" });
   });
 
-  it("le code postal de test 99999 → agence surbookée → SURBOOKEE", () => {
+  it("le CP de test 99999 → écran forte demande, le calendrier reste ouvert", () => {
     const m = jusquaOtp("99999");
     m.repondre({ email: "test@example.org", telephone: "0600000002" });
     m.repondre("4821");
     m.avancer(); // B17b → B18
     m.avancer(); // B18 → B19
     m.avancer(); // B19 → B19b
-    m.avancer(); // B19b surbookée
-    expect(m.courant()).toMatchObject({ type: "sortie", code: "SURBOOKEE" });
+    m.avancer(); // B19b surbookée → B19c
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B19c" });
+
+    m.repondre("creneaux");
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B20" });
   });
 
-  it("un prospect non éligible arrive sur O1 avec la règle et l'orientation", () => {
-    const m = creerMachine(arbre, { projet: "solaire", prefill: { facture_mensuelle: "<60" } });
-    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
+  it("agence saturée, « être rappelé » mène à R1", () => {
+    const m = jusquaOtp("99999");
+    m.repondre({ email: "test@example.org", telephone: "0600000002" });
+    m.repondre("4821");
+    m.avancer();
+    m.avancer();
+    m.avancer();
+    m.avancer();
+    m.repondre("rappel");
+    expect(m.courant()).toMatchObject({ type: "sortie", code: "R1" });
+  });
+});
+
+describe("orientations avec choix (D57)", () => {
+  /**
+   * Un parcours complet jusqu'à l'éligibilité, la réponse `declencheur`
+   * remplaçant celle du nœud visé. Chaque règle doit produire l'écran
+   * intermédiaire B18o, jamais une exclusion.
+   */
+  function jusquaEligibilite(
+    declencheur: Partial<Record<"B5" | "B6" | "B7" | "B9", string>>,
+    projet: "solaire" | "pac" = "solaire",
+  ) {
+    const m = creerMachine(arbre, { projet });
+    repondreJusqua(m, [
+      ["B0", "maison"],
+      ["B1", "proprietaire"],
+      ["B2", "non"],
+      ["B3", projet],
+      ["B5", declencheur.B5 ?? "101-135"],
+      ["B6", declencheur.B6 ?? "principale"],
+      ["B7", declencheur.B7 ?? "100-135"],
+      ["B9", declencheur.B9 ?? (projet === "solaire" ? ">1997" : ">2010")],
+    ]);
+
+    // Les nœuds de toiture ne sont pas posés à tous les projets : on répond
+    // à ceux qui se présentent, par leur première option, jusqu'à l'adresse.
+    const SUITE: Record<string, string> = {
+      B10: "renovee",
+      B11: "non",
+      B12: "tuile",
+      B10p: "radiateurs_eau",
+      B11p: "oui",
+    };
+    for (let pas = 0; pas < 6; pas++) {
+      const courant = m.courant();
+      if (courant.type !== "noeud" || !SUITE[courant.id]) break;
+      m.repondre(SUITE[courant.id]!);
+    }
+
     m.repondre({ adresse: "1 place Bellecour", cp: "69002", ville: "Lyon" });
     m.repondre({ prenom: "Test", nom: "Demo" });
     m.repondre({ email: "test@example.org", telephone: "0600000003" });
     m.repondre("4821");
-    m.avancer(); // B17b
-    m.avancer(); // B18 → O1
-    expect(m.courant()).toMatchObject({ type: "sortie", code: "O1" });
-    expect(m.etat().nonEligible).toEqual(["facture_faible"]);
+    m.avancer(); // B17b → B18
+    m.avancer(); // B18 → B18o ou B19
+    return m;
+  }
+
+  const CAS = [
+    ["facture_faible", { B5: "<60" }],
+    ["surface_faible", { B7: "<70" }],
+    ["residence_secondaire", { B6: "secondaire" }],
+  ] as const;
+
+  for (const [regle, declencheur] of CAS) {
+    it(`${regle} : écran d'orientation, puis B19 avec la note technicien`, () => {
+      const m = jusquaEligibilite({ ...declencheur });
+
+      expect(m.courant()).toMatchObject({ type: "noeud", id: "B18o" });
+      expect(m.etat().nonEligible).toContain(regle);
+
+      m.repondre("reserver");
+      expect(m.courant()).toMatchObject({ type: "noeud", id: "B19" });
+      expect(m.etat().notesTechnicien).toContain(`regle:${regle}`);
+    });
+  }
+
+  it("« être rappelé » depuis l'orientation mène à R1", () => {
+    const m = jusquaEligibilite({ B5: "<60" });
+    m.repondre("rappel");
+    expect(m.courant()).toMatchObject({ type: "sortie", code: "R1" });
+  });
+
+  it("l'orientation PAC n'est proposée qu'au projet solaire seul", () => {
+    const solaire = jusquaEligibilite({ B5: "<60" }, "solaire");
+    const noeudSolaire = solaire.courant();
+    if (noeudSolaire.type !== "noeud") throw new Error("attendu : un nœud");
+    expect(
+      solaire.optionsDe(noeudSolaire.noeud).map((o) => o.valeur),
+    ).toContain("pac");
+
+    const pac = jusquaEligibilite({ B5: "<60" }, "pac");
+    const noeudPac = pac.courant();
+    if (noeudPac.type !== "noeud") throw new Error("attendu : un nœud");
+    expect(pac.optionsDe(noeudPac.noeud).map((o) => o.valeur)).not.toContain(
+      "pac",
+    );
+  });
+
+  it("un prospect sans règle déclenchée ne voit pas l'écran d'orientation", () => {
+    const m = jusquaEligibilite({});
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B19" });
+    expect(m.etat().nonEligible).toEqual([]);
   });
 });
 

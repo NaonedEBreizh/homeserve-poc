@@ -3,11 +3,12 @@
     "version": "2026-09-08.1",
     "source": "docs/cartographie-parcours.md §4–§6 (v1.1 figée), docs/regles-rdv-et-donnees.md (D29–D32)",
     "format": {
-      "noeud": "{ type: 'choix'|'multi'|'form'|'otp'|'info'|'regle'|'calendrier', question, aide?, options?: [{valeur, libelle, cible}], next?, prefill?: cléDuSimulateur, pe?: {op, valeur, regle}, condition?: {projet: [...]}, guard?: {...} }",
+      "noeud": "{ type: 'choix'|'multi'|'form'|'otp'|'info'|'orientation'|'regle'|'calendrier', question, aide?, options?: [{valeur, libelle, cible}], next?, prefill?: cléDuSimulateur, pe?: {op, valeur, regle}, condition?: {projet: [...]}, guard?: {...} }",
       "cible": "id d'un nœud, ou '@code' d'une sortie",
       "prefill": "si l'état contient déjà la clé, le nœud est sauté et sa règle pe est évaluée sur la valeur héritée (règle de non-répétition)",
-      "pe": "règle de non-rentabilité : ajoute `regle` à nonEligible sans arrêter le parcours ; l'écran B18 oriente",
-      "condition": "le nœud n'est posé que si le projet courant est dans la liste"
+      "pe": "règle de non-rentabilité : ajoute `regle` à nonEligible sans arrêter le parcours ; B18 mène à l'écran d'orientation B18o, jamais à une exclusion",
+      "condition": "le nœud n'est posé que si le projet courant est dans la liste",
+      "orientation": "écran intermédiaire (D57) : la règle est dite en clair, puis le prospect choisit — réserver quand même (note technicien), être rappelé, ou une orientation externe (url)"
     },
     "seuils_affiches": [
       "Facture d'électricité inférieure à 60 €/mois",
@@ -466,7 +467,7 @@
         ],
         "exception_test": "99999",
         "rayon_km": 60,
-        "cible": "@S6"
+        "cible": "B14z"
       },
       "next": "B15"
     },
@@ -550,7 +551,7 @@
     "B18": {
       "type": "regle",
       "regle": "eligibilite",
-      "si_non_eligible": "@O1",
+      "si_non_eligible": "B18o",
       "sinon": "B19"
     },
     "B19": {
@@ -567,7 +568,7 @@
         "fenetre_jours": 10,
         "seuil_creneaux_libres": 4
       },
-      "si_surbookee": "@SURBOOKEE",
+      "si_surbookee": "B19c",
       "sinon": "B20"
     },
     "B20": {
@@ -596,6 +597,81 @@
       "type": "info",
       "ecran": "confirmation",
       "next": null
+    },
+    "B18o": {
+      "type": "orientation",
+      "titre": "Avant de réserver, un point d'honnêteté",
+      "texte_par_regle": {
+        "facture_faible": "Avec une facture inférieure à 60 €/mois, une installation reste possible mais les économies seront limitées.",
+        "surface_faible": "Avec moins de 70 m² au sol, la toiture exploitable est réduite : l'installation reste possible, mais plus petite.",
+        "residence_secondaire": "Dans une résidence secondaire, occupée par intermittence, une part de la production est revendue plutôt qu'autoconsommée : les économies sont plus faibles.",
+        "en_construction": "Nous intervenons une fois le logement livré. Réservez dès maintenant si la livraison est proche, ou demandez à être rappelé le moment venu."
+      },
+      "evenement": "booking_disqualified_{regle}",
+      "options": [
+        {
+          "valeur": "reserver",
+          "libelle": "Réserver quand même mon étude",
+          "cible": "B19",
+          "primaire": true,
+          "note_regles": true
+        },
+        {
+          "valeur": "rappel",
+          "libelle": "Être rappelé pour en parler",
+          "cible": "@R1"
+        },
+        {
+          "valeur": "pac",
+          "libelle": "Découvrir la pompe à chaleur",
+          "url": "https://www.homeserve.fr/chauffage-climatisation/pompes-a-chaleur",
+          "condition": {
+            "projet": [
+              "solaire"
+            ]
+          }
+        }
+      ]
+    },
+    "B14z": {
+      "type": "orientation",
+      "titre": "Aucune agence à moins de 60 km dans le prototype",
+      "texte": "Nos 21 agences couvrent une partie de la France ; votre secteur est en cours d'ouverture. Vous pouvez réserver auprès de l'agence la plus proche — le déplacement sera confirmé par téléphone — ou demander à être rappelé.",
+      "evenement": "booking_hors_zone",
+      "options": [
+        {
+          "valeur": "reserver",
+          "libelle": "Réserver quand même",
+          "cible": "B15",
+          "primaire": true,
+          "note_technicien": "déplacement à confirmer"
+        },
+        {
+          "valeur": "rappel",
+          "libelle": "Être rappelé",
+          "cible": "@R1"
+        }
+      ]
+    },
+    "B19c": {
+      "type": "orientation",
+      "titre": "Forte demande dans votre secteur",
+      "texte": "Notre agence a peu de créneaux dans les dix prochains jours. Vous pouvez tout de même consulter le calendrier complet, ou demander à être rappelé pour convenir d'une date.",
+      "badge": "règle simulée (D30)",
+      "evenement": "booking_agency_overbooked",
+      "options": [
+        {
+          "valeur": "creneaux",
+          "libelle": "Voir les créneaux disponibles",
+          "cible": "B20",
+          "primaire": true
+        },
+        {
+          "valeur": "rappel",
+          "libelle": "Être rappelé",
+          "cible": "@R1"
+        }
+      ]
     }
   },
   "sorties": {
@@ -679,29 +755,6 @@
       "cta_principal": "etre_rappele",
       "offre_secondaire": true
     },
-    "@S6": {
-      "code": "S6",
-      "titre": "Nous n'intervenons pas encore dans votre secteur",
-      "texte": "Nos 21 agences couvrent une partie de la France ; votre secteur est en cours d'ouverture.",
-      "cta_secondaire": "etre_informe"
-    },
-    "@O1": {
-      "code": "O1",
-      "titre": "D'après vos réponses, une visite ne serait pas la bonne étape aujourd'hui",
-      "texte_par_regle": {
-        "facture_faible": "Avec une facture inférieure à 60 €/mois, une installation solaire ne serait pas rentable pour vous.",
-        "surface_faible": "Une surface au sol inférieure à 70 m² laisse rarement assez de toiture exploitable.",
-        "residence_secondaire": "Une résidence secondaire, occupée par intermittence, valorise mal l'autoconsommation.",
-        "en_construction": "Nous intervenons une fois le logement livré ; nous pouvons vous recontacter à ce moment-là."
-      },
-      "orientations": {
-        "facture_faible": "entretien",
-        "surface_faible": "pac",
-        "residence_secondaire": "assistance",
-        "en_construction": "rappel_differe"
-      },
-      "cta_secondaire": "etre_rappele"
-    },
     "@R1": {
       "code": "R1",
       "titre": "Un conseiller de votre agence vous rappelle",
@@ -717,13 +770,6 @@
       "texte": "Un rendez-vous existe déjà pour ce téléphone ou cet email. Vous pouvez le consulter ou le modifier.",
       "cta": "gerer_rdv",
       "badge": "règle simulée (D32)"
-    },
-    "@SURBOOKEE": {
-      "code": "SURBOOKEE",
-      "titre": "Forte demande dans votre secteur",
-      "texte": "Notre agence n'a que très peu de créneaux dans les 10 prochains jours. Pour ne pas vous faire attendre devant un calendrier vide, un conseiller vous rappelle pour convenir d'une date.",
-      "cta": "etre_rappele",
-      "badge": "règle simulée (D30)"
     }
   }
 }

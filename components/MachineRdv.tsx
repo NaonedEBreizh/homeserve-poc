@@ -19,7 +19,12 @@ import { contenu } from "@/lib/content";
 import { avecDrapeaux } from "@/lib/navigation";
 import { creneauVersRdv, enregistrerRdv, lireRdvExistants } from "@/lib/rdv";
 import { setRdv, useHydrate, useProjet, type ProjetState } from "@/lib/store";
-import { BANDEAU_INFO, CARTE_OPTION, CTA_PRIMAIRE } from "@/lib/styles";
+import {
+  BANDEAU_INFO,
+  CARTE_OPTION,
+  CTA_PRIMAIRE,
+  CTA_SECONDAIRE,
+} from "@/lib/styles";
 
 import { PictoOption } from "./ui/pictos";
 
@@ -88,6 +93,22 @@ export function MachineRdv() {
     router.replace(avecDrapeaux(`/sortie/${position.code}`, parametres));
   }, [machine, position, router, parametres]);
 
+  // D57 : un écran d'orientation s'annonce dans le dataLayer, une fois.
+  useEffect(() => {
+    if (position?.type !== "noeud") return;
+    const { evenement } = position.noeud;
+    if (!evenement || !machine) return;
+
+    const regles = machine.etat().nonEligible;
+    if (evenement.includes("{regle}")) {
+      for (const regle of regles) {
+        track(evenement.replace("{regle}", regle), { noeud: position.id });
+      }
+      return;
+    }
+    track(evenement, { noeud: position.id });
+  }, [position, machine]);
+
   // Un nœud `regle` est un calcul, pas un écran : il n'a ni titre ni texte.
   // On le franchit sans rien afficher, plutôt que de montrer un écran vide.
   useEffect(() => {
@@ -149,6 +170,7 @@ export function MachineRdv() {
         noeud={noeud}
         cp={cpDe(etatMachine.reponses, etat)}
         options={pilote.optionsDe(noeud)}
+        nonEligible={etatMachine.nonEligible}
         etat={etat}
         onRepondre={repondre}
         onAvancer={avancer}
@@ -306,6 +328,7 @@ function NoeudRendu({
   noeud,
   cp,
   options,
+  nonEligible,
   etat,
   onRepondre,
   onAvancer,
@@ -317,6 +340,7 @@ function NoeudRendu({
   noeud: Noeud;
   cp: string;
   options: OptionNoeud[];
+  nonEligible: string[];
   etat: ProjetState;
   onRepondre: (valeur: Parameters<Machine["repondre"]>[0]) => void;
   onAvancer: () => void;
@@ -355,6 +379,73 @@ function NoeudRendu({
     );
   }
 
+  // D57 : la règle est dite en clair, puis le prospect choisit. Réserver
+  // reste toujours possible ; c'est lui qui décide, pas le parcours.
+  if (noeud.type === "orientation") {
+    const textes = noeud.texte_par_regle
+      ? nonEligible
+          .map((regle) => noeud.texte_par_regle?.[regle])
+          .filter((texte): texte is string => Boolean(texte))
+      : [];
+
+    return (
+      <section className="flex flex-col gap-3">
+        {noeud.badge ? (
+          <p className="self-start rounded-full bg-orange-100 px-3 py-1 text-xs font-extrabold text-neutre-700">
+            {noeud.badge}
+          </p>
+        ) : null}
+
+        {question}
+
+        {noeud.texte ? (
+          <p className="text-base text-neutre-500">{noeud.texte}</p>
+        ) : null}
+
+        {textes.length > 0 ? (
+          <section className="flex flex-col gap-2 rounded-card bg-neutre-100 p-4">
+            <h3 className="text-sm font-extrabold text-neutre-700">
+              {contenu.rdv.sorties.titre_regles}
+            </h3>
+            <ul className="flex flex-col gap-2">
+              {textes.map((texte) => (
+                <li key={texte} className="text-sm text-neutre-500">
+                  {texte}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        <div className="flex flex-col gap-3">
+          {options.map((option) =>
+            option.url ? (
+              <a
+                key={option.valeur}
+                href={option.url}
+                onClick={() =>
+                  track(`booking_exit_${option.valeur}`, { noeud: id })
+                }
+                className={CTA_SECONDAIRE}
+              >
+                {option.libelle ?? option.valeur}
+              </a>
+            ) : (
+              <button
+                key={option.valeur}
+                type="button"
+                onClick={() => onRepondre(option.valeur)}
+                className={option.primaire ? CTA_PRIMAIRE : CTA_SECONDAIRE}
+              >
+                {option.libelle ?? option.valeur}
+              </button>
+            ),
+          )}
+        </div>
+      </section>
+    );
+  }
+
   if (noeud.type === "form" || noeud.type === "otp") {
     return (
       <Formulaire
@@ -367,7 +458,10 @@ function NoeudRendu({
   }
 
   if (noeud.type === "calendrier") {
-    const routage = trouverAgence(cp, AGENCES);
+    // D57 : hors zone, le prospect a choisi de réserver quand même — on lui
+    // propose l'agence la plus proche, quelle que soit la distance.
+    const routage =
+      trouverAgence(cp, AGENCES) ?? trouverAgence(cp, AGENCES, Infinity);
 
     if (!routage) {
       return (

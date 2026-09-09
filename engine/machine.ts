@@ -14,6 +14,10 @@
  * 5. nœuds `regle` — prospect existant, éligibilité, disponibilité d'agence ;
  * 6. `note_technicien` — accumulée pour la visite.
  *
+ * Une règle de rentabilité, une zone non couverte ou une agence saturée ne
+ * ferment plus le parcours (D57) : elles mènent à un nœud `orientation`, où le
+ * prospect choisit de réserver quand même ou d'être rappelé.
+ *
  * Les nœuds `regle`, `info` et `calendrier` ne s'exécutent pas d'eux-mêmes :
  * l'appelant enchaîne avec `avancer()`, un nœud à la fois.
  */
@@ -39,6 +43,17 @@ export type OptionNoeud = {
   cible?: string;
   cible_si?: Record<string, string>;
   note_technicien?: string;
+  /** D57 : écran d'orientation — l'option de tête, mise en avant. */
+  primaire?: boolean;
+  /** D57 : orientation externe (offre HomeServe réelle) plutôt qu'une cible. */
+  url?: string;
+  /** D57 : l'option n'est proposée que pour les projets listés. */
+  condition?: { projet: string[] };
+  /**
+   * D57 : note le code de chaque règle déclenchée (`regle:<code>`), pour que
+   * le technicien sache dans quel contexte la visite a été réservée.
+   */
+  note_regles?: boolean;
 };
 
 export type RegleEligibilite = {
@@ -68,6 +83,10 @@ export type Noeud = {
   // les lit pas, les écrans du module B les rendent tels quels.
   titre?: string;
   texte?: string;
+  /** D57 : texte de l'écran d'orientation, une entrée par règle déclenchée. */
+  texte_par_regle?: Record<string, string>;
+  /** D57 : événement à émettre à l'affichage ; `{regle}` est substitué. */
+  evenement?: string;
   aide?: string;
   badge?: string;
   bouton?: string;
@@ -247,10 +266,19 @@ export function creerMachine(
 
   /** Options réellement posées : le solaire seul a parfois un jeu restreint. */
   function optionsDe(noeud: Noeud): OptionNoeud[] {
-    if (noeud.options_solaire && projetCourant() === "solaire") {
-      return noeud.options_solaire;
-    }
-    return noeud.options ?? [];
+    const brutes =
+      noeud.options_solaire && projetCourant() === "solaire"
+        ? noeud.options_solaire
+        : (noeud.options ?? []);
+
+    // D57 : « Découvrir la pompe à chaleur » n'a pas de sens si le projet en
+    // comporte déjà une.
+    const projet = projetCourant();
+    return brutes.filter(
+      (option) =>
+        !option.condition?.projet ||
+        (projet !== undefined && option.condition.projet.includes(projet)),
+    );
   }
 
   function optionDe(noeud: Noeud, valeur: string): OptionNoeud | undefined {
@@ -392,9 +420,15 @@ export function creerMachine(
     return { type: "sortie", code: sortie.code, sortie };
   }
 
+  function noter(note: string) {
+    if (!notesTechnicien.includes(note)) notesTechnicien.push(note);
+  }
+
   function noterOption(option: OptionNoeud | undefined) {
-    if (option?.note_technicien && !notesTechnicien.includes(option.note_technicien)) {
-      notesTechnicien.push(option.note_technicien);
+    if (option?.note_technicien) noter(option.note_technicien);
+    // D57 : réserver malgré une règle de non-rentabilité se dit au technicien.
+    if (option?.note_regles) {
+      for (const regle of nonEligible) noter(`regle:${regle}`);
     }
   }
 
@@ -484,6 +518,8 @@ export function creerMachine(
     historique.push(id);
 
     switch (noeud.type) {
+      // D57 : un écran d'orientation se répond comme un choix — c'en est un.
+      case "orientation":
       case "choix": {
         if (typeof valeur !== "string") {
           throw new Error(`${id} attend une valeur unique`);

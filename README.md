@@ -61,16 +61,15 @@ pnpm screenshots    # régénère docs/captures/ (nécessite un build)
 |---|---|
 | `?projet=solaire\|pac\|les_deux` | pré-répond A0 sur l'accueil et affiche la ligne de contexte |
 | `?variant=mur` | insère le mur de contact **avant** le résultat, qui n'est jamais affiché — le « avant » reproduit |
-| `?debug=1` | panneau d'événements, avec bascule du drapeau de rentabilité |
-| `?demo=1` | affiche la rentabilité (D41) et le choix de puissance (D45) |
+| `?debug=1` | panneau d'événements |
 
 **Codes postaux de démonstration :** `69002` (Lyon, agence à 3,6 km) ·
-`99999` (agence de test surbookée, règle D30) · `75001` (hors zone, sortie S6).
+`99999` (agence de test surbookée, règle D30) · `75001` (hors zone).
 **Téléphone de test :** `0600000001` (prospect déjà contacté, règle D29).
 **Code SMS de démonstration :** `4821`.
 
 ⚠️ Le routage part de la **préfecture du département** dans un rayon de 60 km :
-Nantes, Bordeaux, Rennes, Marseille et Strasbourg sortent en S6. Pour un
+Nantes, Bordeaux, Rennes, Marseille et Strasbourg tombent hors zone. Pour un
 parcours nominal, préférez `69002`, `21000`, `31000`, `14000` ou `59000`.
 
 ---
@@ -120,7 +119,7 @@ bloc « Nos hypothèses » du résultat les affiche à l'écran.
 | `data/zones.json` | 96 départements : zone climatique, zone d'ensoleillement, productible, préfecture | 2A, 2B et 75 non éligibles (règle du prototype) |
 | `data/agences.json` | 21 agences réelles + 1 agence de test | distances calculées par Haversine, `competences` à confirmer |
 | `data/pac-baremes.json` | SCOP, prix des énergies, rendements, prix PAC, MaPrimeRénov', CEE | SCOP réel 2,9 (ADEME) · MPR par profil · CEE par zone climatique |
-| `data/arbre-rdv.json` | arbre de qualification complet, sorties et URLs réelles | 28 nœuds, 12 sorties |
+| `data/arbre-rdv.json` | arbre de qualification complet, orientations et URLs réelles | 30 nœuds, 9 sorties |
 
 **Rentabilité (D41).** L'année de bascule est la première année où le cumul
 des économies inflatées **plus le surplus revendu** atteint le prix public TTC
@@ -187,13 +186,19 @@ l'instrumentation, il ne la branche pas.
 `sim_result_shown`, `sim_inflation_changed`, `sim_option_toggled`,
 `sim_hypotheses_opened`, `sim_next_steps_viewed`, `sim_to_booking`.
 **Rendez-vous :** `booking_start`, `booking_step_{n}`, `booking_exit_{code}`,
-`booking_contact_submitted`, `booking_otp_ok`, `booking_slot_selected`,
-`booking_engaged`, `booking_slot_confirmed`, `booking_ics_downloaded`.
+`booking_disqualified_{regle}`, `booking_hors_zone`,
+`booking_agency_overbooked`, `booking_contact_submitted`, `booking_otp_ok`,
+`booking_slot_selected`, `booking_engaged`, `booking_slot_confirmed`,
+`booking_ics_downloaded`.
+
+`booking_hors_zone` est nouveau (D57) : la zone non couverte n'étant plus une
+sortie, `booking_exit_S6` ne se déclenche plus.
 **Transverses :** `callback_requested`, `call_click{source, step}`.
 
 Ce qu'on cherche à mesurer : le taux de passage estimation → RDV, l'écart
-entre la variante par défaut et `?variant=mur` (le tunnel actuel), et la part
-des sorties d'orientation dans le total.
+entre la variante par défaut et `?variant=mur` (le tunnel actuel), et — depuis
+D57 — la part des prospects qui réservent **malgré** un écran d'orientation,
+comparée à ceux qui demandent un rappel.
 
 ---
 
