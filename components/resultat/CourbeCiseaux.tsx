@@ -176,8 +176,19 @@ export function CourbeCiseaux({
               strokeDasharray="4 3"
               data-testid="trait-rentabilite"
             />
+            {/* Le libellé passe à gauche du trait quand il déborderait sur
+                les annotations de fin de série. */}
             <text
-              x={geo.x(rentabilite.annee) + 4}
+              x={
+                geo.x(rentabilite.annee) + 4 > largeur - MARGE.droite - 96
+                  ? geo.x(rentabilite.annee) - 4
+                  : geo.x(rentabilite.annee) + 4
+              }
+              textAnchor={
+                geo.x(rentabilite.annee) + 4 > largeur - MARGE.droite - 96
+                  ? "end"
+                  : "start"
+              }
               y={MARGE.haut + 8}
               fontSize={9}
               fill="var(--color-canard-700)"

@@ -111,10 +111,12 @@ export function Resultat() {
 
   /**
    * Rentabilité (D41) : première année où le cumul des économies, surplus
-   * inclus, atteint le prix public du pack. Uniquement sous `?demo=1`.
+   * inclus, atteint le prix public du pack retenu. Dans la vue par défaut :
+   * changer de puissance change le prix, la production, le surplus, donc
+   * l'année de bascule et le trait de la courbe.
    */
   const rentabilite = useMemo(() => {
-    if (!etat.demo || !resultat) return null;
+    if (!resultat) return null;
 
     const longue = projeter({
       factureAnnuelle: resultat.factureAnnuelle,
@@ -130,7 +132,7 @@ export function Resultat() {
       if (cumul >= resultat.prixPack) return annee;
     }
     return null;
-  }, [etat.demo, resultat, taux]);
+  }, [resultat, taux]);
 
   const traitRentabilite: Rentabilite =
     rentabilite !== null && rentabilite <= horizon
@@ -219,16 +221,12 @@ export function Resultat() {
         </>
       ),
     },
-    ...(etat.demo
-      ? [
-          {
-            cle: "kwc",
-            ...t.comprendre_panneau.blocs.kwc,
-            vignette: <Configurateur reglages={reglages} bloc="kwc" apercu />,
-            impacts: impactsOption("kwc"),
-          },
-        ]
-      : []),
+    {
+      cle: "kwc",
+      ...t.comprendre_panneau.blocs.kwc,
+      vignette: <Configurateur reglages={reglages} bloc="kwc" apercu />,
+      impacts: impactsOption("kwc"),
+    },
     {
       cle: "stockage",
       ...t.comprendre_panneau.blocs.stockage,
@@ -372,7 +370,6 @@ export function Resultat() {
           <div className={SECTION_ALTERNEE}>
             <Configurateur
               reglages={reglages}
-              avecPuissance={etat.demo}
               avecCouplage={!pacDeja}
               onChanger={(r) => {
                 setReglages(r);
@@ -393,9 +390,7 @@ export function Resultat() {
             afficherAides={etat.projet !== "solaire"}
           />
 
-          {etat.demo ? (
-            <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
-          ) : null}
+          <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
         </>
       )}
 

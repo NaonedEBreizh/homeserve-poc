@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { useEvenements, viderBus, type EvenementSuivi } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
-import { setDemo, useProjet } from "@/lib/store";
+import { useProjet } from "@/lib/store";
 
 /**
  * Panneau de débogage, activé par `?debug=1`.
@@ -12,13 +12,12 @@ import { setDemo, useProjet } from "@/lib/store";
  * Il montre exactement ce qui serait poussé vers la mesure d'audience —
  * nom d'événement, variante, horodatage, charge utile — sans qu'aucune
  * requête ne parte. C'est l'outil qui permet de démontrer l'instrumentation
- * pendant la présentation, et de basculer le drapeau de rentabilité (D41)
- * sans changer d'URL.
+ * pendant la présentation.
  */
 export function DebugPanel() {
   const [ouvert, setOuvert] = useState(false);
   const evenements = useEvenements();
-  const { variant, demo } = useProjet();
+  const { variant } = useProjet();
   const t = contenu.debug;
 
   return (
@@ -37,16 +36,6 @@ export function DebugPanel() {
         <span className="text-neutre-500">
           {t.variant} : <strong className="text-neutre-700">{variant}</strong>
         </span>
-
-        <label className="flex min-h-11 items-center gap-2">
-          <input
-            type="checkbox"
-            checked={demo}
-            onChange={(e) => setDemo(e.target.checked)}
-            className="size-5 accent-corail-600"
-          />
-          {t.rentabilite}
-        </label>
 
         {evenements.length > 0 ? (
           <button

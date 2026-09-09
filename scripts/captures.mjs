@@ -28,7 +28,6 @@ const ETAT_SOLAIRE = {
   version: 1,
   variant: "defaut",
   debug: false,
-  demo: false,
   projet: "solaire",
   events: [],
   reponses: {
@@ -136,9 +135,6 @@ async function main() {
 
     await ouvrir(page, "/resultat", ETAT_SOLAIRE);
     await capturer(page, "resultat");
-
-    await ouvrir(page, "/resultat?demo=1", { ...ETAT_SOLAIRE, demo: true });
-    await capturer(page, "resultat-demo");
 
     // Calendrier : on traverse la porte chaude jusqu'à B20.
     await ouvrir(page, "/rendez-vous", ETAT_SOLAIRE);

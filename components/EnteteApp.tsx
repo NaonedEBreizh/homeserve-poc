@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import { contenu } from "@/lib/content";
-import { setDebug, setDemo, setVariant, useProjet } from "@/lib/store";
+import { setDebug, setVariant, useProjet } from "@/lib/store";
 
 import { PictoMaison } from "./ui/pictos";
 
@@ -29,13 +29,11 @@ export function EnteteApp() {
 
   const variantUrl = parametres.get("variant") === "mur" ? "mur" : "defaut";
   const debugUrl = parametres.get("debug") === "1";
-  const demoUrl = parametres.get("demo") === "1";
 
   useEffect(() => {
     setVariant(variantUrl);
     setDebug(debugUrl);
-    setDemo(demoUrl);
-  }, [variantUrl, debugUrl, demoUrl]);
+  }, [variantUrl, debugUrl]);
 
   return (
     <>

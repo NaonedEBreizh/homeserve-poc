@@ -55,13 +55,13 @@ describe("Accueil", () => {
     expect(lireEtat().reponses.projet).toBeUndefined();
   });
 
-  it("propage la variante et le drapeau démo dans les liens", () => {
-    rendre("variant=mur&demo=1");
+  it("propage la variante et le drapeau debug dans les liens", () => {
+    rendre("variant=mur&debug=1");
 
     const lien = screen.getByRole("link", {
       name: new RegExp(contenu.accueil.porte_simulateur.titre),
     });
     expect(lien.getAttribute("href")).toContain("variant=mur");
-    expect(lien.getAttribute("href")).toContain("demo=1");
+    expect(lien.getAttribute("href")).toContain("debug=1");
   });
 });

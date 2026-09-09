@@ -122,6 +122,22 @@ bloc « Nos hypothèses » du résultat les affiche à l'écran.
 | `data/pac-baremes.json` | SCOP, prix des énergies, rendements, prix PAC, MaPrimeRénov', CEE | SCOP réel 2,9 (ADEME) · MPR par profil · CEE par zone climatique |
 | `data/arbre-rdv.json` | arbre de qualification complet, sorties et URLs réelles | 28 nœuds, 12 sorties |
 
+**Rentabilité (D41).** L'année de bascule est la première année où le cumul
+des économies inflatées **plus le surplus revendu** atteint le prix public TTC
+du pack retenu. La recherche va jusqu'à 40 ans ; au-delà de l'horizon affiché,
+le trait n'est pas tracé. Changer la puissance (3 · 6 · 9 kWc) change le pack,
+donc le prix, la production, le surplus et l'année de bascule. Ce que le calcul
+suppose, et qu'il faut valider avant d'en faire un argument commercial :
+
+- **accord du commerce** sur le fait d'afficher une année de rentabilité ;
+- **grille de prix validée** — les prix sont les « à partir de » publics du
+  site, pas des devis ;
+- **dégradation des modules** non prise en compte (≈ 0,5 %/an de production
+  perdue) : elle recule l'année de bascule ;
+- **maintenance et remplacement d'onduleur** non comptés (un onduleur se
+  remplace vers 10–15 ans) : ils la reculent aussi ;
+- **tarif de rachat du surplus** supposé constant sur tout l'horizon.
+
 **Non-régression obligatoire.** Le moteur solaire reproduit l'exemple EDF
 vérifié — département 69, 100–135 m², 101–135 €/mois, radiateurs électriques,
 véhicule électrique, chauffe-eau thermodynamique, occupation 5 j+ :

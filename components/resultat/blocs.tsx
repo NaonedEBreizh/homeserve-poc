@@ -163,19 +163,12 @@ export function Configurateur({
   onChanger,
   apercu = false,
   bloc,
-  avecPuissance = false,
   avecCouplage = true,
 }: PropsApercu & {
   reglages: ReglagesInstallation;
   onChanger?: (r: ReglagesInstallation) => void;
   /** Restreint l'aperçu à une seule ligne du configurateur (panneau D37). */
   bloc?: "kwc" | "stockage" | "couplage";
-  /**
-   * D45 : le choix de puissance ne figure pas dans la vue par défaut — le
-   * dimensionnement relève de l'étude, pas d'un curseur. Il réapparaît sous
-   * `?demo=1`, à côté de la rentabilité.
-   */
-  avecPuissance?: boolean;
   /**
    * Masque la ligne « Couplage pompe à chaleur » quand l'utilisateur en a
    * déjà déclaré une : le couplage est acquis, pas une option à choisir.
@@ -226,7 +219,6 @@ export function Configurateur({
       choisir: (v: string) => onChanger?.({ ...reglages, couplage: v === "oui" }),
     },
   ]
-    .filter((ligne) => ligne.cle !== "kwc" || avecPuissance || bloc === "kwc")
     .filter((ligne) => ligne.cle !== "couplage" || avecCouplage || bloc === "couplage")
     .filter((ligne) => !bloc || ligne.cle === bloc);
 

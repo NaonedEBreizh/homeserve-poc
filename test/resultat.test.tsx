@@ -10,7 +10,6 @@ import { evenements, viderBus } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
 import {
   __reinitialiserPourTests,
-  setDemo,
   setReponse,
   setVariant,
 } from "@/lib/store";
@@ -266,13 +265,15 @@ describe("puissance de la centrale (D45)", () => {
     repondreSimulateur();
   });
 
-  it("n'expose pas le choix de kWc dans la vue par défaut", () => {
+  it("expose le choix de puissance dans la vue par défaut (D41 révisée)", () => {
     render(<Resultat />);
 
     const options = contenu.resultat.configurateur.solaire.options;
-    expect(screen.queryByText(contenu.resultat.configurateur.solaire.libelle)).toBeNull();
+    expect(
+      screen.getByText(contenu.resultat.configurateur.solaire.libelle),
+    ).toBeDefined();
     for (const libelle of Object.values(options)) {
-      expect(screen.queryByRole("button", { name: libelle })).toBeNull();
+      expect(screen.getByRole("button", { name: libelle })).toBeDefined();
     }
   });
 
@@ -283,19 +284,6 @@ describe("puissance de la centrale (D45)", () => {
     expect(screen.getByText(/Puissance conseillée : 6 kWc/)).toBeDefined();
   });
 
-  it("rétablit le choix de kWc avec ?demo=1, à côté de la rentabilité", () => {
-    setDemo(true);
-    render(<Resultat />);
-
-    expect(
-      screen.getByText(contenu.resultat.configurateur.solaire.libelle),
-    ).toBeDefined();
-    expect(
-      screen.getByRole("button", {
-        name: contenu.resultat.configurateur.solaire.options["9"],
-      }),
-    ).toBeDefined();
-  });
 });
 
 describe("rentabilité (D41)", () => {
@@ -303,21 +291,40 @@ describe("rentabilité (D41)", () => {
     repondreSimulateur();
   });
 
-  it("ne rend pas le trait de rentabilité sans le drapeau", () => {
-    render(<Resultat />);
-
-    expect(screen.queryByTestId("trait-rentabilite")).toBeNull();
-    expect(
-      screen.queryByText(contenu.resultat.rentabilite.mention),
-    ).toBeNull();
-  });
-
-  it("affiche le trait, la ligne du pack et la mention légale avec ?demo=1", () => {
-    setDemo(true);
+  it("rend le trait, la ligne du pack et la mention dans la vue par défaut", () => {
     render(<Resultat />);
 
     expect(screen.getByTestId("trait-rentabilite")).toBeDefined();
     expect(screen.getByText(contenu.resultat.rentabilite.mention)).toBeDefined();
+    // « Rentabilisée en N ans » dans la carte pack.
+    expect(
+      screen.getByText(
+        (texte) => /^Rentabilisée en \d+ ans$/.test(texte),
+      ),
+    ).toBeDefined();
+  });
+
+  it("changer la puissance change le prix du pack et l'année de bascule", () => {
+    render(<Resultat />);
+
+    const anneeBascule = () =>
+      /Rentabilisée en (\d+) ans/.exec(document.body.textContent ?? "")?.[1];
+    const prixPack = () =>
+      /à partir de ([\d\u00a0\u202f ]+) €/.exec(document.body.textContent ?? "")?.[1];
+
+    const prix6 = prixPack();
+    const annee6 = anneeBascule();
+    expect(prix6).toBeDefined();
+    expect(annee6).toBeDefined();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.solaire.options["9"],
+      }),
+    );
+
+    expect(prixPack()).not.toBe(prix6);
+    expect(anneeBascule()).not.toBe(annee6);
   });
 });
 
@@ -361,12 +368,7 @@ describe("panneau « Comprendre mes résultats » (D37)", () => {
     );
 
     const blocs = contenu.resultat.comprendre_panneau.blocs;
-    // L'onglet kWc suit la ligne du configurateur : absent hors ?demo=1 (D45).
-    for (const [cle, bloc] of Object.entries(blocs)) {
-      if (cle === "kwc") {
-        expect(screen.queryByRole("button", { name: bloc.titre })).toBeNull();
-        continue;
-      }
+    for (const bloc of Object.values(blocs)) {
       expect(screen.getByRole("button", { name: bloc.titre })).toBeDefined();
     }
 
@@ -380,7 +382,6 @@ describe("panneau « Comprendre mes résultats » (D37)", () => {
 
   it("rend pour chaque onglet un texte non vide venant de fr-fr.json", () => {
     repondreSimulateur();
-    setDemo(true); // avec le drapeau, les huit onglets sont présents
     render(<Resultat />);
 
     fireEvent.click(
