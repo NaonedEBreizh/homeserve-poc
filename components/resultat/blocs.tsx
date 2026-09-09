@@ -88,7 +88,8 @@ export function ChipsHorizon({
   return (
     <ul
       aria-hidden={apercu || undefined}
-      className={`flex flex-wrap gap-2 ${apercu ? "pointer-events-none scale-95" : ""}`}
+      // Les cinq horizons tiennent sur une ligne à 390 px.
+      className={`grid grid-cols-5 gap-1.5 ${apercu ? "pointer-events-none scale-95" : ""}`}
     >
       {hypotheses.projection.horizons_ans.map((n) => (
         <li key={n}>
@@ -97,7 +98,7 @@ export function ChipsHorizon({
             tabIndex={apercu ? -1 : undefined}
             onClick={() => onChanger?.(n)}
             aria-pressed={n === horizon}
-            className={`min-h-11 rounded-full border px-4 text-sm font-extrabold ${
+            className={`min-h-11 rounded-full border px-1 text-sm font-extrabold ${
               n === horizon
                 ? "border-corail-600 bg-corail-600 text-white"
                 : "border-neutre-200 bg-white text-neutre-700"
@@ -188,6 +189,10 @@ export function Configurateur({
       options: Object.entries(configurateur.stockage.options).map(
         ([valeur, libelle]) => ({ valeur, libelle }),
       ),
+      // Le prix ne s'affiche que pour l'option retenue : la ligne reste lisible.
+      sousLigne: (configurateur.stockage.prix as Record<string, string>)[
+        reglages.stockage
+      ],
       actif: reglages.stockage,
       choisir: (v: string) =>
         onChanger?.({
@@ -243,6 +248,11 @@ export function Configurateur({
               </button>
             ))}
           </div>
+          {"sousLigne" in ligne && ligne.sousLigne ? (
+            <span className="text-sm font-bold text-canard-700">
+              {ligne.sousLigne}
+            </span>
+          ) : null}
         </div>
       ))}
     </section>
@@ -253,7 +263,17 @@ export function CartePack({
   resultat,
   rentabiliteAns,
   apercu = false,
-}: PropsApercu & { resultat: SolaireResult; rentabiliteAns?: number | null }) {
+  afficherAides = false,
+}: PropsApercu & {
+  resultat: SolaireResult;
+  rentabiliteAns?: number | null;
+  /**
+   * D48 : en solaire, la prime à l'autoconsommation est nulle depuis le
+   * 05/06/2026 — afficher « Aides : 0 € » dessert le message. La ligne reste
+   * pour les projets avec pompe à chaleur, où MaPrimeRénov' et le CEE pèsent.
+   */
+  afficherAides?: boolean;
+}) {
   const { recommandation, rentabilite } = contenu.resultat;
 
   return (
@@ -280,12 +300,14 @@ export function CartePack({
         </p>
 
         <dl className="mt-2 flex flex-col divide-y divide-neutre-100 text-[17px]">
-          <div className="flex justify-between py-2">
-            <dt className="text-neutre-500">{recommandation.aides}</dt>
-            <dd className="font-extrabold text-vert-600">
-              {euros(resultat.aides)} €
-            </dd>
-          </div>
+          {afficherAides ? (
+            <div className="flex justify-between py-2">
+              <dt className="text-neutre-500">{recommandation.aides}</dt>
+              <dd className="font-extrabold text-vert-600">
+                {euros(resultat.aides)} €
+              </dd>
+            </div>
+          ) : null}
           <div className="flex justify-between py-2">
             <dt className="text-neutre-500">{recommandation.reste}</dt>
             <dd className="font-extrabold text-neutre-700">

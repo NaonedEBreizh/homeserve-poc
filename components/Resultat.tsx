@@ -274,7 +274,9 @@ export function Resultat() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-md flex-col gap-6 p-5 pb-24 text-[17px]">
+    // pb-[76px] : exactement la hauteur de la barre d'actions collante, pour
+    // que le dernier bloc ne passe jamais dessous.
+    <main className="mx-auto flex w-full max-w-md flex-col gap-6 p-5 pb-[76px] text-[17px]">
       {resultat.horsZone ? (
         <p className="rounded-card bg-orange-100 p-3 text-sm font-bold text-orange-600">
           {t.hors_zone.bandeau}
@@ -328,7 +330,11 @@ export function Resultat() {
       />
       </div>
 
-      <CartePack resultat={resultat} rentabiliteAns={rentabilite} />
+      <CartePack
+        resultat={resultat}
+        rentabiliteAns={rentabilite}
+        afficherAides={etat.projet !== "solaire"}
+      />
 
       {etat.demo ? (
         <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
@@ -343,9 +349,12 @@ export function Resultat() {
         <Link
           href={avecDrapeaux("/rendez-vous", parametres, { source: "resultat" })}
           onClick={() => track("sim_to_booking", { horizon })}
-          className={CTA_PRIMAIRE}
+          className={`${CTA_PRIMAIRE} flex-col gap-0 py-2 leading-tight`}
         >
-          {t.cta_principal}
+          <span>{t.cta_principal}</span>
+          <span className="text-xs font-bold opacity-90">
+            {t.cta_principal_sous_titre}
+          </span>
         </Link>
         <Link
           href={avecDrapeaux("/rendez-vous", parametres, { rappel: "1" })}

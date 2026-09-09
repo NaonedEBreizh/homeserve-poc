@@ -154,7 +154,8 @@
           "electrique_moins_10_ans": "Électrique, moins de 10 ans",
           "electrique_plus_10_ans": "Électrique, plus de 10 ans",
           "je_ne_sais_pas": "Je ne sais pas"
-        }
+        },
+        "aide": "Votre chauffe-eau consomme en journée, quand vos panneaux produisent"
       },
       "A8": {
         "titre": "Quel est le montant mensuel de votre facture d'électricité ?",
@@ -249,8 +250,13 @@
         "libelle": "Stockage",
         "options": {
           "aucun": "Aucun",
-          "virtuel": "Virtuel (15 €/mois)",
-          "batterie": "Batterie (sur devis)"
+          "virtuel": "Virtuel",
+          "batterie": "Batterie"
+        },
+        "prix": {
+          "aucun": "",
+          "virtuel": "15 €/mois",
+          "batterie": "sur devis"
         }
       },
       "couplage": {
@@ -285,10 +291,10 @@
       "titre": "Nos hypothèses",
       "disclaimer": "Ordre de grandeur, ne constitue pas un devis."
     },
-    "cta_principal": "Je réserve mon étude gratuite",
+    "cta_principal": "Je prends rendez-vous",
     "cta_rappel": "Je préfère être rappelé",
     "cta_appel": "Appeler mon agence",
-    "widget_sticky": "Réserver mon étude",
+    "widget_sticky": "Prendre rendez-vous",
     "hors_zone": {
       "bandeau": "Nous n'intervenons pas encore dans votre département.",
       "cta": "Être informé de l'ouverture"
@@ -357,22 +363,26 @@
         {
           "titre": "Votre estimation",
           "detail": "vous y êtes",
-          "faite": true
+          "faite": true,
+          "mise_en_avant": false
         },
         {
           "titre": "Étude gratuite à domicile",
-          "detail": "vous choisissez le créneau",
-          "faite": false
+          "detail": "vous choisissez votre créneau",
+          "faite": false,
+          "mise_en_avant": true
         },
         {
           "titre": "Financement",
           "detail": "aides déduites du devis",
-          "faite": false
+          "faite": false,
+          "mise_en_avant": false
         },
         {
           "titre": "Installation et suivi",
           "detail": "",
-          "faite": false
+          "faite": false,
+          "mise_en_avant": false
         }
       ],
       "carte": {
@@ -391,7 +401,8 @@
         "+ de 850 pros",
         "Avis Vérifiés 4,7/5"
       ]
-    }
+    },
+    "cta_principal_sous_titre": "étude gratuite à domicile"
   },
   "mur": {
     "titre": "Vous n'êtes plus qu'à un clic de votre étude solaire !",

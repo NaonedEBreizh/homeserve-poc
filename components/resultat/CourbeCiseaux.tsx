@@ -53,7 +53,7 @@ export function CourbeCiseaux({
   const index = Math.min(indexBrut, dernier);
 
   const largeur = apercu ? 300 : 326;
-  const hauteur = apercu ? 96 : 170;
+  const hauteur = apercu ? 96 : 190;
 
   const geo = useMemo(() => {
     const max = Math.max(...serie.sans, 1);
@@ -105,7 +105,11 @@ export function CourbeCiseaux({
         className="w-full"
         aria-hidden="true"
       >
-        <path d={geo.aire} fill="var(--color-canard-100)" />
+        <path
+          d={geo.aire}
+          fill="var(--color-canard-300)"
+          fillOpacity={0.45}
+        />
         <path d={geo.ligneSans} fill="none" stroke="var(--color-neutre-400)" strokeWidth={2} />
         <path d={geo.ligneAvec} fill="none" stroke="var(--color-canard-500)" strokeWidth={2} />
       </svg>
@@ -128,7 +132,7 @@ export function CourbeCiseaux({
       <svg
         ref={svgRef}
         viewBox={`0 0 ${largeur} ${hauteur}`}
-        className="w-full touch-none"
+        className="min-h-[190px] w-full touch-none"
         role="slider"
         tabIndex={0}
         aria-label={courbe.aide_curseur}

@@ -54,14 +54,53 @@ describe("variante par défaut", () => {
     expect(screen.queryByText(contenu.mur.titre)).toBeNull();
   });
 
+  it("n'affiche pas la ligne « Aides » pour un projet solaire (D48)", () => {
+    render(<Resultat />);
+
+    const intro = screen.getByText(contenu.resultat.recommandation.intro);
+    const carte = intro.closest("section")!;
+
+    expect(carte.textContent).not.toContain(contenu.resultat.recommandation.aides);
+    expect(carte.textContent).toContain(contenu.resultat.recommandation.reste);
+  });
+
+  it("affiche le prix du stockage retenu en sous-ligne", () => {
+    render(<Resultat />);
+
+    const prix = contenu.resultat.configurateur.stockage.prix;
+    // « Aucun » par défaut : pas de prix affiché.
+    expect(screen.queryByText(prix.virtuel)).toBeNull();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.stockage.options.virtuel,
+      }),
+    );
+
+    expect(screen.getByText(prix.virtuel)).toBeDefined();
+  });
+
+  it("met l'étape suivante en avant dans « Et après ? » (D42)", () => {
+    render(<Resultat />);
+
+    const etape = contenu.resultat.et_apres.etapes.find((e) => e.mise_en_avant)!;
+    expect(etape.titre).toBe("Étude gratuite à domicile");
+    expect(etape.detail).toBe("vous choisissez votre créneau");
+
+    const carte = screen.getByText(etape.titre).closest("li")!;
+    expect(carte.className).toContain("border-corail-600");
+  });
+
   it("mène au rendez-vous avec le wording D42", () => {
     render(<Resultat />);
 
     const cta = screen.getByRole("link", {
-      name: contenu.resultat.cta_principal,
+      name: new RegExp(contenu.resultat.cta_principal),
     });
     expect(cta.getAttribute("href")).toContain("/rendez-vous");
-    expect(contenu.resultat.cta_principal).toBe("Je réserve mon étude gratuite");
+    expect(contenu.resultat.cta_principal).toBe("Je prends rendez-vous");
+    // Le sous-titre porte la nature du rendez-vous (D42 révisée).
+    expect(cta.textContent).toContain(contenu.resultat.cta_principal_sous_titre);
   });
 
   it("expose l'encart taux, la tuile héros, les chips et la courbe", () => {

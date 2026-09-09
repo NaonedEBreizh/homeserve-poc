@@ -180,6 +180,13 @@ const PICTOS: Record<string, (p: PropsPicto) => React.ReactElement> = {
       <path d="M7 19h10" />
     </Svg>
   ),
+  calendrier: (p) => (
+    <Svg {...p}>
+      <rect x="3.5" y="5" width="17" height="16" rx="2.5" />
+      <path d="M8 3v4M16 3v4M3.5 10h17" />
+      <rect x="7" y="13" width="4" height="4" rx="1" fill={ACCENT} stroke="none" />
+    </Svg>
+  ),
   aucun: (p) => (
     <Svg {...p}>
       <circle cx="12" cy="12" r="9" />
@@ -245,23 +252,70 @@ export function PictoOption({
 
 type PropsIllustration = { className?: string };
 
-/** Toit couvert de panneaux. */
+/**
+ * Maison complète, toit couvert de panneaux. Le même dessin sert la carte
+ * pack et l'onglet « Le pack proposé » du panneau d'aide : le lecteur doit
+ * reconnaître d'un écran à l'autre ce dont on lui parle.
+ */
 export function IllustrationToit({ className = "" }: PropsIllustration) {
   return (
-    <svg viewBox="0 0 120 64" className={className} aria-hidden="true">
+    <svg viewBox="0 0 120 72" className={className} aria-hidden="true">
+      {/* Corps de la maison */}
       <path
-        d="M8 46 44 18l44 28z"
+        d="M26 38h56v24H26z"
+        fill="white"
+        stroke="var(--color-neutre-400)"
+        strokeWidth="1.5"
+      />
+      {/* Toit */}
+      <path
+        d="M18 39 54 14l36 25z"
         fill="var(--color-neutre-100)"
         stroke="var(--color-neutre-400)"
         strokeWidth="1.5"
       />
-      <g stroke="var(--color-canard-500)" strokeWidth="1.2" fill="var(--color-canard-100)">
-        <path d="M30 40 46 28l12 8-16 12z" />
-        <path d="M50 42 66 30l12 8-16 12z" />
+      {/* Panneaux sur le pan de toit */}
+      <g stroke="var(--color-canard-500)" strokeWidth="1.1" fill="var(--color-canard-300)">
+        <path d="M38 34 50 25l9 6-12 9z" />
+        <path d="M56 35 68 26l9 6-12 9z" />
       </g>
-      <path d="M8 46h96" stroke="var(--color-neutre-300)" strokeWidth="1.5" />
-      <circle cx="100" cy="16" r="7" fill="var(--color-corail-100)" />
-      <circle cx="100" cy="16" r="3.2" fill="var(--color-corail-600)" />
+      {/* Porte et fenêtre */}
+      <path d="M48 62V48h12v14" fill="var(--color-corail-100)" stroke="var(--color-corail-600)" strokeWidth="1.3" />
+      <rect x="32" y="45" width="10" height="8" rx="1" fill="var(--color-neutre-100)" stroke="var(--color-neutre-400)" strokeWidth="1.2" />
+      {/* Sol et soleil */}
+      <path d="M10 62h100" stroke="var(--color-neutre-300)" strokeWidth="1.5" />
+      <circle cx="102" cy="18" r="7" fill="var(--color-corail-100)" />
+      <circle cx="102" cy="18" r="3.2" fill="var(--color-corail-600)" />
+    </svg>
+  );
+}
+
+/** Accueil : maison, panneaux et unité extérieure de pompe à chaleur. */
+export function IllustrationAccueil({ className = "" }: PropsIllustration) {
+  return (
+    <svg viewBox="0 0 200 96" className={className} aria-hidden="true">
+      <circle cx="172" cy="22" r="11" fill="var(--color-corail-100)" />
+      <circle cx="172" cy="22" r="5" fill="var(--color-corail-600)" />
+
+      <path d="M44 54h64v30H44z" fill="white" stroke="var(--color-neutre-400)" strokeWidth="1.6" />
+      <path d="M34 55 76 24l42 31z" fill="var(--color-neutre-100)" stroke="var(--color-neutre-400)" strokeWidth="1.6" />
+      <g stroke="var(--color-canard-500)" strokeWidth="1.2" fill="var(--color-canard-300)">
+        <path d="M56 49 70 38l10 7-14 11z" />
+        <path d="M78 50 92 39l10 7-14 11z" />
+      </g>
+      <path d="M68 84V68h14v16" fill="var(--color-corail-100)" stroke="var(--color-corail-600)" strokeWidth="1.4" />
+      <rect x="50" y="63" width="11" height="9" rx="1" fill="var(--color-neutre-100)" stroke="var(--color-neutre-400)" strokeWidth="1.2" />
+
+      {/* Unité extérieure de pompe à chaleur, adossée à la maison */}
+      <rect x="122" y="60" width="34" height="24" rx="3" fill="var(--color-neutre-100)" stroke="var(--color-neutre-400)" strokeWidth="1.5" />
+      <circle cx="139" cy="72" r="8" fill="white" stroke="var(--color-canard-500)" strokeWidth="1.2" />
+      <path
+        d="M139 72V65a7 7 0 0 1 6 3.5zM139 72l6 3.5a7 7 0 0 1-6 3.5zM139 72l-6 3.5a7 7 0 0 1 0-7z"
+        fill="var(--color-canard-300)"
+      />
+      <circle cx="139" cy="72" r="1.8" fill="var(--color-corail-600)" />
+
+      <path d="M20 84h164" stroke="var(--color-neutre-300)" strokeWidth="1.6" />
     </svg>
   );
 }
