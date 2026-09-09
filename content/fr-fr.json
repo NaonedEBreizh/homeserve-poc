@@ -272,8 +272,8 @@
         },
         "prix": {
           "aucun": "",
-          "virtuel": "15 €/mois",
-          "batterie": "sur devis"
+          "virtuel": "15 €/mois, déduits de vos économies",
+          "batterie": "batterie physique : prix sur devis, non compté"
         }
       },
       "couplage": {

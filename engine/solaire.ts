@@ -90,7 +90,14 @@ export type SolaireResult = {
   tapBatteriePct: number;
   /** Celui réellement utilisé pour les économies (dépend du stockage choisi). */
   tapEffectifPct: number;
+  /** Économies nettes : l'abonnement du stockage virtuel est déjà déduit. */
   economiesAn: number;
+  /**
+   * D55 : abonnement annuel du stockage virtuel (15 €/mois). Nul pour
+   * « aucun » ; nul aussi pour la batterie physique, dont le prix est sur
+   * devis et n'est donc pas compté ici.
+   */
+  abonnementStockageAn: number;
   kwcConseille: Kwc;
   prixPack: number;
   nomPack: string;
@@ -271,7 +278,16 @@ export function simulerSolaire(
   );
 
   const tapEffectifPct = stockage === "aucun" ? tapPct : tapBatteriePct;
-  const economiesAn = Math.round((factureAnnuelle * tapEffectifPct) / 100);
+
+  // D55 : le stockage virtuel est un abonnement, pas un équipement. Il se
+  // déduit des économies, année après année, sans être inflaté.
+  const abonnementStockageAn =
+    stockage === "virtuel"
+      ? hypotheses.stockage.virtuel_mensuel_ttc.valeur * 12
+      : 0;
+
+  const economiesAn =
+    Math.round((factureAnnuelle * tapEffectifPct) / 100) - abonnementStockageAn;
 
   // --- Dimensionnement : indice = tranche surface + tranche facture
   const indice =
@@ -307,6 +323,7 @@ export function simulerSolaire(
     tapBatteriePct,
     tapEffectifPct,
     economiesAn,
+    abonnementStockageAn,
     kwcConseille,
     prixPack: pack.prix_ttc,
     nomPack: pack.nom,
@@ -330,6 +347,11 @@ export type ParametresProjection = {
   tauxHausse: number;
   horizon: number;
   convention?: Convention;
+  /**
+   * D55 : abonnement annuel à déduire des économies (stockage virtuel). Il
+   * n'est pas inflaté : c'est un prix d'abonnement, pas un prix du kWh.
+   */
+  abonnementAn?: number;
 };
 
 /**
@@ -350,6 +372,7 @@ export function projeter({
   tauxHausse,
   horizon,
   convention = "homeserve",
+  abonnementAn = 0,
 }: ParametresProjection): Projection {
   const annees: number[] = [];
   const factureSans: number[] = [];
@@ -362,7 +385,7 @@ export function projeter({
   for (let annee = 0; annee <= horizon; annee++) {
     if (annee > 0) facture = Math.ceil(facture * (1 + tauxHausse));
 
-    const economie = Math.round((facture * tapPct) / 100);
+    const economie = Math.round((facture * tapPct) / 100) - abonnementAn;
 
     annees.push(annee);
     factureSans.push(facture);

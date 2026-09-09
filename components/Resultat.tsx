@@ -100,6 +100,7 @@ export function Resultat() {
             tauxHausse: taux,
             horizon,
             convention: "homeserve",
+            abonnementAn: resultat.abonnementStockageAn,
           })
         : null,
     [resultat, taux, horizon],
@@ -124,6 +125,7 @@ export function Resultat() {
       tauxHausse: taux,
       horizon: HORIZON_RECHERCHE_RENTABILITE,
       convention: "homeserve",
+      abonnementAn: resultat.abonnementStockageAn,
     });
 
     let cumul = 0;
@@ -177,6 +179,7 @@ export function Resultat() {
       tauxHausse: taux + 0.01,
       horizon,
       convention: "homeserve",
+      abonnementAn: resultat.abonnementStockageAn,
     });
     return plus.cumul - projection.cumul;
   })();
@@ -277,6 +280,7 @@ export function Resultat() {
         tauxHausse: taux,
         horizon,
         convention: "homeserve",
+        abonnementAn: s.abonnementStockageAn,
       }).cumul;
     };
 

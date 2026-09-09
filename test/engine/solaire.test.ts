@@ -5,7 +5,7 @@
  *
  * Contrat attendu :
  *   simulerSolaire(entrees: EntreesSolaire, options?: OptionsSolaire): SolaireResult
- *   projeter(params: { factureAnnuelle, tapPct, tauxHausse, horizon, convention?: "edf" | "homeserve" }): Projection
+ *   projeter(params: { factureAnnuelle, tapPct, tauxHausse, horizon, convention?: "edf" | "homeserve", abonnementAn?: number }): Projection
  *
  * Sources : docs/retro-ingenierie-edf.md §1.2, docs/releve-simulateur-edf.md §3,
  * data/hypotheses.json, data/tap-base.json, data/zones.json.
@@ -104,6 +104,37 @@ describe("simulerSolaire — bornes et coefficients", () => {
     const batt = simulerSolaire(EXEMPLE_EDF, { stockage: "batterie" });
     expect(batt.economiesAn).toBeGreaterThan(base.economiesAn);
     expect(Math.abs(batt.economiesAn - Math.round((1416 * batt.tapBatteriePct) / 100))).toBeLessThanOrEqual(1);
+    // La batterie physique est sur devis : rien n'est déduit (D55).
+    expect(batt.abonnementStockageAn).toBe(0);
+  });
+
+  it("D55 : le stockage virtuel déduit son abonnement des économies", () => {
+    const abonnement = hypotheses.stockage.virtuel_mensuel_ttc.valeur * 12;
+    const batt = simulerSolaire(EXEMPLE_EDF, { stockage: "batterie" });
+    const virt = simulerSolaire(EXEMPLE_EDF, { stockage: "virtuel" });
+
+    // Même TAP que la batterie, mais 180 € de moins par an.
+    expect(virt.tapEffectifPct).toBe(batt.tapEffectifPct);
+    expect(virt.abonnementStockageAn).toBe(abonnement);
+    expect(virt.economiesAn).toBe(batt.economiesAn - abonnement);
+  });
+
+  it("D55 : l'abonnement se déduit de chaque année du cumul", () => {
+    const abonnement = hypotheses.stockage.virtuel_mensuel_ttc.valeur * 12;
+    const horizon = 25;
+    const commun = {
+      factureAnnuelle: 1416,
+      tapPct: 50.94,
+      tauxHausse: 0.04,
+      horizon,
+      convention: "homeserve" as const,
+    };
+
+    const sans = projeter(commun);
+    const avec = projeter({ ...commun, abonnementAn: abonnement });
+
+    // Un abonnement constant, jamais inflaté : N années × 180 €.
+    expect(sans.cumul - avec.cumul).toBe(horizon * abonnement);
   });
 
   it("un département hors zone calcule quand même mais le signale", () => {
