@@ -275,7 +275,7 @@
           "les_deux"
         ]
       },
-      "aide": "Une toiture d'origine sur une maison d'avant 1997 peut contenir de l'amiante : nous vérifions.",
+      "aide": "Sur une maison d'avant 1997, une toiture d'origine peut contenir de l'amiante : nous vérifions.",
       "options": [
         {
           "valeur": "renovee",
@@ -289,15 +289,24 @@
         {
           "valeur": "origine",
           "libelle": "D'origine",
-          "cible": "B11"
+          "cible": "B12",
+          "cible_si": {
+            "annee_construction": "<1997",
+            "cible": "B11"
+          }
         },
         {
           "valeur": "nsp",
           "libelle": "Je ne sais pas",
-          "cible": "B11"
+          "cible": "B12",
+          "cible_si": {
+            "annee_construction": "<1997",
+            "cible": "B11"
+          }
         }
       ],
-      "next_sinon": "B10p"
+      "next_sinon": "B10p",
+      "note_d50": "D50 : B11 (amiante) n'est posée que si annee_construction vaut <1997."
     },
     "B11": {
       "type": "choix",
@@ -495,11 +504,21 @@
           "libelle": "Téléphone mobile",
           "type": "tel",
           "requis": true,
-          "aide": "Uniquement pour le SMS de confirmation"
+          "aide": "Pour le SMS de confirmation et l'appel du technicien-conseil"
         },
         {
-          "id": "ne_pas_appeler",
-          "libelle": "Je ne souhaite pas être appelé, uniquement le SMS de confirmation",
+          "id": "consentement_contact",
+          "libelle": "J'accepte d'être contacté par HomeServe par téléphone, SMS ou e-mail au sujet de ma demande d'étude, et j'ai lu la politique de données personnelles",
+          "type": "checkbox",
+          "requis": true,
+          "lien": {
+            "libelle": "politique de données personnelles",
+            "url": "https://www.homeserve.fr/donnees-personnelles"
+          }
+        },
+        {
+          "id": "consentement_marketing",
+          "libelle": "Je souhaite recevoir les conseils et offres HomeServe",
           "type": "checkbox",
           "requis": false
         }
@@ -547,7 +566,7 @@
     "B19": {
       "type": "info",
       "titre": "Votre étude gratuite à domicile",
-      "texte": "Environ 1 h, en présence d'un propriétaire. Vous pouvez être accompagné d'un proche.",
+      "texte": "Pour que l'étude soit utile, tous les décideurs du foyer doivent être présents (co-propriétaires, conjoint). Comptez environ 1 h. Un technicien-conseil se déplace pour vous : en cas d'empêchement, modifiez ou annulez au plus tard la veille.",
       "next": "B19b"
     },
     "B19b": {
@@ -573,13 +592,14 @@
         ]
       },
       "aucun_creneau": "@R1",
-      "next": "B21"
+      "next": "B21",
+      "confirmation_decideurs": "Je confirme que les décideurs seront présents"
     },
     "B21": {
       "type": "info",
       "modale": true,
       "titre": "Ce rendez-vous mobilise un technicien-conseil",
-      "texte": "Environ 1 heure sur place. Vous pourrez le modifier ou l'annuler par email ou SMS.",
+      "texte": "Pour que l'étude soit utile, tous les décideurs du foyer doivent être présents (co-propriétaires, conjoint). Comptez environ 1 h. Un technicien-conseil se déplace pour vous : en cas d'empêchement, modifiez ou annulez au plus tard la veille.",
       "bouton": "Je confirme",
       "next": "B22"
     },

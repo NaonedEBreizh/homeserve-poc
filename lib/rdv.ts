@@ -18,6 +18,10 @@ export type RdvEnregistre = {
   agenceNom: string;
   distanceKm: number;
   typeRdv: string;
+  /** D51 : consentements recueillis en B16, horodatés. */
+  consentementContact?: boolean;
+  consentementMarketing?: boolean;
+  consentementHorodatage?: string;
 };
 
 export function lireRdv(): RdvEnregistre | null {

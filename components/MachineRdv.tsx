@@ -9,6 +9,7 @@ import { trouverAgence, type Agence, type Creneau } from "@/engine/agenda";
 import {
   creerMachine,
   type Machine,
+  type ChampNoeud,
   type Noeud,
   type OptionNoeud,
 } from "@/engine/machine";
@@ -152,6 +153,7 @@ export function MachineRdv() {
         onAvancer={avancer}
         onCreneau={(creneau, agence, distanceKm) => {
           const coordonnees = coordonneesDe(etatMachine.reponses);
+          const consentements = consentementsDe(etatMachine.reponses);
           const rdv = creneauVersRdv(
             creneau,
             coordonnees,
@@ -159,7 +161,7 @@ export function MachineRdv() {
             distanceKm,
             contenu.rdv.confirmation.type_rdv,
           );
-          enregistrerRdv(rdv);
+          enregistrerRdv({ ...rdv, ...consentements });
           setRdv({
             agence: agence.nom,
             creneau: creneau.debut.toISOString(),
@@ -221,6 +223,25 @@ function cpDe(
   return typeof etat.reponses.cp === "string" ? etat.reponses.cp : "";
 }
 
+/** Consentements recueillis en B16, horodatés au moment de la réservation. */
+function consentementsDe(reponses: Record<string, unknown>) {
+  let contact = false;
+  let marketing = false;
+
+  for (const valeur of Object.values(reponses)) {
+    if (!valeur || typeof valeur !== "object" || Array.isArray(valeur)) continue;
+    const champs = valeur as Record<string, string>;
+    if (champs.consentement_contact === "true") contact = true;
+    if (champs.consentement_marketing === "true") marketing = true;
+  }
+
+  return {
+    consentementContact: contact,
+    consentementMarketing: marketing,
+    consentementHorodatage: new Date().toISOString(),
+  };
+}
+
 function coordonneesDe(reponses: Record<string, unknown>): {
   telephone: string;
   email: string;
@@ -235,6 +256,32 @@ function coordonneesDe(reponses: Record<string, unknown>): {
     if (champs.email) email = champs.email;
   }
   return { telephone, email };
+}
+
+/**
+ * Libellé d'une case à cocher, avec le lien réel quand le champ en porte un
+ * (D51 : la politique de données personnelles doit être atteignable).
+ */
+function LibelleAvecLien({ champ }: { champ: ChampNoeud }) {
+  const libelle = champ.libelle ?? champ.id;
+  if (!champ.lien) return <>{libelle}</>;
+
+  const [avant, apres] = libelle.split(champ.lien.libelle);
+  return (
+    <>
+      {avant}
+      <a
+        href={champ.lien.url}
+        target="_blank"
+        rel="noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        className="font-bold text-canard-700 underline"
+      >
+        {champ.lien.libelle}
+      </a>
+      {apres}
+    </>
+  );
 }
 
 /** Rend le nœud courant selon son `type`, sans rien décider du parcours. */
@@ -318,6 +365,7 @@ function NoeudRendu({
       <Calendrier
         agence={routage.agence}
         distanceKm={routage.distanceKm}
+        confirmationDecideurs={noeud.confirmation_decideurs}
         cp={cp}
         aujourdhui={new Date()}
         onConfirmer={(creneau) =>
@@ -417,9 +465,12 @@ function Formulaire({
     );
   }
 
-  const complet = champs.every(
-    (champ) => !champ.requis || (valeurs[champ.id] ?? "").trim().length > 0,
-  );
+  // Une case requise doit valoir « true », pas seulement être non vide (D51).
+  const complet = champs.every((champ) => {
+    if (!champ.requis) return true;
+    const valeur = valeurs[champ.id] ?? "";
+    return champ.type === "checkbox" ? valeur === "true" : valeur.trim().length > 0;
+  });
 
   return (
     <form
@@ -436,10 +487,19 @@ function Formulaire({
       </h2>
 
       {champs.map((champ) => (
-        <label key={champ.id} className="flex flex-col gap-1">
-          <span className="text-[13px] font-semibold text-neutre-500">
-            {champ.libelle ?? champ.id}
-          </span>
+        <label
+          key={champ.id}
+          className={
+            champ.type === "checkbox"
+              ? "flex items-start gap-2 text-sm text-neutre-700"
+              : "flex flex-col gap-1"
+          }
+        >
+          {champ.type === "checkbox" ? null : (
+            <span className="text-[13px] font-semibold text-neutre-500">
+              {champ.libelle ?? champ.id}
+            </span>
+          )}
           {champ.type === "checkbox" ? (
             <input
               type="checkbox"
@@ -447,7 +507,7 @@ function Formulaire({
               onChange={(e) =>
                 setValeurs({ ...valeurs, [champ.id]: String(e.target.checked) })
               }
-              className="size-6 accent-corail-600"
+              className="size-6 shrink-0 accent-corail-600"
             />
           ) : (
             <input
@@ -461,6 +521,17 @@ function Formulaire({
               className="h-12 rounded-xl border border-neutre-300 px-4 text-base text-neutre-700"
             />
           )}
+          {champ.type === "checkbox" ? (
+            <span>
+              <LibelleAvecLien champ={champ} />
+              {champ.requis ? (
+                <span aria-hidden="true" className="text-corail-600">
+                  {" *"}
+                </span>
+              ) : null}
+            </span>
+          ) : null}
+
           {champ.aide ? (
             <span className="text-xs text-neutre-500">{champ.aide}</span>
           ) : null}

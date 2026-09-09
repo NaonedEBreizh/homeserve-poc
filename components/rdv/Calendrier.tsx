@@ -43,6 +43,7 @@ export function Calendrier({
   distanceKm,
   cp,
   aujourdhui,
+  confirmationDecideurs,
   onConfirmer,
   onAucunCreneau,
 }: {
@@ -50,6 +51,8 @@ export function Calendrier({
   distanceKm: number;
   cp: string;
   aujourdhui: Date;
+  /** D52 : case à cocher exigée avant la confirmation du créneau. */
+  confirmationDecideurs?: string;
   onConfirmer: (creneau: Creneau) => void;
   onAucunCreneau: () => void;
 }) {
@@ -87,6 +90,7 @@ export function Calendrier({
     premierPlein?.creneaux[0]?.periode ?? "matin",
   );
   const [choisi, setChoisi] = useState<Creneau | null>(null);
+  const [decideurs, setDecideurs] = useState(false);
 
   const duJour = jours.find((j) => cleJour(j.date) === jourActif)?.creneaux ?? [];
   const affiches = duJour.filter((c) => c.periode === periode).slice(0, MAX_CHIPS);
@@ -201,7 +205,7 @@ export function Calendrier({
       </button>
 
       {choisi ? (
-        <div className="sticky bottom-0 -mx-5 flex items-center gap-3 border-t border-neutre-100 bg-white px-5 py-3">
+        <div className="sticky bottom-0 -mx-5 flex flex-col gap-2 border-t border-neutre-200 bg-white px-5 py-3">
           <span className="text-sm font-bold text-neutre-700">
             {remplacer(calendrier.recap, {
               jour: libelleJour(choisi.debut),
@@ -209,10 +213,25 @@ export function Calendrier({
               fin: heure(choisi.fin),
             })}
           </span>
+
+          {/* D52 : l'étude n'a de valeur que si les décideurs sont là. */}
+          {confirmationDecideurs ? (
+            <label className="flex items-start gap-2 text-sm text-neutre-700">
+              <input
+                type="checkbox"
+                checked={decideurs}
+                onChange={(e) => setDecideurs(e.target.checked)}
+                className="mt-0.5 size-6 shrink-0 accent-corail-600"
+              />
+              {confirmationDecideurs}
+            </label>
+          ) : null}
+
           <button
             type="button"
+            disabled={Boolean(confirmationDecideurs) && !decideurs}
             onClick={() => onConfirmer(choisi)}
-            className="ml-auto flex min-h-11 items-center rounded-full bg-corail-600 px-4 text-sm font-extrabold text-white"
+            className="flex min-h-14 items-center justify-center rounded-full bg-corail-600 px-4 text-base font-extrabold text-white shadow-[0_2px_6px_rgba(226,44,34,0.24)] disabled:opacity-40"
           >
             {calendrier.cta}
           </button>

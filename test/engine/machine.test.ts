@@ -97,6 +97,72 @@ describe("sous-arbres par projet", () => {
   });
 });
 
+describe("amiante conditionnée à l'année de construction (D50)", () => {
+  it("saute B11 quand la maison est postérieure à 1997", () => {
+    const m = creerMachine(arbre, { projet: "solaire" });
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "origine"]]);
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B12" });
+  });
+
+  it("pose B11 quand la maison est antérieure à 1997", () => {
+    const m = creerMachine(arbre, { projet: "solaire" });
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", "<1997"], ["B10", "origine"]]);
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B11" });
+  });
+
+  it("saute aussi B11 sur « je ne sais pas » après 1997", () => {
+    const m = creerMachine(arbre, { projet: "solaire" });
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "nsp"]]);
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B12" });
+  });
+});
+
+describe("tranches d'année selon le projet (D49)", () => {
+  it("n'offre que trois tranches en solaire seul", () => {
+    const m = creerMachine(arbre, { projet: "solaire" });
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"]]);
+    const c = m.courant();
+    if (c.type !== "noeud") throw new Error("attendu un nœud");
+    expect(m.optionsDe(c.noeud).map((o) => o.valeur)).toEqual(["<1997", ">1997", "en_construction"]);
+  });
+
+  it("garde les quatre tranches dès qu'une pompe à chaleur est en jeu", () => {
+    const m = creerMachine(arbre, { projet: "les_deux" });
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "les_deux"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"]]);
+    const c = m.courant();
+    if (c.type !== "noeud") throw new Error("attendu un nœud");
+    expect(m.optionsDe(c.noeud)).toHaveLength(4);
+  });
+});
+
+describe("consentements et décideurs (D51, D52)", () => {
+  it("B16 exige le consentement de contact et n'a plus de case « ne pas m'appeler »", () => {
+    const champs = arbre.noeuds.B16.champs as Array<{ id: string; requis?: boolean }>;
+    const ids = champs.map((c) => c.id);
+
+    expect(ids).not.toContain("ne_pas_appeler");
+    expect(ids).toContain("consentement_contact");
+    expect(ids).toContain("consentement_marketing");
+    expect(champs.find((c) => c.id === "consentement_contact")?.requis).toBe(true);
+    expect(champs.find((c) => c.id === "consentement_marketing")?.requis).toBe(false);
+  });
+
+  it("le consentement porte le lien vers la politique de données", () => {
+    const champs = arbre.noeuds.B16.champs as Array<{ id: string; lien?: { url: string } }>;
+    const lien = champs.find((c) => c.id === "consentement_contact")?.lien;
+
+    expect(lien?.url).toContain("homeserve.fr");
+  });
+
+  it("B19 et B21 exigent la présence des décideurs, B20 porte la case", () => {
+    expect(arbre.noeuds.B19.texte).toContain("décideurs du foyer");
+    expect(arbre.noeuds.B21.texte).toContain("décideurs du foyer");
+    expect(arbre.noeuds.B20.confirmation_decideurs).toBe(
+      "Je confirme que les décideurs seront présents",
+    );
+  });
+});
+
 describe("garde géographique (B14)", () => {
   function jusquaAdresse(projet: "solaire" = "solaire") {
     const m = creerMachine(arbre, { projet });
@@ -132,7 +198,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("un RDV existant avec le même téléphone → DOUBLON", () => {
     const m = jusquaOtp("69002", [{ telephone: "0600000009", email: "autre@example.org" }]);
-    m.repondre({ email: "test@example.org", telephone: "06 00 00 00 09", ne_pas_appeler: "false" });
+    m.repondre({ email: "test@example.org", telephone: "06 00 00 00 09", consentement_contact: "true" });
     m.repondre("4821");
     m.avancer();
     expect(m.courant()).toMatchObject({ type: "sortie", code: "DOUBLON" });
@@ -140,7 +206,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("le téléphone de test 0600000001 → écran B17c puis poursuite vers l'éligibilité", () => {
     const m = jusquaOtp();
-    m.repondre({ email: "test@example.org", telephone: "0600000001", ne_pas_appeler: "false" });
+    m.repondre({ email: "test@example.org", telephone: "0600000001", consentement_contact: "true" });
     m.repondre("4821");
     m.avancer();
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B17c" });
@@ -151,7 +217,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("le code postal de test 99999 → agence surbookée → SURBOOKEE", () => {
     const m = jusquaOtp("99999");
-    m.repondre({ email: "test@example.org", telephone: "0600000002", ne_pas_appeler: "false" });
+    m.repondre({ email: "test@example.org", telephone: "0600000002", consentement_contact: "true" });
     m.repondre("4821");
     m.avancer(); // B17b → B18
     m.avancer(); // B18 → B19
@@ -165,7 +231,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
     repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
     m.repondre({ adresse: "1 place Bellecour", cp: "69002", ville: "Lyon" });
     m.repondre({ prenom: "Test", nom: "Demo" });
-    m.repondre({ email: "test@example.org", telephone: "0600000003", ne_pas_appeler: "true" });
+    m.repondre({ email: "test@example.org", telephone: "0600000003", consentement_contact: "true" });
     m.repondre("4821");
     m.avancer(); // B17b
     m.avancer(); // B18 → O1

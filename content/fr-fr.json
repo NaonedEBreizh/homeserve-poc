@@ -424,7 +424,8 @@
     },
     "coordonnees": {
       "cta_code": "Recevoir mon code",
-      "mention": "Prototype : aucune donnée n'est transmise."
+      "mention": "Prototype : aucune donnée n'est transmise.",
+      "consentement_requis": "Le consentement est nécessaire pour vous recontacter."
     },
     "otp": {
       "titre": "Saisissez le code reçu par SMS",
@@ -445,7 +446,8 @@
       "badge": "agenda simulé",
       "sous_titre": "14 jours à partir de demain, créneaux d'une heure",
       "jour_sans": "aucun créneau",
-      "recap": "{jour} · {debut} – {fin}"
+      "recap": "{jour} · {debut} – {fin}",
+      "decideurs": "Je confirme que les décideurs seront présents"
     },
     "confirmation": {
       "titre": "Votre étude gratuite est confirmée",
