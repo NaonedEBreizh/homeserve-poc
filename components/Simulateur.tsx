@@ -48,7 +48,6 @@ const QUESTIONS: Question[] = [
     condition: (e) => AVEC_PAC(e) && e.reponses.chauffage === "gaz_fioul_bois",
   },
   { id: "A6", cle: "equipements", type: "multi", etape: 1 },
-  { id: "A7", cle: "chauffe_eau", type: "choix", etape: 1 },
   { id: "A8", cle: "facture_mensuelle", type: "curseur", valeurs: TRANCHES_FACTURE, etape: 1 },
   // A9 et A10 ne concernent que les parcours avec pompe à chaleur.
   { id: "A9", cle: "revenus", type: "choix", etape: 1, condition: AVEC_PAC },
@@ -57,6 +56,7 @@ const QUESTIONS: Question[] = [
 
 type ContenuQuestion = {
   titre: string;
+  options_solaire?: Record<string, string>;
   aide?: string;
   intro?: string;
   placeholder?: string;
@@ -103,6 +103,12 @@ export function Simulateur() {
   if (!question) return null;
 
   const c = contenuDe(question.id);
+  // D49 : l'année de construction n'a que trois tranches en solaire seul ;
+  // le découpage fin ne sert qu'au calcul des aides PAC.
+  const options =
+    question.id === "A10" && etat.projet === "solaire" && c.options_solaire
+      ? c.options_solaire
+      : (c.options ?? {});
   const total = posees.length;
   const numero = Math.min(index, total - 1) + 1;
 
@@ -139,7 +145,7 @@ export function Simulateur() {
 
       {question.type === "choix" ? (
         <Choix
-          options={c.options ?? {}}
+          options={options}
           valeur={etat.reponses[question.cle]}
           onChoisir={(valeur) => repondre(question.cle, valeur)}
         />
@@ -170,7 +176,7 @@ export function Simulateur() {
 
       {question.type === "multi" ? (
         <Multi
-          options={c.options ?? {}}
+          options={options}
           valeurs={
             Array.isArray(etat.reponses[question.cle])
               ? (etat.reponses[question.cle] as string[])
@@ -381,13 +387,21 @@ function Multi({
 }) {
   const [choisis, setChoisis] = useState<string[]>(valeurs);
 
+  // D53 : les deux chauffe-eau s'excluent l'un l'autre.
+  const CHAUFFE_EAU = ["chauffe_eau_electrique", "chauffe_eau_thermodynamique"];
+
   function basculer(cle: string) {
-    // « Aucun » est exclusif : le cocher vide la sélection.
+    // « Aucun » est exclusif de tout : le cocher vide la sélection.
     if (cle === "aucun") {
       setChoisis(choisis.includes("aucun") ? [] : ["aucun"]);
       return;
     }
-    const sans = choisis.filter((c) => c !== "aucun");
+
+    let sans = choisis.filter((c) => c !== "aucun");
+    if (CHAUFFE_EAU.includes(cle)) {
+      sans = sans.filter((c) => !CHAUFFE_EAU.includes(c) || c === cle);
+    }
+
     setChoisis(
       sans.includes(cle) ? sans.filter((c) => c !== cle) : [...sans, cle],
     );

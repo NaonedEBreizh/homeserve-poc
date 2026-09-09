@@ -38,9 +38,21 @@ export type Occupation =
   keyof typeof hypotheses.tap.bonus_malus_points.occupation;
 export type ChauffeEau =
   keyof typeof hypotheses.tap.bonus_malus_points.chauffe_eau;
+/**
+ * D53 : le type de chauffe-eau est devenu un équipement (deux cases
+ * exclusives). Les coefficients restent ceux de la table `chauffe_eau` de
+ * hypotheses.json — rien n'est dupliqué.
+ */
 export type Equipement =
   | keyof typeof hypotheses.tap.bonus_malus_points.equipements
+  | "chauffe_eau_electrique"
+  | "chauffe_eau_thermodynamique"
   | "aucun";
+
+const CHAUFFE_EAU_EQUIPEMENT: Record<string, ChauffeEau> = {
+  chauffe_eau_electrique: "electrique_moins_10_ans",
+  chauffe_eau_thermodynamique: "thermodynamique",
+};
 
 export type Personnes = "1-2" | "3-4" | "5+";
 
@@ -56,7 +68,6 @@ export type EntreesSolaire = {
   surface_sol: TrancheSurface;
   chauffage: Chauffage;
   equipements: Equipement[];
-  chauffe_eau: ChauffeEau;
   facture_mensuelle: TrancheFacture;
 };
 
@@ -131,6 +142,9 @@ function pointsChauffeEau(chauffeEau: ChauffeEau): number {
 }
 
 function pointsEquipement(equipement: Equipement): number {
+  const chauffeEau = CHAUFFE_EAU_EQUIPEMENT[equipement];
+  if (chauffeEau) return pointsChauffeEau(chauffeEau);
+
   const table = BONUS.equipements as Record<string, { valeur: number }>;
   return table[equipement]?.valeur ?? 0;
 }
@@ -186,10 +200,18 @@ function pointsEquipements(equipements: Equipement[]): Array<{
 }> {
   const detail: Array<{ libelle: string; points: number }> = [];
   const aVehicule = equipements.includes("vehicule_electrique");
+  // Les deux chauffe-eau sont exclusifs à l'écran ; si les deux arrivaient
+  // quand même, on n'en compte qu'un.
+  let chauffeEauCompte = false;
 
   for (const equipement of equipements) {
     if (equipement === "aucun") continue;
     if (equipement === "borne_de_recharge" && aVehicule) continue;
+
+    if (CHAUFFE_EAU_EQUIPEMENT[equipement]) {
+      if (chauffeEauCompte) continue;
+      chauffeEauCompte = true;
+    }
 
     const points =
       equipement === "borne_de_recharge" && !aVehicule
@@ -233,10 +255,6 @@ export function simulerSolaire(
   detailTap.push({
     libelle: entrees.occupation,
     points: pointsOccupation(entrees.occupation),
-  });
-  detailTap.push({
-    libelle: entrees.chauffe_eau,
-    points: pointsChauffeEau(entrees.chauffe_eau),
   });
   detailTap.push(...pointsEquipements(entrees.equipements));
 

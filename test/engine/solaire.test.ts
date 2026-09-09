@@ -21,8 +21,8 @@ const EXEMPLE_EDF: EntreesSolaire = {
   personnes: "3-4",
   surface_sol: "100-135",
   chauffage: "radiateurs_electriques",
-  equipements: ["vehicule_electrique"],
-  chauffe_eau: "thermodynamique",
+  // D53 : le chauffe-eau est désormais une case de A6.
+  equipements: ["vehicule_electrique", "chauffe_eau_thermodynamique"],
   facture_mensuelle: "101-135",
 };
 
@@ -66,9 +66,9 @@ describe("simulerSolaire — non-régression sur l'exemple EDF vérifié", () =>
 
 describe("simulerSolaire — bornes et coefficients", () => {
   it("borne le TAP entre 12 et 63 quels que soient les bonus", () => {
-    const bas = simulerSolaire({ ...EXEMPLE_EDF, dept: "59", surface_sol: "<70", chauffage: "pompe_a_chaleur", equipements: [], chauffe_eau: "je_ne_sais_pas", occupation: "moins_de_3_jours" });
+    const bas = simulerSolaire({ ...EXEMPLE_EDF, dept: "59", surface_sol: "<70", chauffage: "pompe_a_chaleur", equipements: [], occupation: "moins_de_3_jours" });
     expect(bas.tapPct).toBeGreaterThanOrEqual(12);
-    const haut = simulerSolaire({ ...EXEMPLE_EDF, dept: "13", surface_sol: ">175", chauffage: "gaz_fioul_bois", equipements: ["vehicule_electrique", "climatisation", "piscine_ou_jacuzzi", "lave_vaisselle", "seche_linge", "chauffage_secondaire"], chauffe_eau: "electrique_moins_10_ans" });
+    const haut = simulerSolaire({ ...EXEMPLE_EDF, dept: "13", surface_sol: ">175", chauffage: "gaz_fioul_bois", equipements: ["vehicule_electrique", "climatisation", "piscine_ou_jacuzzi", "lave_vaisselle", "seche_linge", "chauffage_secondaire", "chauffe_eau_electrique"] });
     expect(haut.tapPct).toBeLessThanOrEqual(63);
   });
 
@@ -79,14 +79,17 @@ describe("simulerSolaire — bornes et coefficients", () => {
   });
 
   it("applique le bonus véhicule électrique (+8,9)", () => {
-    const sans = simulerSolaire({ ...EXEMPLE_EDF, equipements: [] }).tapPct;
+    const sans = simulerSolaire({
+      ...EXEMPLE_EDF,
+      equipements: ["chauffe_eau_thermodynamique"],
+    }).tapPct;
     const avec = simulerSolaire(EXEMPLE_EDF).tapPct;
     expect(Math.abs(avec - sans - 8.9)).toBeLessThanOrEqual(0.05);
   });
 
   it("une borne sans véhicule vaut un véhicule implicite (+8,9), pas un double bonus", () => {
-    const borneSeule = simulerSolaire({ ...EXEMPLE_EDF, equipements: ["borne_de_recharge"] }).tapPct;
-    const vehiculeEtBorne = simulerSolaire({ ...EXEMPLE_EDF, equipements: ["vehicule_electrique", "borne_de_recharge"] }).tapPct;
+    const borneSeule = simulerSolaire({ ...EXEMPLE_EDF, equipements: ["borne_de_recharge", "chauffe_eau_thermodynamique"] }).tapPct;
+    const vehiculeEtBorne = simulerSolaire({ ...EXEMPLE_EDF, equipements: ["vehicule_electrique", "borne_de_recharge", "chauffe_eau_thermodynamique"] }).tapPct;
     expect(Math.abs(borneSeule - vehiculeEtBorne)).toBeLessThanOrEqual(0.05);
   });
 

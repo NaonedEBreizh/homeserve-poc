@@ -80,8 +80,8 @@ describe("Simulateur", () => {
     setReponse("projet", "solaire");
     render(<Simulateur />);
 
-    // A0…A8 sans A5b : 9 questions.
-    expect(screen.getByText("2 / 9")).toBeDefined();
+    // D53 : A7 a disparu, le parcours solaire tient en 8 questions.
+    expect(screen.getByText("2 / 8")).toBeDefined();
   });
 
   it("ajoute A9 et A10 dès que le projet comporte une pompe à chaleur", () => {
@@ -89,7 +89,7 @@ describe("Simulateur", () => {
     render(<Simulateur />);
 
     // A5b reste conditionnée à un chauffage gaz/fioul/bois, non répondu ici.
-    expect(screen.getByText("2 / 11")).toBeDefined();
+    expect(screen.getByText("2 / 10")).toBeDefined();
   });
 
   it("expose la phrase d'introduction de A9 (D35)", () => {
@@ -101,7 +101,6 @@ describe("Simulateur", () => {
       ["surface_sol", "100-135"],
       ["chauffage", "radiateurs_electriques"],
       ["equipements", ["aucun"]],
-      ["chauffe_eau", "thermodynamique"],
       ["facture_mensuelle", "101-135"],
     ] as const) {
       setReponse(cle as never, valeur as never);
@@ -114,6 +113,12 @@ describe("Simulateur", () => {
 
   it("propose le chauffage d'appoint dans A6 (aligné sur hypotheses.json)", () => {
     expect(q.A6.options).toHaveProperty("chauffage_secondaire");
+  });
+
+  it("porte les deux chauffe-eau dans A6 et n'a plus d'écran A7 (D53)", () => {
+    expect(q.A6.options).toHaveProperty("chauffe_eau_electrique");
+    expect(q.A6.options).toHaveProperty("chauffe_eau_thermodynamique");
+    expect(q).not.toHaveProperty("A7");
   });
 
   it("multi-sélection : « aucun » est exclusif", () => {

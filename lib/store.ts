@@ -32,7 +32,6 @@ export type CleReponse =
   | "chauffage"
   | "energie_chauffage"
   | "equipements"
-  | "chauffe_eau"
   | "facture_mensuelle"
   | "revenus"
   | "idf"

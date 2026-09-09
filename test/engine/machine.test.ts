@@ -100,7 +100,7 @@ describe("sous-arbres par projet", () => {
 describe("garde géographique (B14)", () => {
   function jusquaAdresse(projet: "solaire" = "solaire") {
     const m = creerMachine(arbre, { projet });
-    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", projet], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">2010"], ["B10", "renovee"], ["B12", "tuile"]]);
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", projet], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
     expect(m.courant()).toMatchObject({ type: "noeud", id: "B14" });
     return m;
   }
@@ -124,7 +124,7 @@ describe("garde géographique (B14)", () => {
 describe("règles simulées post-OTP (D29, D30, D32)", () => {
   function jusquaOtp(cp = "69002", rdvExistants: Array<{ telephone: string; email: string }> = []) {
     const m = creerMachine(arbre, { projet: "solaire", contexte: { rdvExistants } });
-    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">2010"], ["B10", "renovee"], ["B12", "tuile"]]);
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
     m.repondre({ adresse: "1 place Bellecour", cp, ville: "Lyon" });
     m.repondre({ prenom: "Test", nom: "Demo" });
     return m;
@@ -162,7 +162,7 @@ describe("règles simulées post-OTP (D29, D30, D32)", () => {
 
   it("un prospect non éligible arrive sur O1 avec la règle et l'orientation", () => {
     const m = creerMachine(arbre, { projet: "solaire", prefill: { facture_mensuelle: "<60" } });
-    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">2010"], ["B10", "renovee"], ["B12", "tuile"]]);
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
     m.repondre({ adresse: "1 place Bellecour", cp: "69002", ville: "Lyon" });
     m.repondre({ prenom: "Test", nom: "Demo" });
     m.repondre({ email: "test@example.org", telephone: "0600000003", ne_pas_appeler: "true" });

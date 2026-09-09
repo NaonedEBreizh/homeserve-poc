@@ -46,10 +46,9 @@ export function entreesSolaire(etat: ProjetState): EntreesSolaire | null {
   const occupation = texte(etat, "occupation");
   const surface = texte(etat, "surface_sol");
   const chauffage = texte(etat, "chauffage");
-  const chauffeEau = texte(etat, "chauffe_eau");
   const facture = texte(etat, "facture_mensuelle");
 
-  if (!cp || !occupation || !surface || !chauffage || !chauffeEau || !facture) {
+  if (!cp || !occupation || !surface || !chauffage || !facture) {
     return null;
   }
   if (!estTrancheFacture(facture)) return null;
@@ -61,7 +60,6 @@ export function entreesSolaire(etat: ProjetState): EntreesSolaire | null {
     surface_sol: surface,
     chauffage: chauffage as EntreesSolaire["chauffage"],
     equipements: liste(etat, "equipements") as Equipement[],
-    chauffe_eau: chauffeEau as EntreesSolaire["chauffe_eau"],
     facture_mensuelle: facture,
   };
 }

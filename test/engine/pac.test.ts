@@ -210,8 +210,7 @@ const SOLAIRE_LES_DEUX: EntreesSolaire = {
   personnes: "3-4",
   surface_sol: "100-135",
   chauffage: "pompe_a_chaleur",
-  equipements: ["vehicule_electrique"],
-  chauffe_eau: "thermodynamique",
+  equipements: ["vehicule_electrique", "chauffe_eau_thermodynamique"],
   facture_mensuelle: "101-135",
 };
 

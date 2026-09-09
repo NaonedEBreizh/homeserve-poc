@@ -27,8 +27,10 @@ function repondreSimulateur() {
   setReponse("personnes", "3-4");
   setReponse("surface_sol", "100-135");
   setReponse("chauffage", "radiateurs_electriques");
-  setReponse("equipements", ["vehicule_electrique"]);
-  setReponse("chauffe_eau", "thermodynamique");
+  setReponse("equipements", [
+    "vehicule_electrique",
+    "chauffe_eau_thermodynamique",
+  ]);
   setReponse("facture_mensuelle", "101-135");
 }
 

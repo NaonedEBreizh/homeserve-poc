@@ -249,7 +249,22 @@
           "valeur": "en_construction",
           "libelle": "En construction"
         }
-      ]
+      ],
+      "options_solaire": [
+        {
+          "valeur": "<1997",
+          "libelle": "Avant 1997"
+        },
+        {
+          "valeur": ">1997",
+          "libelle": "Après 1997"
+        },
+        {
+          "valeur": "en_construction",
+          "libelle": "En construction"
+        }
+      ],
+      "note_options": "D49 : trois tranches suffisent au solaire (seule la borne 1997 déclenche la question amiante) ; le découpage fin sert aux aides PAC."
     },
     "B10": {
       "type": "choix",

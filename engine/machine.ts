@@ -61,6 +61,8 @@ export type Noeud = {
   type: string;
   question?: string;
   options?: OptionNoeud[];
+  /** Jeu d'options restreint pour un projet solaire seul (D49). */
+  options_solaire?: OptionNoeud[];
   champs?: ChampNoeud[];
   // Champs de présentation portés par data/arbre-rdv.json : l'interpréteur ne
   // les lit pas, les écrans du module B les rendent tels quels.
@@ -136,6 +138,8 @@ export type Machine = {
   avancer: () => void;
   retour: () => void;
   etat: () => EtatMachine;
+  /** Options à afficher pour un nœud, projet pris en compte (D49). */
+  optionsDe: (noeud: Noeud) => OptionNoeud[];
 };
 
 const AGENCES = agencesJson.agences as unknown as Agence[];
@@ -239,8 +243,16 @@ export function creerMachine(
     return cible;
   }
 
+  /** Options réellement posées : le solaire seul a parfois un jeu restreint. */
+  function optionsDe(noeud: Noeud): OptionNoeud[] {
+    if (noeud.options_solaire && projetCourant() === "solaire") {
+      return noeud.options_solaire;
+    }
+    return noeud.options ?? [];
+  }
+
   function optionDe(noeud: Noeud, valeur: string): OptionNoeud | undefined {
-    return noeud.options?.find((o) => o.valeur === valeur);
+    return optionsDe(noeud).find((o) => o.valeur === valeur);
   }
 
   // ------------------------------------------------------------ garde B14
@@ -540,5 +552,5 @@ export function creerMachine(
 
   allerVers(arbre.start);
 
-  return { courant, repondre, avancer, retour, etat };
+  return { courant, repondre, avancer, retour, etat, optionsDe };
 }

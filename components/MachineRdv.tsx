@@ -6,7 +6,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import agencesJson from "@/data/agences.json";
 import arbre from "@/data/arbre-rdv.json";
 import { trouverAgence, type Agence, type Creneau } from "@/engine/agenda";
-import { creerMachine, type Machine, type Noeud } from "@/engine/machine";
+import {
+  creerMachine,
+  type Machine,
+  type Noeud,
+  type OptionNoeud,
+} from "@/engine/machine";
 import { track } from "@/lib/analytics";
 import { contenu } from "@/lib/content";
 import { avecDrapeaux } from "@/lib/navigation";
@@ -141,6 +146,7 @@ export function MachineRdv() {
         id={id}
         noeud={noeud}
         cp={cpDe(etatMachine.reponses, etat)}
+        options={pilote.optionsDe(noeud)}
         etat={etat}
         onRepondre={repondre}
         onAvancer={avancer}
@@ -236,6 +242,7 @@ function NoeudRendu({
   id,
   noeud,
   cp,
+  options,
   etat,
   onRepondre,
   onAvancer,
@@ -246,6 +253,7 @@ function NoeudRendu({
   id: string;
   noeud: Noeud;
   cp: string;
+  options: OptionNoeud[];
   etat: ProjetState;
   onRepondre: (valeur: Parameters<Machine["repondre"]>[0]) => void;
   onAvancer: () => void;
@@ -267,7 +275,7 @@ function NoeudRendu({
           <p className={BANDEAU_INFO}>{noeud.aide}</p>
         ) : null}
         <ul className="flex flex-col gap-2.5">
-          {noeud.options?.map((option) => (
+          {options.map((option) => (
             <li key={option.valeur}>
               <button
                 type="button"

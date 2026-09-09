@@ -132,7 +132,7 @@
       },
       "A6": {
         "titre": "Quels équipements possédez-vous ?",
-        "aide": "Plusieurs choix possibles.",
+        "aide": "Plusieurs choix possibles. Votre chauffe-eau consomme en journée, quand vos panneaux produisent.",
         "options": {
           "vehicule_electrique": "Véhicule électrique",
           "borne_de_recharge": "Borne de recharge",
@@ -141,21 +141,11 @@
           "pompe_a_chaleur_equipement": "Pompe à chaleur",
           "lave_vaisselle": "Lave-vaisselle",
           "seche_linge": "Sèche-linge",
-          "chauffe_eau_equipement": "Chauffe-eau",
+          "chauffe_eau_electrique": "Chauffe-eau électrique",
+          "chauffe_eau_thermodynamique": "Chauffe-eau thermodynamique",
           "chauffage_secondaire": "Chauffage d'appoint électrique",
           "aucun": "Aucun de ces équipements"
         }
-      },
-      "A7": {
-        "titre": "Quel est votre type de chauffe-eau ?",
-        "options": {
-          "thermodynamique": "Thermodynamique",
-          "gaz_plus_10_ans": "Gaz, plus de 10 ans",
-          "electrique_moins_10_ans": "Électrique, moins de 10 ans",
-          "electrique_plus_10_ans": "Électrique, plus de 10 ans",
-          "je_ne_sais_pas": "Je ne sais pas"
-        },
-        "aide": "Votre chauffe-eau consomme en journée, quand vos panneaux produisent"
       },
       "A8": {
         "titre": "Quel est le montant mensuel de votre facture d'électricité ?",
