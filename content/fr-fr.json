@@ -515,6 +515,12 @@
   "debug": {
     "titre": "Événements",
     "vide": "Aucun événement pour l'instant",
-    "variant": "Variante"
+    "variant": "Variante",
+    "ouvrir": "Ouvrir le panneau de débogage",
+    "fermer": "Réduire",
+    "vider": "Vider",
+    "rentabilite": "Afficher la rentabilité (D41)",
+    "sans_payload": "sans donnée",
+    "aide": "Panneau de démonstration : il liste ce qui serait envoyé à la mesure d'audience. Rien ne part sur le réseau."
   }
 }
