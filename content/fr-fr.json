@@ -504,9 +504,9 @@
       "preparer": {
         "titre": "À préparer",
         "items": [
-          "Vos dernières factures d'énergie",
-          "Votre taxe foncière",
-          "Une photo du compteur ou du toit"
+          "Votre dernière facture d'électricité et de chauffage",
+          "Votre dernier avis d'imposition (pour estimer vos aides)",
+          "L'accès au toit, au tableau électrique et au compteur"
         ]
       },
       "deroule": {
