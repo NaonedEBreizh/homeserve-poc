@@ -20,18 +20,48 @@ function rendre(query = "") {
   return render(<Accueil />);
 }
 
-describe("Accueil", () => {
-  it("annonce les trois promesses et les deux portes d'entrée", () => {
+describe("Accueil (D54 : gabarit de page produit)", () => {
+  it("présente le produit solaire et les deux portes, avec leurs cibles", () => {
     rendre();
 
+    const { solaire } = contenu.accueil.produit;
     expect(
-      screen.getByRole("heading", { level: 1, name: contenu.accueil.titre }),
+      screen.getByRole("heading", { level: 1, name: new RegExp(solaire.titre) }),
     ).toBeDefined();
+    expect(screen.getByText(solaire.texte)).toBeDefined();
+    for (const preuve of solaire.preuves) {
+      expect(screen.getByText(preuve)).toBeDefined();
+    }
     expect(
-      screen.getByRole("link", { name: new RegExp(contenu.accueil.porte_simulateur.titre) }),
+      screen.getByRole("heading", {
+        level: 2,
+        name: contenu.accueil.ou_en_etes_vous,
+      }),
     ).toBeDefined();
+
+    const simulateur = screen.getByRole("link", {
+      name: new RegExp(contenu.accueil.porte_simulateur.titre),
+    });
+    const rdv = screen.getByRole("link", {
+      name: new RegExp(contenu.accueil.porte_rdv.titre),
+    });
+    expect(simulateur.getAttribute("href")).toContain("/simulateur");
+    expect(rdv.getAttribute("href")).toContain("/rendez-vous");
+  });
+
+  it("change de gabarit avec ?projet=pac", () => {
+    rendre("projet=pac");
+
+    const { pac, solaire } = contenu.accueil.produit;
     expect(
-      screen.getByRole("link", { name: new RegExp(contenu.accueil.porte_rdv.titre) }),
+      screen.getByRole("heading", { level: 1, name: new RegExp(pac.titre) }),
+    ).toBeDefined();
+    expect(screen.getByText(pac.texte)).toBeDefined();
+    // Le texte solaire ne subsiste nulle part sur la page.
+    expect(screen.queryByText(solaire.texte)).toBeNull();
+    // L'accroche porte le montant d'aides calculé depuis le barème.
+    expect(
+      screen.getByText((texte) => /Jusqu'à [\d\u00a0\u202f ]+ € d'aides/.test(texte)),
     ).toBeDefined();
   });
 

@@ -49,3 +49,17 @@ export function BoutonAppel({
     </span>
   );
 }
+
+/**
+ * Horaires seuls, sur une ligne à part : dans l'en-tête, le message de
+ * fermeture fait trois lignes et écraserait le mot-symbole s'il partageait
+ * la rangée du lien.
+ */
+export function MentionHoraires() {
+  const { projet } = useProjet();
+  const contact = contactPourProjet(projet);
+
+  return (
+    <p className="px-5 pb-2 text-xs text-neutre-500">{contact.mention}</p>
+  );
+}

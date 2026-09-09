@@ -8,7 +8,7 @@ import { setDebug, setVariant, useProjet } from "@/lib/store";
 
 import { PictoMaison } from "./ui/pictos";
 
-import { BoutonAppel } from "./BoutonAppel";
+import { BoutonAppel, MentionHoraires } from "./BoutonAppel";
 import { DebugPanel } from "./DebugPanel";
 
 /**
@@ -37,19 +37,24 @@ export function EnteteApp() {
 
   return (
     <>
-      <header className="flex min-h-14 items-center justify-between gap-4 border-b border-neutre-200 px-5 py-3">
-        {/* Mot-symbole précédé d'un pictogramme original (toit + panneau) :
-            aucune reprise du logo officiel. */}
-        <span className="flex items-center gap-2">
-          <PictoMaison taille={28} />
-          <span className="font-sans text-[19px] font-extrabold tracking-tight text-corail-600">
-            {contenu.global.marque}
+      <header className="border-b border-neutre-200">
+        <div className="flex min-h-14 items-center justify-between gap-4 px-5 py-3">
+          {/* Mot-symbole précédé d'un pictogramme original (toit + panneau) :
+              aucune reprise du logo officiel. */}
+          <span className="flex items-center gap-2">
+            <PictoMaison taille={28} />
+            <span className="font-sans text-[19px] font-extrabold tracking-tight text-corail-600">
+              {contenu.global.marque}
+            </span>
           </span>
-        </span>
 
-        {appelAutorise(chemin) ? (
-          <BoutonAppel source="header" step={chemin} />
-        ) : null}
+          {appelAutorise(chemin) ? (
+            <BoutonAppel source="header" step={chemin} />
+          ) : null}
+        </div>
+
+        {/* D54 : la page produit annonce les horaires sous le lien d'appel. */}
+        {chemin === "/" ? <MentionHoraires /> : null}
       </header>
 
       {debug ? <DebugPanel /> : null}

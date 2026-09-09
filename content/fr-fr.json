@@ -22,19 +22,46 @@
   },
   "accueil": {
     "surtitre": "Propriétaire d'une maison ?",
-    "titre": "Votre projet énergie, chiffré en 2 minutes",
-    "badges": [
-      "Sans coordonnées",
-      "Gratuit",
-      "Sans engagement"
-    ],
+    "produit": {
+      "solaire": {
+        "titre": "Panneaux solaires",
+        "accroche": "Produisez votre électricité",
+        "texte": "Une installation dimensionnée pour votre maison et posée par votre agence HomeServe : ce que vous produisez, vous ne l'achetez plus.",
+        "preuves": [
+          "Installateur RGE",
+          "+ de 10 000 projets",
+          "Avis Vérifiés 4,7/5"
+        ]
+      },
+      "pac": {
+        "titre": "Pompe à chaleur",
+        "accroche": "Jusqu'à {aides} € d'aides",
+        "texte": "Une pompe à chaleur air/eau remplace votre chaudière et divise votre dépense de chauffage. MaPrimeRénov' et prime CEE déduites, sans avance de frais.",
+        "preuves": [
+          "Installateur RGE",
+          "+ de 10 000 projets",
+          "Avis Vérifiés 4,7/5"
+        ]
+      },
+      "les_deux": {
+        "titre": "Solaire et pompe à chaleur",
+        "accroche": "Produisez, chauffez, économisez",
+        "texte": "Vos panneaux alimentent votre pompe à chaleur : ce que vous produisez sert d'abord à chauffer votre maison.",
+        "preuves": [
+          "Installateur RGE",
+          "+ de 10 000 projets",
+          "Avis Vérifiés 4,7/5"
+        ]
+      }
+    },
+    "ou_en_etes_vous": "Où en êtes-vous ?",
     "porte_simulateur": {
-      "titre": "J'estime mes économies",
-      "sous_titre": "solaire, pompe à chaleur ou les deux"
+      "titre": "Je me renseigne",
+      "sous_titre": "Estimer mes économies en 2 minutes, sans laisser mes coordonnées"
     },
     "porte_rdv": {
-      "titre": "Je réserve mon étude gratuite",
-      "sous_titre": "étude gratuite à domicile, sans engagement"
+      "titre": "Je suis décidé",
+      "sous_titre": "Prendre rendez-vous pour une étude gratuite à domicile"
     },
     "chiffres": [
       {
