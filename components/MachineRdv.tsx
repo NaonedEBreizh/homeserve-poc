@@ -144,14 +144,23 @@ export function MachineRdv() {
     rafraichir();
   }
 
+  // Le code postal affiché est celui du projet dès que l'adresse est saisie
+  // en B14 : c'est lui qui route l'agence. Il perd alors le badge « repris ».
+  const cpCourant = cpDe(etatMachine.reponses, etat);
+
   const lignes: LigneReponse[] = CLES_PREFILL.filter(
     (cle) => typeof etat.reponses[cle] === "string",
-  ).map((cle) => ({
-    cle,
-    libelle: LIBELLES_PREFILL[cle],
-    valeur: libelleReponse(cle, String(etat.reponses[cle])),
-    herite: true,
-  }));
+  ).map((cle) => {
+    const herite = String(etat.reponses[cle]);
+    const valeur = cle === "cp" ? cpCourant : herite;
+
+    return {
+      cle,
+      libelle: LIBELLES_PREFILL[cle],
+      valeur: libelleReponse(cle, valeur),
+      herite: valeur === herite,
+    };
+  });
 
   return (
     <main className="mx-auto flex w-full max-w-md flex-col gap-5 p-5">
@@ -168,7 +177,7 @@ export function MachineRdv() {
       <NoeudRendu
         id={id}
         noeud={noeud}
-        cp={cpDe(etatMachine.reponses, etat)}
+        cp={cpCourant}
         options={pilote.optionsDe(noeud)}
         nonEligible={etatMachine.nonEligible}
         etat={etat}

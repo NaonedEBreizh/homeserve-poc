@@ -342,6 +342,42 @@ describe("orientations avec choix (D57)", () => {
   });
 });
 
+describe("code postal du projet (lot 5)", () => {
+  function jusquaAdresse(cpSimulateur = "69002") {
+    const m = creerMachine(arbre, {
+      projet: "solaire",
+      prefill: { cp: cpSimulateur },
+    });
+    repondreJusqua(m, [["B0", "maison"], ["B1", "proprietaire"], ["B2", "non"], ["B3", "solaire"], ["B5", "101-135"], ["B6", "principale"], ["B7", "100-135"], ["B9", ">1997"], ["B10", "renovee"], ["B12", "tuile"]]);
+    return m;
+  }
+
+  it("l'adresse saisie l'emporte sur le code postal de l'estimation", () => {
+    const m = jusquaAdresse("69002");
+    m.repondre({ adresse: "1 rue Nationale", cp: "21000", ville: "Dijon" });
+
+    expect(m.courant()).toMatchObject({ type: "noeud", id: "B15" });
+    expect(m.etat().reponses.B14).toMatchObject({ cp: "21000" });
+  });
+
+  it("un code postal différent est signalé au technicien", () => {
+    const m = jusquaAdresse("69002");
+    m.repondre({ adresse: "1 rue Nationale", cp: "21000", ville: "Dijon" });
+
+    const notes = m.etat().notesTechnicien;
+    expect(notes.some((n) => n.includes("21000") && n.includes("69002"))).toBe(
+      true,
+    );
+  });
+
+  it("un code postal identique ne produit aucune note", () => {
+    const m = jusquaAdresse("69002");
+    m.repondre({ adresse: "1 place Bellecour", cp: "69002", ville: "Lyon" });
+
+    expect(m.etat().notesTechnicien).toEqual([]);
+  });
+});
+
 describe("retour arrière", () => {
   it("retour() revient au nœud précédent et efface sa réponse", () => {
     const m = creerMachine(arbre);

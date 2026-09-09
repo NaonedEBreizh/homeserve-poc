@@ -70,6 +70,11 @@ export type ChampNoeud = {
   requis?: boolean;
   aide?: string;
   prefill?: string;
+  /**
+   * Note technicien ajoutée quand la valeur saisie diffère de celle héritée
+   * du simulateur : `{avant}` et `{apres}` y sont substitués.
+   */
+  note_si_different?: string;
 };
 
 export type Noeud = {
@@ -202,9 +207,12 @@ export function creerMachine(
    * Valeur d'une clé du simulateur : héritée si le prefill la porte, sinon
    * lue sur le nœud qui la collecte (ou dans un champ de formulaire).
    */
+  /**
+   * Une valeur collectée dans le parcours l'emporte sur celle héritée du
+   * simulateur : l'adresse saisie en B14 est plus précise que le code postal
+   * de l'estimation, et c'est elle qui doit router l'agence.
+   */
   function valeurCle(cle: string): string | undefined {
-    if (herite[cle] !== undefined) return herite[cle];
-
     for (const [id, noeud] of Object.entries(arbre.noeuds)) {
       if (noeud.prefill === cle) {
         const valeur = reponses[id];
@@ -214,13 +222,14 @@ export function creerMachine(
         if (champ.prefill === cle) {
           const valeur = reponses[id];
           if (valeur && typeof valeur === "object" && !Array.isArray(valeur)) {
-            return valeur[champ.id];
+            const saisie = valeur[champ.id];
+            if (saisie) return saisie;
           }
         }
       }
     }
 
-    return undefined;
+    return herite[cle];
   }
 
   function projetCourant(): string | undefined {
@@ -424,6 +433,28 @@ export function creerMachine(
     if (!notesTechnicien.includes(note)) notesTechnicien.push(note);
   }
 
+  /**
+   * Le prospect a corrigé une réponse du simulateur : le technicien doit le
+   * savoir avant de se déplacer (le code postal du projet, notamment).
+   */
+  function noterEcartsPrefill(noeud: Noeud, valeur: ValeurReponse) {
+    if (!valeur || typeof valeur !== "object" || Array.isArray(valeur)) return;
+
+    for (const champ of noeud.champs ?? []) {
+      if (!champ.prefill || !champ.note_si_different) continue;
+
+      const avant = herite[champ.prefill];
+      const apres = valeur[champ.id];
+      if (!avant || !apres || avant === apres) continue;
+
+      noter(
+        champ.note_si_different
+          .replaceAll("{avant}", avant)
+          .replaceAll("{apres}", apres),
+      );
+    }
+  }
+
   function noterOption(option: OptionNoeud | undefined) {
     if (option?.note_technicien) noter(option.note_technicien);
     // D57 : réserver malgré une règle de non-rentabilité se dit au technicien.
@@ -539,6 +570,7 @@ export function creerMachine(
       }
 
       case "form": {
+        noterEcartsPrefill(noeud, valeur);
         allerVers(appliquerGarde(noeud, valeur));
         return;
       }

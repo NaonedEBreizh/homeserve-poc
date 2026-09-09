@@ -8,7 +8,8 @@
       "prefill": "si l'état contient déjà la clé, le nœud est sauté et sa règle pe est évaluée sur la valeur héritée (règle de non-répétition)",
       "pe": "règle de non-rentabilité : ajoute `regle` à nonEligible sans arrêter le parcours ; B18 mène à l'écran d'orientation B18o, jamais à une exclusion",
       "condition": "le nœud n'est posé que si le projet courant est dans la liste",
-      "orientation": "écran intermédiaire (D57) : la règle est dite en clair, puis le prospect choisit — réserver quand même (note technicien), être rappelé, ou une orientation externe (url)"
+      "orientation": "écran intermédiaire (D57) : la règle est dite en clair, puis le prospect choisit — réserver quand même (note technicien), être rappelé, ou une orientation externe (url)",
+      "note_si_different": "sur un champ porteur d'un `prefill` : note technicien ajoutée quand la valeur saisie diffère de celle héritée du simulateur ; {avant} et {apres} sont substitués"
     },
     "seuils_affiches": [
       "Facture d'électricité inférieure à 60 €/mois",
@@ -446,7 +447,8 @@
           "libelle": "Code postal",
           "type": "cp",
           "requis": true,
-          "prefill": "cp"
+          "prefill": "cp",
+          "note_si_different": "code postal du projet ({apres}) différent de celui de l'estimation ({avant})"
         },
         {
           "id": "ville",
