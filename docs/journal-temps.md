@@ -17,3 +17,4 @@ Heures en **UTC** (horloge de l'environnement d'exécution). Un bloc = un prompt
 | 6a — Moteur PAC et couplage (moteurs seuls) | 15:14 | 15:18 | 4 min | `feat(bloc6a): moteur PAC et couplage` |
 | Lot 1 de recette (5 points) | 18:02 | 18:22 | 20 min | `fix(resultat)` recalcul · `feat(resultat)` D45 · `fix(resultat)` panneau 390 px · `feat(ui)` D46-A · `chore(captures)` |
 | 7 — Panneau debug, README, vérifications | 00:01 | 00:05 | 4 min | `docs: README complet, panneau debug` |
+| Lot 2 de recette (16 points + pictogrammes) | 00:20 | 01:08 | 48 min | `fix(resultat)` lisibilité · `feat(simulateur)` D53/D49 · `feat(rdv)` D50/D51/D52 · `fix(rdv)` révision sans case · `feat(resultat)` volet PAC · `docs` angles morts · `feat(ui)` pictogrammes 44 px |
