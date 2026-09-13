@@ -1,4 +1,4 @@
-# Handoff : POC « Mon projet énergie » (HomeServe) — maquettes v1
+# Handoff : POC « Mon projet énergie » (HomeServe Energies Services) — maquettes v1
 
 ## Overview
 Prototype destiné à être intégré dans www.homeserve.fr. Un propriétaire de maison choisit son projet (solaire, pompe à chaleur, les deux), obtient en 8 questions une estimation chiffrée **sans donner ses coordonnées** (économies cumulées avec un taux de hausse de l'électricité réglable, pack et prix, aides, reste à charge), puis se qualifie et réserve un créneau de visite technique dans l'agence la plus proche. S'il n'est pas éligible, il est orienté vers une autre offre HomeServe — jamais vers une impasse.

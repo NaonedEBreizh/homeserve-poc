@@ -1,6 +1,6 @@
-# CLAUDE.md — POC « Mon projet énergie HomeServe »
+# CLAUDE.md — POC « Mon projet énergie » (HomeServe Energies Services)
 
-Prototype de business case (candidature), produit par Benoît Ploquin (product owner) avec Claude. **Non officiel, aucune donnée transmise.** Le cadrage complet vit dans le projet Cowork « Business case IA pour Homeserve » (documents 00–16) ; ce fichier en est le résumé opérationnel pour quiconque code dans ce dépôt.
+Prototype produit par Benoît Ploquin (product owner) avec Claude. **Non officiel, aucune donnée transmise.** Ce fichier est le résumé opérationnel pour quiconque code dans ce dépôt.
 
 ## Ce que fait le produit
 Un propriétaire de maison choisit son projet (solaire, pompe à chaleur, les deux), obtient en 8–10 questions fermées une estimation chiffrée **sans coordonnées** (économies cumulées à horizon 10–30 ans avec un taux de hausse de l'électricité réglable 0–15 %, pack HomeServe et prix, aides 2026, reste à charge, retour sur investissement, courbe « effet ciseaux »), puis se qualifie (machine à états) et réserve un créneau de visite technique dans l'agence la plus proche. Trois entrées : « Estimer mes économies » (tiède), « Prendre rendez-vous » (chaud), bouton d'appel instrumenté (pressé). Ce que le simulateur a demandé n'est **jamais** redemandé au RDV. Aucune impasse : chaque sortie oriente vers une offre HomeServe réelle.

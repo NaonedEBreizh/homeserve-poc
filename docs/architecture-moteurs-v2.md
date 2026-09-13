@@ -1,4 +1,4 @@
-# Architecture définitive — POC HomeServe « Simulateur solaire + PAC → RDV » (agent Architecte v2 — 07/09/2026)
+# Architecture définitive — POC HomeServe Energies Services « Simulateur solaire + PAC → RDV » (agent Architecte v2 — 07/09/2026)
 
 ✅ vérifié (source datée) · 🔶 source tierce · ❓ supposé.
 
@@ -186,7 +186,7 @@ Aucune variable d'environnement lue (`grep -r "import.meta.env\|process.env" src
 | 1:20-1:30 | `DebugPanel` (`?debug=1`), README, gitleaks vert, test offline, captures | — | « Panneau debug ; README archi/hypothèses/sécu/métriques ; build sans requête externe » |
 
 ## 7. Risques de démo et parades
-Wifi absent → `vite preview` local + Vercel + `dist/` sur clé USB, zéro asset externe. Navigateur du jury → pas d'API exotique, sessionStorage testé en privé Safari, ICS testé 3 navigateurs. Mobile → responsive + QR code. Données incohérentes → clamps, tests de propriétés (économie ≤ facture, reste ≥ 0), « ordre de grandeur » + hypothèses. Écart avec EDF → non-régression sur l'exemple, seule Z3 ancrée. Confusion mock → `MockBadge` systématique + bandeau prototype. Accès direct /rdv → machine tolère `prefill = {}`.
+Wifi absent → `vite preview` local + Vercel + `dist/` sur clé USB, zéro asset externe. Navigateur de démonstration → pas d'API exotique, sessionStorage testé en privé Safari, ICS testé 3 navigateurs. Mobile → responsive + QR code. Données incohérentes → clamps, tests de propriétés (économie ≤ facture, reste ≥ 0), « ordre de grandeur » + hypothèses. Écart avec EDF → non-régression sur l'exemple, seule Z3 ancrée. Confusion mock → `MockBadge` systématique + bandeau prototype. Accès direct /rdv → machine tolère `prefill = {}`.
 
 ## 8. Tests
 **Solaire** : exemple EDF → 1 416 € / 29,94 ± 0,1 / 424 € / batterie 50,94 ; clamps 12/63/84 ; chaque coefficient ; kWc par (segT, segF) ; prix pack ; ROI ; projection 30 valeurs, Math.ceil, inflation, échantillonnage 5 ans ; zone inconnue → erreur.

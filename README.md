@@ -1,9 +1,8 @@
-# Mon projet énergie — POC HomeServe
+# Mon projet énergie — POC HomeServe Energies Services
 
-Prototype de business case produit par **Benoît Ploquin** (product owner) avec
-Claude Code. **Non officiel, aucune donnée transmise.** Ni devis, ni étude, ni
-engagement : des ordres de grandeur, datés et sourcés, pour démontrer un
-parcours.
+Prototype produit par **Benoît Ploquin** (product owner) avec Claude Code.
+**Non officiel, aucune donnée transmise.** Ni devis, ni étude, ni engagement :
+des ordres de grandeur, datés et sourcés, pour démontrer un parcours.
 
 ![Accueil](docs/captures/accueil.png)
 

@@ -1,4 +1,4 @@
-# User stories — « Mon projet énergie HomeServe » (v1, 08/09/2026)
+# User stories — « Mon projet énergie » (HomeServe Energies Services, v1, 08/09/2026)
 
 Dérivées des personas (`04-etude-cible-personas.md`), de la cartographie (`09-cartographie-parcours.md`) et du PRD (`10-prd-poc-homeserve.md`). Priorité MoSCoW pour la v1 du POC. Chaque story cite ses écrans et ses événements de mesure. Les critères d'acceptation sont écrits pour devenir des tests (Vitest sur les moteurs et la machine, tests manuels sur les écrans).
 

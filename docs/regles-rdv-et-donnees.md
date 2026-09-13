@@ -158,7 +158,7 @@ Dans l'ordre où ils s'appliquent :
 6. **Disponibilité** (B20) : self-booking actif ? agence non surbookée sur 10 jours ? créneaux à 21 jours ? → sinon « forte demande » / R1.
 7. **Engagement** (B21) : accepté → confirmation ; refusé → retour calendrier ou R1.
 
-## 6. Ce que le POC démontre au jury sur ce sujet
+## 6. Ce que le POC démontre sur ce sujet
 Trois scénarios de démo courts, en plus du nominal (D32) : un second passage avec le même téléphone montre « vous avez déjà un rendez-vous » ; le numéro de test `0600000001` (lead déjà au plateau) montre la conciliation D29 ; le code postal de test « agence surbookée » montre le masquage du self-booking et le repli « être rappelé ». Le cas « client existant » et toute la chaîne CRM / tournée / notifications sont présentés comme sorties identifiées, avec les questions à poser au SI HomeServe, sans simulation : c'est un choix, pas un oubli. Le README liste chaque règle avec son statut POC / MOCK / CIBLE et ce document sert de base au cadrage v2 avec le SI HES (agendas) et le CRM.
 
 ## 6 bis. Questions à poser au SI HomeServe (cadrage v2, hors POC)

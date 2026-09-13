@@ -43,7 +43,7 @@ Lecture : 2 280 × 1,04¹¹ ≈ 3 510 → 3 516 avec arrondis `Math.ceil` : la �
 | Taux de hausse | 4 % « modifiable » | 0–15 %, bouton Valider, sourcé | 0–15 %, **recalcul en direct**, source affichée |
 | Chiffre héros | non précisé | cumul à l'horizon | Cumul à l'horizon (D16 confirmée) + courbe ciseaux |
 
-## 5. Ce que le POC HomeServe reprend, améliore, écarte
+## 5. Ce que le POC HomeServe Energies Services reprend, améliore, écarte
 - **Reprend** : stepper court, cartes-options, curseurs à crans, toggle option sur le résultat, chips d'horizon, tuile héros cumul, onboarding « Comprendre mes résultats », accordéon hypothèses, CTA collant.
 - **Améliore** : recalcul en direct du taux ; courbe ciseaux visible sous les tuiles ; libellés justes (« dans N ans ») ; kWc, prix du pack, aides, reste à charge et retour (absents chez EDF) ; pas de case CGU en entrée (aucune donnée personnelle) ; hypothèses remontées près du chiffre ; CTA vers un RDV **pré-rempli** avec créneau, au lieu d'un formulaire vierge.
 - **Écarte** : le bouton « Valider » ; le wording « facture moyenne annuelle ».
