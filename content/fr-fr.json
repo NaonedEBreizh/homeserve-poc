@@ -294,7 +294,6 @@
     "recommandation": {
       "titre": "Pack le plus souvent proposé",
       "prix": "à partir de {prix} € TTC",
-      "aides": "Aides estimées",
       "reste": "Reste à charge",
       "retour": "Rentabilisé en {n} ans",
       "pac_prix": "Fourchette de prix",
@@ -319,7 +318,8 @@
         "jaune": "revenus modestes",
         "violet": "revenus intermédiaires",
         "rose": "revenus supérieurs"
-      }
+      },
+      "tva": "TVA réduite à {reduite} % incluse dans le prix (au lieu de {normale} %)"
     },
     "hypotheses": {
       "titre": "Nos hypothèses",

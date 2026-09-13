@@ -8,6 +8,11 @@ import { contenu } from "@/lib/content";
 import { euros, remplacer } from "@/lib/format";
 import { IllustrationPac, IllustrationToit } from "@/components/ui/pictos";
 
+/** Un ratio en pourcentage lisible : 0,055 → « 5,5 », 0,2 → « 20 ». */
+function pourcent(ratio: number): string {
+  return String(Math.round(ratio * 1000) / 10).replace(".", ",");
+}
+
 /** Tous les blocs acceptent `apercu` : réduit et inerte, pour le panneau D37. */
 export type PropsApercu = { apercu?: boolean };
 
@@ -271,16 +276,9 @@ export function CartePack({
   resultat,
   rentabiliteAns,
   apercu = false,
-  afficherAides = false,
 }: PropsApercu & {
   resultat: SolaireResult;
   rentabiliteAns?: number | null;
-  /**
-   * D48 : en solaire, la prime à l'autoconsommation est nulle depuis le
-   * 05/06/2026 — afficher « Aides : 0 € » dessert le message. La ligne reste
-   * pour les projets avec pompe à chaleur, où MaPrimeRénov' et le CEE pèsent.
-   */
-  afficherAides?: boolean;
 }) {
   const { recommandation, rentabilite } = contenu.resultat;
 
@@ -308,14 +306,20 @@ export function CartePack({
         </p>
 
         <dl className="mt-2 flex flex-col divide-y divide-neutre-100 text-[17px]">
-          {afficherAides ? (
-            <div className="flex justify-between py-2">
-              <dt className="text-neutre-500">{recommandation.aides}</dt>
-              <dd className="font-extrabold text-vert-600">
-                {euros(resultat.aides)} €
-              </dd>
-            </div>
-          ) : null}
+          {/* D59 : la prime à l'autoconsommation est nulle depuis le
+              05/06/2026 et n'est plus affichée. L'avantage réel du solaire
+              côté fiscalité, c'est le taux réduit, déjà dans le prix. */}
+          <div className="flex justify-between gap-3 py-2">
+            <dt className="text-neutre-500">
+              {remplacer(recommandation.tva, {
+                reduite: pourcent(hypotheses.aides_solaire.tva_reduite.valeur),
+                normale: pourcent(hypotheses.aides_solaire.tva_normale.valeur),
+              })}
+            </dt>
+            <dd className="whitespace-nowrap font-extrabold text-vert-600">
+              −{euros(resultat.economieTva)} €
+            </dd>
+          </div>
           <div className="flex justify-between py-2">
             <dt className="text-neutre-500">{recommandation.reste}</dt>
             <dd className="font-extrabold text-neutre-700">
@@ -422,6 +426,10 @@ export function BlocHypotheses() {
     [
       `Prime à l'autoconsommation : ${aides_solaire.prime_autoconsommation_eur_par_kwc.valeur} €/kWc`,
       aides_solaire.prime_autoconsommation_eur_par_kwc.source,
+    ],
+    [
+      `TVA réduite ${pourcent(aides_solaire.tva_reduite.valeur)} % au lieu de ${pourcent(aides_solaire.tva_normale.valeur)} %`,
+      aides_solaire.tva_reduite.source,
     ],
     [`Taux d'autoproduction borné à ${tap.min}–${tap.max} %`, tap.facture_annuelle_par_tranche.source],
   ];

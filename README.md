@@ -124,7 +124,7 @@ bloc « Nos hypothèses » du résultat les affiche à l'écran.
 
 | Fichier | Contenu | Points saillants |
 |---|---|---|
-| `data/hypotheses.json` | prix de l'électricité, surplus, aides solaire, packs, stockage, table TAP, projection, contact | kWh 0,2001 € (TRVE 01/08/2026) · surplus 0,011 €/kWh · **prime à l'autoconsommation 0 €** depuis le 05/06/2026 |
+| `data/hypotheses.json` | prix de l'électricité, surplus, aides solaire, packs, stockage, table TAP, projection, contact | kWh 0,2001 € (TRVE 01/08/2026) · surplus 0,011 €/kWh · **prime à l'autoconsommation 0 €** depuis le 05/06/2026, remplacée à l'écran par l'économie de **TVA 5,5 % au lieu de 20 %** |
 | `data/tap-base.json` | taux d'autoproduction de base par zone × surface | calibré sur l'exemple EDF : base(Z3, 100–135) = 4,74 ; **le reste est extrapolé** |
 | `data/zones.json` | 96 départements : zone climatique, zone d'ensoleillement, productible, préfecture | 2A, 2B et 75 non éligibles (règle du prototype) |
 | `data/agences.json` | 21 agences réelles + 1 agence de test | distances calculées par Haversine, `competences` à confirmer |

@@ -104,6 +104,11 @@ export type SolaireResult = {
   productionKwhAn: number;
   surplusAn: number;
   aides: number;
+  /**
+   * D59 : économie de TVA déjà comprise dans le prix public. Le pack est
+   * facturé à 5,5 % ; à 20 % il coûterait ce montant de plus.
+   */
+  economieTva: number;
   resteACharge: number;
   retourAns: number;
   horsZone: boolean;
@@ -313,6 +318,13 @@ export function simulerSolaire(
   const aides =
     hypotheses.aides_solaire.prime_autoconsommation_eur_par_kwc.valeur *
     kwcConseille;
+  // Prix TTC à 5,5 % → HT → TTC à 20 % : l'écart est ce que le taux réduit
+  // fait économiser, sans jamais sortir des taux de `hypotheses.json`.
+  const { tva_reduite, tva_normale } = hypotheses.aides_solaire;
+  const economieTva = Math.round(
+    pack.prix_ttc * ((1 + tva_normale.valeur) / (1 + tva_reduite.valeur) - 1),
+  );
+
   const resteACharge = Math.max(pack.prix_ttc - aides, 0);
   const gainAn = economiesAn + surplusAn;
   const retourAns = gainAn > 0 ? arrondi2(resteACharge / gainAn) : Infinity;
@@ -330,6 +342,7 @@ export function simulerSolaire(
     productionKwhAn,
     surplusAn,
     aides,
+    economieTva,
     resteACharge,
     retourAns,
     horsZone: zone.eligible === false,

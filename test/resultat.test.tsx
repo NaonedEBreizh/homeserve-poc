@@ -67,14 +67,21 @@ describe("variante par défaut", () => {
     expect(screen.queryByText(contenu.mur.titre)).toBeNull();
   });
 
-  it("n'affiche pas la ligne « Aides » pour un projet solaire (D48)", () => {
+  it("annonce la TVA réduite à la place des aides (D59)", () => {
     render(<Resultat />);
 
     const intro = screen.getByText(contenu.resultat.recommandation.intro);
     const carte = intro.closest("section")!;
 
-    expect(carte.textContent).not.toContain(contenu.resultat.recommandation.aides);
+    // La prime à l'autoconsommation est nulle : plus de ligne « Aides ».
+    expect(carte.textContent).not.toContain("Aides estimées");
     expect(carte.textContent).toContain(contenu.resultat.recommandation.reste);
+
+    // Sol&Go 6 kWc à 10 190 € TTC : 10 190 × (1,20 / 1,055 − 1) = 1 401 €.
+    expect(
+      screen.getByText(/TVA réduite à 5,5 % incluse dans le prix/),
+    ).toBeDefined();
+    expect(carte.textContent).toMatch(/−1[\u00a0\u202f ]401[\u00a0\u202f ]€/);
   });
 
   it("affiche le prix du stockage retenu en sous-ligne", () => {

@@ -137,6 +137,27 @@ describe("simulerSolaire — bornes et coefficients", () => {
     expect(sans.cumul - avec.cumul).toBe(horizon * abonnement);
   });
 
+  it("D59 : l'économie de TVA se calcule sur le prix du pack", () => {
+    const { tva_reduite, tva_normale } = hypotheses.aides_solaire;
+    const r = simulerSolaire(EXEMPLE_EDF);
+
+    // Le prix public est TTC à 5,5 % ; à 20 %, il coûterait cet écart de plus.
+    const attendu = Math.round(
+      r.prixPack * ((1 + tva_normale.valeur) / (1 + tva_reduite.valeur) - 1),
+    );
+    expect(r.economieTva).toBe(attendu);
+    expect(r.economieTva).toBe(1401); // Sol&Go 6 kWc, 10 190 € TTC
+
+    // Elle est déjà dans le prix : le reste à charge ne la déduit pas.
+    expect(r.resteACharge).toBe(r.prixPack);
+  });
+
+  it("l'économie de TVA suit la puissance choisie", () => {
+    const trois = simulerSolaire(EXEMPLE_EDF, { kwc: 3 }).economieTva;
+    const neuf = simulerSolaire(EXEMPLE_EDF, { kwc: 9 }).economieTva;
+    expect(neuf).toBeGreaterThan(trois);
+  });
+
   it("un département hors zone calcule quand même mais le signale", () => {
     const r = simulerSolaire({ ...EXEMPLE_EDF, dept: "75" });
     expect(r.economiesAn).toBeGreaterThan(0);

@@ -391,7 +391,6 @@ export function Resultat() {
           <CartePack
             resultat={resultat}
             rentabiliteAns={rentabilite}
-            afficherAides={etat.projet !== "solaire"}
           />
 
           <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>
