@@ -45,7 +45,15 @@
     "tva_reduite": {
       "valeur": 0.055,
       "unite": "ratio",
-      "source": "TVA 5,5 % pour les installations ≤ 9 kWc avec modules < 530 kgCO2/kWc et gestionnaire d'énergie (HEMS), depuis le 01/10/2025",
+      "kwc_max": 9,
+      "conditions": [
+        "puissance installée inférieure ou égale à 9 kWc",
+        "modules sous 530 kgCO₂/kWc",
+        "gestionnaire d'énergie (HEMS)",
+        "logement d'habitation",
+        "batteries de stockage exclues du taux réduit"
+      ],
+      "source": "Arrêté du 1er octobre 2025 : TVA 5,5 % pour les installations ≤ 9 kWc, modules < 530 kgCO₂/kWc, avec gestionnaire d'énergie ; batteries exclues",
       "date": "2025-10-01"
     },
     "tva_normale": {

@@ -141,15 +141,34 @@ describe("simulerSolaire — bornes et coefficients", () => {
     const { tva_reduite, tva_normale } = hypotheses.aides_solaire;
     const r = simulerSolaire(EXEMPLE_EDF);
 
-    // Le prix public est TTC à 5,5 % ; à 20 %, il coûterait cet écart de plus.
+    // Formule arbitrée par le PO : prix × (0,20 − 0,055) / 1,20.
     const attendu = Math.round(
-      r.prixPack * ((1 + tva_normale.valeur) / (1 + tva_reduite.valeur) - 1),
+      (r.prixPack * (tva_normale.valeur - tva_reduite.valeur)) /
+        (1 + tva_normale.valeur),
     );
     expect(r.economieTva).toBe(attendu);
-    expect(r.economieTva).toBe(1401); // Sol&Go 6 kWc, 10 190 € TTC
+    expect(r.economieTva).toBe(1231); // Sol&Go 6 kWc, 10 190 € TTC
 
     // Elle est déjà dans le prix : le reste à charge ne la déduit pas.
     expect(r.resteACharge).toBe(r.prixPack);
+  });
+
+  it("D59 : les trois packs tiennent sous le plafond de 9 kWc", () => {
+    for (const kwc of [3, 6, 9] as const) {
+      const r = simulerSolaire(EXEMPLE_EDF, { kwc });
+      expect(r.kwcConseille).toBeLessThanOrEqual(
+        hypotheses.aides_solaire.tva_reduite.kwc_max,
+      );
+      expect(r.tvaReduiteEligible).toBe(true);
+      expect(r.economieTva).toBeGreaterThan(0);
+    }
+  });
+
+  it("D59 : le stockage ne change pas l'économie de TVA", () => {
+    const base = simulerSolaire(EXEMPLE_EDF).economieTva;
+    for (const stockage of ["virtuel", "batterie"] as const) {
+      expect(simulerSolaire(EXEMPLE_EDF, { stockage }).economieTva).toBe(base);
+    }
   });
 
   it("l'économie de TVA suit la puissance choisie", () => {

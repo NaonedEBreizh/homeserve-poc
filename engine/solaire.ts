@@ -105,10 +105,13 @@ export type SolaireResult = {
   surplusAn: number;
   aides: number;
   /**
-   * D59 : économie de TVA déjà comprise dans le prix public. Le pack est
-   * facturé à 5,5 % ; à 20 % il coûterait ce montant de plus.
+   * D59 : ce que le taux réduit fait gagner sur le pack, à formule du product
+   * owner — prix × (0,20 − 0,055) / 1,20. Nulle si la puissance dépasse le
+   * plafond du taux réduit (9 kWc).
    */
   economieTva: number;
+  /** Le pack ouvre-t-il droit au taux réduit ? (≤ 9 kWc, arrêté 01/10/2025) */
+  tvaReduiteEligible: boolean;
   resteACharge: number;
   retourAns: number;
   horsZone: boolean;
@@ -318,12 +321,19 @@ export function simulerSolaire(
   const aides =
     hypotheses.aides_solaire.prime_autoconsommation_eur_par_kwc.valeur *
     kwcConseille;
-  // Prix TTC à 5,5 % → HT → TTC à 20 % : l'écart est ce que le taux réduit
-  // fait économiser, sans jamais sortir des taux de `hypotheses.json`.
+  /**
+   * Taux réduit (arrêté du 01/10/2025) : réservé aux installations d'au plus
+   * 9 kWc. Les trois packs y sont éligibles ; le plafond reste lu dans les
+   * données pour qu'un pack plus puissant sorte du dispositif tout seul.
+   */
   const { tva_reduite, tva_normale } = hypotheses.aides_solaire;
-  const economieTva = Math.round(
-    pack.prix_ttc * ((1 + tva_normale.valeur) / (1 + tva_reduite.valeur) - 1),
-  );
+  const tvaReduiteEligible = kwcConseille <= tva_reduite.kwc_max;
+  const economieTva = tvaReduiteEligible
+    ? Math.round(
+        (pack.prix_ttc * (tva_normale.valeur - tva_reduite.valeur)) /
+          (1 + tva_normale.valeur),
+      )
+    : 0;
 
   const resteACharge = Math.max(pack.prix_ttc - aides, 0);
   const gainAn = economiesAn + surplusAn;
@@ -343,6 +353,7 @@ export function simulerSolaire(
     surplusAn,
     aides,
     economieTva,
+    tvaReduiteEligible,
     resteACharge,
     retourAns,
     horsZone: zone.eligible === false,

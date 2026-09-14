@@ -391,6 +391,7 @@ export function Resultat() {
           <CartePack
             resultat={resultat}
             rentabiliteAns={rentabilite}
+            stockage={reglages.stockage}
           />
 
           <p className="text-xs text-neutre-500">{t.rentabilite.mention}</p>

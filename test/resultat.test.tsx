@@ -77,11 +77,45 @@ describe("variante par défaut", () => {
     expect(carte.textContent).not.toContain("Aides estimées");
     expect(carte.textContent).toContain(contenu.resultat.recommandation.reste);
 
-    // Sol&Go 6 kWc à 10 190 € TTC : 10 190 × (1,20 / 1,055 − 1) = 1 401 €.
+    // Sol&Go 6 kWc à 10 190 € TTC : 10 190 × (0,20 − 0,055) / 1,20 = 1 231 €.
+    expect(screen.getByText(/TVA réduite à 5,5 % au lieu de 20 %/)).toBeDefined();
+    expect(carte.textContent).toMatch(/−1[\u00a0\u202f ]231[\u00a0\u202f ]€/);
+
+    // Conditions du taux réduit, dites sous la ligne.
     expect(
-      screen.getByText(/TVA réduite à 5,5 % incluse dans le prix/),
+      screen.getByText(contenu.resultat.recommandation.tva_mention),
     ).toBeDefined();
-    expect(carte.textContent).toMatch(/−1[\u00a0\u202f ]401[\u00a0\u202f ]€/);
+  });
+
+  it("D59 : la batterie dit que seuls les panneaux gardent le taux réduit", () => {
+    render(<Resultat />);
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.stockage.options.batterie,
+      }),
+    );
+
+    const { recommandation } = contenu.resultat;
+    expect(screen.getByText(recommandation.tva_mention_batterie)).toBeDefined();
+    expect(screen.queryByText(recommandation.tva_mention)).toBeNull();
+    // La ligne reste, sur les panneaux : même montant qu'en « aucun ».
+    expect(screen.getByText(/TVA réduite à 5,5 % au lieu de 20 %/)).toBeDefined();
+  });
+
+  it("D59 : le stockage virtuel n'a aucun effet sur la TVA", () => {
+    render(<Resultat />);
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: contenu.resultat.configurateur.stockage.options.virtuel,
+      }),
+    );
+
+    expect(
+      screen.getByText(contenu.resultat.recommandation.tva_mention),
+    ).toBeDefined();
+    expect(document.body.textContent).toMatch(/−1[\u00a0\u202f ]231[\u00a0\u202f ]€/);
   });
 
   it("affiche le prix du stockage retenu en sous-ligne", () => {
@@ -563,11 +597,17 @@ describe("projet pompe à chaleur", () => {
     ).toBeDefined();
   });
 
-  it("n'affiche ni pack solaire ni configurateur", () => {
+  it("n'affiche ni pack solaire ni configurateur ni ligne de TVA (D59)", () => {
     render(<Resultat />);
 
     expect(screen.queryByText(contenu.resultat.configurateur.titre)).toBeNull();
     expect(screen.queryByText(contenu.resultat.recommandation.intro)).toBeNull();
+    // La ligne de TVA porte sur les panneaux : absente d'un projet PAC.
+    // (Le bloc « Nos hypothèses » garde la sienne, qui documente la donnée.)
+    expect(screen.queryByText(/^TVA réduite à /)).toBeNull();
+    expect(
+      screen.queryByText(contenu.resultat.recommandation.tva_mention),
+    ).toBeNull();
     // La légende de la courbe et la tuile portent le même libellé.
     expect(
       screen.getAllByText(contenu.resultat.tuiles_pac.avec).length,

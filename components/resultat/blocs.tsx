@@ -275,10 +275,17 @@ export function Configurateur({
 export function CartePack({
   resultat,
   rentabiliteAns,
+  stockage = "aucun",
   apercu = false,
 }: PropsApercu & {
   resultat: SolaireResult;
   rentabiliteAns?: number | null;
+  /**
+   * D59 : la batterie physique est exclue du taux réduit. La ligne reste, mais
+   * elle ne porte plus que sur les panneaux — et le dit. Le stockage virtuel,
+   * qui n'est pas du matériel, n'a aucun effet.
+   */
+  stockage?: ReglagesInstallation["stockage"];
 }) {
   const { recommandation, rentabilite } = contenu.resultat;
 
@@ -307,19 +314,28 @@ export function CartePack({
 
         <dl className="mt-2 flex flex-col divide-y divide-neutre-100 text-[17px]">
           {/* D59 : la prime à l'autoconsommation est nulle depuis le
-              05/06/2026 et n'est plus affichée. L'avantage réel du solaire
-              côté fiscalité, c'est le taux réduit, déjà dans le prix. */}
-          <div className="flex justify-between gap-3 py-2">
-            <dt className="text-neutre-500">
-              {remplacer(recommandation.tva, {
-                reduite: pourcent(hypotheses.aides_solaire.tva_reduite.valeur),
-                normale: pourcent(hypotheses.aides_solaire.tva_normale.valeur),
-              })}
-            </dt>
-            <dd className="whitespace-nowrap font-extrabold text-vert-600">
-              −{euros(resultat.economieTva)} €
-            </dd>
-          </div>
+              05/06/2026 et n'est plus affichée. L'avantage fiscal réel du
+              solaire, c'est le taux réduit. */}
+          {resultat.tvaReduiteEligible ? (
+            <div className="flex flex-col gap-1 py-2">
+              <div className="flex justify-between gap-3">
+                <dt className="text-neutre-500">
+                  {remplacer(recommandation.tva, {
+                    reduite: pourcent(hypotheses.aides_solaire.tva_reduite.valeur),
+                    normale: pourcent(hypotheses.aides_solaire.tva_normale.valeur),
+                  })}
+                </dt>
+                <dd className="whitespace-nowrap font-extrabold text-vert-600">
+                  −{euros(resultat.economieTva)} €
+                </dd>
+              </div>
+              <p className="text-xs text-neutre-500">
+                {stockage === "batterie"
+                  ? recommandation.tva_mention_batterie
+                  : recommandation.tva_mention}
+              </p>
+            </div>
+          ) : null}
           <div className="flex justify-between py-2">
             <dt className="text-neutre-500">{recommandation.reste}</dt>
             <dd className="font-extrabold text-neutre-700">
@@ -428,7 +444,7 @@ export function BlocHypotheses() {
       aides_solaire.prime_autoconsommation_eur_par_kwc.source,
     ],
     [
-      `TVA réduite ${pourcent(aides_solaire.tva_reduite.valeur)} % au lieu de ${pourcent(aides_solaire.tva_normale.valeur)} %`,
+      `TVA réduite ${pourcent(aides_solaire.tva_reduite.valeur)} % au lieu de ${pourcent(aides_solaire.tva_normale.valeur)} % — ${aides_solaire.tva_reduite.conditions.join(", ")}`,
       aides_solaire.tva_reduite.source,
     ],
     [`Taux d'autoproduction borné à ${tap.min}–${tap.max} %`, tap.facture_annuelle_par_tranche.source],
