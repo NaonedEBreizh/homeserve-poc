@@ -313,12 +313,22 @@ facture, l'une rénovée et l'autre non, obtiennent le même chiffre : c'est un
 ordre de grandeur d'entrée de parcours, pas un dimensionnement.
 
 **Le taux d'autoconsommation ne dépend pas de la puissance installée.** Le
-modèle EDF le calcule à partir du profil du foyer — occupation, équipements,
-chauffage, surface, zone — et pas des kWc posés. En réalité, plus la
-production est élevée, plus une batterie absorbe le surplus et fait monter
-autoconsommation et autoproduction : le couplage puissance × stockage est à
-ajouter au moteur. Aujourd'hui, changer de puissance ne joue que sur la
-production, le surplus, le prix et la rentabilité.
+modèle de référence le calcule à partir du profil du foyer — occupation,
+équipements, chauffage, surface, zone — et pas des kWc posés. Une production
+plus forte, couplée à une batterie, fait monter autoconsommation et
+autoproduction : le couplage puissance × stockage est à ajouter au moteur.
+Aujourd'hui, changer de puissance ne joue que sur la production, le surplus,
+le prix et la rentabilité.
+
+**Les règles de dédoublonnage inter-canal restent à définir.** Un rendez-vous
+posé par le plateau et un rendez-vous pris dans le parcours digital peuvent
+désigner le même foyer sans partager la même clé. À arbitrer avec le SI :
+quelle clé de rapprochement fait foi (téléphone normalisé, email, adresse
+normalisée, ou une combinaison), sur quelle fenêtre de temps deux demandes
+comptent pour une seule, quel canal est prioritaire lorsque les deux ont
+abouti, et qui est notifié de quoi. Le prototype ne compare que le téléphone
+et l'email d'un `localStorage` — c'est une démonstration du principe, pas une
+règle de rapprochement.
 
 **Le dimensionnement et la rentabilité restent l'affaire de l'étude.** Le kWc
 et la puissance PAC affichés sont des repères ; l'écran ne dit jamais « votre
