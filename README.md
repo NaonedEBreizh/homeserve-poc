@@ -17,6 +17,13 @@ de l'électricité réglable de 0 à 15 %, pack et prix public, aides 2026, rest
 charge. Il peut ensuite se qualifier et **réserver un créneau d'étude gratuite à
 domicile** dans l'agence la plus proche.
 
+**Périmètre : HomeServe Energies Services** — le solaire et la pompe à
+chaleur. Les sorties qui renvoient vers l'assistance, l'entretien ou le
+dépannage sont des **orientations** vers une offre existante, avec son URL
+réelle : le prototype ne réserve rien sur ces métiers, qui relèvent d'une autre
+business unit. Réserver un entretien en ligne n'est pas une suite prévue de ce
+travail, et le moteur solaire/PAC n'a pas vocation à y servir.
+
 **Trois portes d'entrée, un seul moteur :**
 
 | Porte | Chemin | Ce qu'elle suppose |
