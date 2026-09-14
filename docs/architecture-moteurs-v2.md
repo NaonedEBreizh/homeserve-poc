@@ -171,19 +171,19 @@ Sans carte à l'inscription ✅ (zplatform 25/08/2026 ; Render 23/04/2026, qui c
 ## 5. Sécurité — README « Zéro secret par construction »
 Aucune variable d'environnement lue (`grep -r "import.meta.env\|process.env" src/` vide) ; `.env.example` vide et commenté (réservé v2 Supabase anon key bornée par RLS) ; `.gitignore` `.env*`, `!.env.example`, `node_modules`, `dist`, `.vercel` ; gitleaks pre-commit + CI ; GitHub Push Protection + Secret Scanning ; aucune requête réseau au runtime (capture onglet Réseau + `Content-Security-Policy: default-src 'self'` dans `vercel.json`) ; coordonnées uniquement en sessionStorage, bandeau « Prototype — aucune donnée envoyée ».
 
-## 6. Plan de build 1h30
+## 6. Plan de build
 
 **La veille** : comptes GitHub + Vercel liés ; pre-commit, gitleaks, Node 22 ; `zones.json`, `agences.json`, `tap-base.json` calibrés ; maquettes Claude Design des 6 écrans ; URLs réelles des offres HomeServe ; brief dans `docs/`.
 
 | Bloc | Livrable | Stop possible | Prompt Claude Code (résumé) |
 |---|---|---|---|
-| 0:00-0:10 | Scaffold Vite+React+TS+Tailwind PostCSS, hash router 6 routes, `state.ts`, `analytics.ts`, CI, Vercel « Hello » | — | « Scaffold …, store sessionStorage typé ProjetState, dataLayer.push, vitest, gitleaks pre-commit, vercel.json CSP self » |
-| 0:10-0:25 | `engine/solaire.ts` + tests | — | « Implémente d'après ref-04 §1.2 et hypotheses.json ; tests : dept 69 → 1416/29,94/424 ; clamp 12/63/84 » |
-| 0:25-0:40 | Écrans Entrée + Simulateur + Résultat (chiffres, packs, ROI, projection, hypothèses), `variant=mur` | **Oui** | « Écrans depuis maquettes ; variant=mur coordonnées avant ; events sim_* » |
-| 0:40-0:55 | `machine.ts` + `arbre-rdv.json` + tests | — | « Interpréteur générique §3 ; tests : chaque P(e), chaque @sortie, prefill saute facture/surface » |
-| 0:55-1:10 | `Rdv.tsx`, Sortie cross-sell, OTP mock, `agenda.ts` (seed CP, ICS), Confirmation, `MockBadge` | **Oui** | « Rendu par type de nœud, sorties avec CTA url, OTP 'mode démo', créneaux 21 j, ICS Blob, localStorage doublon » |
-| 1:10-1:20 | `engine/pac.ts` + `couplage.ts` + tests ; écran PAC (ou « bientôt » assumé) | **Oui** | « Moteur PAC selon pac-baremes.json et §2 ; si retard, carte 'bientôt' avec hypothèses » |
-| 1:20-1:30 | `DebugPanel` (`?debug=1`), README, gitleaks vert, test offline, captures | — | « Panneau debug ; README archi/hypothèses/sécu/métriques ; build sans requête externe » |
+| 1 | Scaffold Vite+React+TS+Tailwind PostCSS, hash router 6 routes, `state.ts`, `analytics.ts`, CI, Vercel « Hello » | — | « Scaffold …, store sessionStorage typé ProjetState, dataLayer.push, vitest, gitleaks pre-commit, vercel.json CSP self » |
+| 2 | `engine/solaire.ts` + tests | — | « Implémente d'après ref-04 §1.2 et hypotheses.json ; tests : dept 69 → 1416/29,94/424 ; clamp 12/63/84 » |
+| 3 | Écrans Entrée + Simulateur + Résultat (chiffres, packs, ROI, projection, hypothèses), `variant=mur` | **Oui** | « Écrans depuis maquettes ; variant=mur coordonnées avant ; events sim_* » |
+| 4 | `machine.ts` + `arbre-rdv.json` + tests | — | « Interpréteur générique §3 ; tests : chaque P(e), chaque @sortie, prefill saute facture/surface » |
+| 5 | `Rdv.tsx`, Sortie cross-sell, OTP mock, `agenda.ts` (seed CP, ICS), Confirmation, `MockBadge` | **Oui** | « Rendu par type de nœud, sorties avec CTA url, OTP 'mode démo', créneaux 21 j, ICS Blob, localStorage doublon » |
+| 6 | `engine/pac.ts` + `couplage.ts` + tests ; écran PAC (ou « bientôt » assumé) | **Oui** | « Moteur PAC selon pac-baremes.json et §2 ; si retard, carte 'bientôt' avec hypothèses » |
+| 7 | `DebugPanel` (`?debug=1`), README, gitleaks vert, test offline, captures | — | « Panneau debug ; README archi/hypothèses/sécu/métriques ; build sans requête externe » |
 
 ## 7. Risques de démo et parades
 Wifi absent → `vite preview` local + Vercel + `dist/` sur clé USB, zéro asset externe. Navigateur de démonstration → pas d'API exotique, sessionStorage testé en privé Safari, ICS testé 3 navigateurs. Mobile → responsive + QR code. Données incohérentes → clamps, tests de propriétés (économie ≤ facture, reste ≥ 0), « ordre de grandeur » + hypothèses. Écart avec EDF → non-régression sur l'exemple, seule Z3 ancrée. Confusion mock → `MockBadge` systématique + bandeau prototype. Accès direct /rdv → machine tolère `prefill = {}`.

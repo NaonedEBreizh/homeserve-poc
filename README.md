@@ -350,14 +350,14 @@ conservation restent à arbitrer avec le DPO avant toute mise en production.
 
 Le détail bloc par bloc est dans [`docs/journal-temps.md`](docs/journal-temps.md).
 
-**Préparation déclarée la veille** (8 septembre) : cadrage produit, rétro-ingénierie
-du simulateur EDF, construction des fichiers de données et des tests de moteurs,
-maquettes Claude Design. Le dépôt en porte la trace : `docs/`, `data/`,
-`content/` et `test/engine/` étaient écrits avant le premier bloc.
+**Préparation** (8 septembre) : cadrage produit, rétro-ingénierie du
+simulateur de référence, construction des fichiers de données et des tests de
+moteurs, maquettes Claude Design. Le dépôt en porte la trace : `docs/`,
+`data/`, `content/` et `test/engine/` étaient écrits avant le premier bloc.
 
-**Séance de build** : 7 blocs, chacun un prompt, un commit, un gate
+**Build** : 7 blocs, chacun un prompt, un commit, un gate
 `pnpm typecheck && pnpm test && pnpm build`. Les points d'arrêt du product
-owner ont été tenus, et deux lots de correction ont suivi la recette.
+owner ont été tenus ; les lots de correction issus de la recette ont suivi.
 
 ---
 

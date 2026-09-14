@@ -1,4 +1,4 @@
-# Cartographie des parcours — v1.1 FIGÉE (08/09/2026)
+# Cartographie des parcours — HomeServe Energies Services (v1.1 figée, 08/09/2026)
 
 Statut : **figée par Benoît le 08/09** (réponses aux 9 points, voir §7). Référence unique pour Claude Design (maquettes) et pour `data/arbre-rdv.json` (code). Toute modification passe par ici et par le journal de décisions.
 

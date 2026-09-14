@@ -1,4 +1,4 @@
-# Modèle de données, stockage et règles de la prise de rendez-vous (v1 — arbitré par le PO le 08/09/2026)
+# Modèle de données, stockage et règles de la prise de rendez-vous — HomeServe Energies Services (v1, arbitré par le PO le 08/09/2026)
 
 **Statut** : règles fonctionnelles tranchées par le product owner (D29–D32) ; les éléments encore marqués « ⚑ » restent des propositions à confirmer ou relèvent de la cible.
 
@@ -168,4 +168,4 @@ Quel outil de planification des tournées par agence, et expose-t-il une API de 
 - `agences.json` : ajouter `competences` (solaire, pac), `self_booking_actif`, `seuil_surbooking`, `jours_travailles`, `delai_min_jours`.
 - `arbre-rdv.json` : nœud « prospect_existant » après OTP (mock : doublon, lead plateau) ; nœud « disponibilite » avant calendrier (mock : surbooking).
 - User stories : US-2.9 (doublon), US-2.10 (lead plateau), US-2.11 (agence surbookée) ajoutées ; US-6.5 (règles lisibles dans le README avec statut POC / MOCK / CIBLE et questions au SI).
-- Plan de build : +10 min au bloc RDV (deux écrans conditionnels) — absorbés par la marge ; PAC reste le premier candidat à la coupe.
+- Plan de build : deux écrans conditionnels de plus au bloc RDV.

@@ -1,4 +1,4 @@
-# Architecture v3 — bascule Next.js App Router (agent Architecte — 07/09/2026, complément à `06-architecture-poc-v2.md`)
+# Architecture v3 — POC HomeServe Energies Services, bascule Next.js App Router (agent Architecte — 07/09/2026, complément à `06-architecture-poc-v2.md`)
 
 ✅ vérifié · 🔶 source tierce · ❓ supposé. Ce qui n'est pas mentionné ici est inchangé par rapport à la v2 (`engine/`, JSON `data/`, sessionStorage, tests, moteur PAC, machine à états, sécurité repo).
 
@@ -80,18 +80,18 @@ export default nextConfig;
 ```
 `style-src 'unsafe-inline'` nécessaire (styles inline Next + Radix) : compromis v1 documenté, chemin v2 = nonce. `script-src 'self'` tient si Next 16 n'émet pas de script inline en prod ❓ (tester en console au bloc 0 ; sinon ajouter le hash). Objectif : F → A sur securityheaders.com.
 
-## 4. Plan de build 1h30 réajusté
-**La veille** : `create-next-app@latest` exécuté et commité (TS, Tailwind, App Router, Turbopack) ; Radix + zod + vitest installés ; woff2 Nunito ; `content/model.json`, `fr-fr.json`, les six JSON `data/` prêts ; projet Vercel lié ; Dockerfile testé ; maquettes Claude Design. **À déclarer dans le journal de temps de la note** (préparation d'environnement, hors 1h30).
+## 4. Plan de build réajusté
+**La veille** : `create-next-app@latest` exécuté et commité (TS, Tailwind, App Router, Turbopack) ; Radix + zod + vitest installés ; woff2 Nunito ; `content/model.json`, `fr-fr.json`, les six JSON `data/` prêts ; projet Vercel lié ; Dockerfile testé ; maquettes Claude Design.
 
 | Bloc | Livrable | Stop | Prompt Claude Code |
 |---|---|---|---|
-| 0:00-0:10 | `globals.css` tokens, layout + bandeau + font, `next.config` headers, store, analytics, CI ; push → URL Vercel, securityheaders A | — | « Layout fr Nunito local, @theme tokens HomeServe, bandeau prototype, headers() §3, store useSyncExternalStore, track() dataLayer, workflow vitest+gitleaks+build » |
-| 0:10-0:25 | `engine/solaire.ts` + tests (EDF vert) | — | inchangé v2 |
-| 0:25-0:40 | Entrée, Simulateur, Résultat (`variant=mur`), wording depuis `content/` | **Oui** | « Écrans 'use client' lisant content/fr-fr.json ; Résultat depuis store ; useSearchParams dans Suspense ; events sim_* » |
-| 0:40-0:55 | `engine/machine.ts` + `arbre-rdv.json` + tests | — | inchangé v2 |
-| 0:55-1:10 | `MachineRdv`, `sortie/[type]` statiques, Calendrier Popover, Créneaux RadioGroup, Engagement Dialog, OTP mock, ICS, Confirmation | **Oui** | « Rendu par type de nœud avec Radix ; generateStaticParams sorties ; agenda seed CP ; MockBadge ; POST /api/rdv si dispo sinon localStorage » |
-| 1:10-1:20 | `engine/pac.ts` + couplage + écran PAC (ou « bientôt ») | **Oui** | inchangé v2 |
-| 1:20-1:30 | DebugPanel, README (archi, GKE, mapping Piwik/GTM, sécu), test offline, `next build` vert `○ Static` | — | « README complet ; zéro requête externe et 0 erreur CSP en console » |
+| 1 | `globals.css` tokens, layout + bandeau + font, `next.config` headers, store, analytics, CI ; push → URL Vercel, securityheaders A | — | « Layout fr Nunito local, @theme tokens HomeServe, bandeau prototype, headers() §3, store useSyncExternalStore, track() dataLayer, workflow vitest+gitleaks+build » |
+| 2 | `engine/solaire.ts` + tests (EDF vert) | — | inchangé v2 |
+| 3 | Entrée, Simulateur, Résultat (`variant=mur`), wording depuis `content/` | **Oui** | « Écrans 'use client' lisant content/fr-fr.json ; Résultat depuis store ; useSearchParams dans Suspense ; events sim_* » |
+| 4 | `engine/machine.ts` + `arbre-rdv.json` + tests | — | inchangé v2 |
+| 5 | `MachineRdv`, `sortie/[type]` statiques, Calendrier Popover, Créneaux RadioGroup, Engagement Dialog, OTP mock, ICS, Confirmation | **Oui** | « Rendu par type de nœud avec Radix ; generateStaticParams sorties ; agenda seed CP ; MockBadge ; POST /api/rdv si dispo sinon localStorage » |
+| 6 | `engine/pac.ts` + couplage + écran PAC (ou « bientôt ») | **Oui** | inchangé v2 |
+| 7 | DebugPanel, README (archi, GKE, mapping Piwik/GTM, sécu), test offline, `next build` vert `○ Static` | — | « README complet ; zéro requête externe et 0 erreur CSP en console » |
 
 ## 5. Risques nouveaux et parades
 | Risque | Parade |
