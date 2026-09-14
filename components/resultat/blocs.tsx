@@ -318,17 +318,24 @@ export function CartePack({
               solaire, c'est le taux réduit. */}
           {resultat.tvaReduiteEligible ? (
             <div className="flex flex-col gap-1 py-2">
-              <div className="flex justify-between gap-3">
-                <dt className="text-neutre-500">
-                  {remplacer(recommandation.tva, {
+              {/* La phrase porte le montant : on la coupe sur le repère pour
+                  garder le chiffre en évidence sans découper le libellé. */}
+              <dt className="text-neutre-500">
+                {(() => {
+                  const [avant, apres] = remplacer(recommandation.tva, {
                     reduite: pourcent(hypotheses.aides_solaire.tva_reduite.valeur),
-                    normale: pourcent(hypotheses.aides_solaire.tva_normale.valeur),
-                  })}
-                </dt>
-                <dd className="whitespace-nowrap font-extrabold text-vert-600">
-                  −{euros(resultat.economieTva)} €
-                </dd>
-              </div>
+                  }).split("{montant} €");
+                  return (
+                    <>
+                      {avant}
+                      <strong className="whitespace-nowrap font-extrabold text-vert-600">
+                        {euros(resultat.economieTva)} €
+                      </strong>
+                      {apres}
+                    </>
+                  );
+                })()}
+              </dt>
               <p className="text-xs text-neutre-500">
                 {stockage === "batterie"
                   ? recommandation.tva_mention_batterie
@@ -444,7 +451,7 @@ export function BlocHypotheses() {
       aides_solaire.prime_autoconsommation_eur_par_kwc.source,
     ],
     [
-      `TVA réduite ${pourcent(aides_solaire.tva_reduite.valeur)} % au lieu de ${pourcent(aides_solaire.tva_normale.valeur)} % — ${aides_solaire.tva_reduite.conditions.join(", ")}`,
+      `TVA réduite ${pourcent(aides_solaire.tva_reduite.valeur)} % au lieu de ${pourcent(aides_solaire.tva_normale.valeur)} % — le prix public est déjà au taux réduit ; l'économie affichée est l'écart avec le taux normal. Conditions : ${aides_solaire.tva_reduite.conditions.join(", ")}`,
       aides_solaire.tva_reduite.source,
     ],
     [`Taux d'autoproduction borné à ${tap.min}–${tap.max} %`, tap.facture_annuelle_par_tranche.source],

@@ -77,9 +77,10 @@ describe("variante par défaut", () => {
     expect(carte.textContent).not.toContain("Aides estimées");
     expect(carte.textContent).toContain(contenu.resultat.recommandation.reste);
 
-    // Sol&Go 6 kWc à 10 190 € TTC : 10 190 × (0,20 − 0,055) / 1,20 = 1 231 €.
-    expect(screen.getByText(/TVA réduite à 5,5 % au lieu de 20 %/)).toBeDefined();
-    expect(carte.textContent).toMatch(/−1[\u00a0\u202f ]231[\u00a0\u202f ]€/);
+    // Sol&Go 6 kWc à 10 190 € TTC : 10 190 × (1,20 / 1,055 − 1) = 1 401 €.
+    expect(carte.textContent).toMatch(
+      /TVA réduite à 5,5 % : vous économisez 1[\u00a0\u202f ]401[\u00a0\u202f ]€ par rapport au taux normal/,
+    );
 
     // Conditions du taux réduit, dites sous la ligne.
     expect(
@@ -100,7 +101,9 @@ describe("variante par défaut", () => {
     expect(screen.getByText(recommandation.tva_mention_batterie)).toBeDefined();
     expect(screen.queryByText(recommandation.tva_mention)).toBeNull();
     // La ligne reste, sur les panneaux : même montant qu'en « aucun ».
-    expect(screen.getByText(/TVA réduite à 5,5 % au lieu de 20 %/)).toBeDefined();
+    expect(document.body.textContent).toMatch(
+      /TVA réduite à 5,5 % : vous économisez 1[\u00a0\u202f ]401[\u00a0\u202f ]€/,
+    );
   });
 
   it("D59 : le stockage virtuel n'a aucun effet sur la TVA", () => {
@@ -115,7 +118,9 @@ describe("variante par défaut", () => {
     expect(
       screen.getByText(contenu.resultat.recommandation.tva_mention),
     ).toBeDefined();
-    expect(document.body.textContent).toMatch(/−1[\u00a0\u202f ]231[\u00a0\u202f ]€/);
+    expect(document.body.textContent).toMatch(
+      /vous économisez 1[\u00a0\u202f ]401[\u00a0\u202f ]€/,
+    );
   });
 
   it("affiche le prix du stockage retenu en sous-ligne", () => {

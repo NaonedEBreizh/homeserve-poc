@@ -319,7 +319,7 @@
         "violet": "revenus intermédiaires",
         "rose": "revenus supérieurs"
       },
-      "tva": "TVA réduite à {reduite} % au lieu de {normale} %",
+      "tva": "TVA réduite à {reduite} % : vous économisez {montant} € par rapport au taux normal",
       "tva_mention": "offre ultra-bas carbone avec gestionnaire d'énergie, logement d'habitation",
       "tva_mention_batterie": "la batterie est facturée à 20 % ; facturation séparée pour conserver le taux réduit sur les panneaux"
     },

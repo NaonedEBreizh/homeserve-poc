@@ -141,13 +141,13 @@ describe("simulerSolaire — bornes et coefficients", () => {
     const { tva_reduite, tva_normale } = hypotheses.aides_solaire;
     const r = simulerSolaire(EXEMPLE_EDF);
 
-    // Formule arbitrée par le PO : prix × (0,20 − 0,055) / 1,20.
+    // Le prix public est déjà au taux réduit : l'économie est l'écart avec
+    // le taux normal, prix × (1,20 / 1,055 − 1).
     const attendu = Math.round(
-      (r.prixPack * (tva_normale.valeur - tva_reduite.valeur)) /
-        (1 + tva_normale.valeur),
+      r.prixPack * ((1 + tva_normale.valeur) / (1 + tva_reduite.valeur) - 1),
     );
     expect(r.economieTva).toBe(attendu);
-    expect(r.economieTva).toBe(1231); // Sol&Go 6 kWc, 10 190 € TTC
+    expect(r.economieTva).toBe(1401); // Sol&Go 6 kWc, 10 190 € TTC
 
     // Elle est déjà dans le prix : le reste à charge ne la déduit pas.
     expect(r.resteACharge).toBe(r.prixPack);
