@@ -12,7 +12,7 @@ des ordres de grandeur, datés et sourcés, pour démontrer un parcours.
 
 Un propriétaire de maison choisit son projet — solaire, pompe à chaleur, ou les
 deux — et obtient **en 8 à 10 questions fermées une estimation chiffrée sans
-donner ses coordonnées** : économies cumulées à l'horizon choisi, taux de hausse
+donner ses coordonnées** : économies cumulées à l'horizon choisi, simulation du taux de hausse
 de l'électricité réglable de 0 à 15 %, pack et prix public, aides 2026, reste à
 charge. Il peut ensuite se qualifier et **réserver un créneau d'étude gratuite à
 domicile** dans l'agence la plus proche.
